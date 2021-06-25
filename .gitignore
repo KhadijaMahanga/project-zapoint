@@ -21,3 +21,8 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+#pwa
+**/public/workbox-*.js
+**/public/sw.js
+**/public/fallback-*.js
