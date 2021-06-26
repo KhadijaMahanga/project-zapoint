@@ -222,9 +222,6 @@ tags
 
 # Customs
 
-# include wordpress tags function
-!src/lib/wordpress/tags
-
 #pwa
 **/public/workbox-*.js
 **/public/sw.js
