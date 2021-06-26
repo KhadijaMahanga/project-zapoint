@@ -1,5 +1,12 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
-export default function handler(req, res) {
-  res.status(200).json({ name: 'John Doe' })
-}
+import nextConnect from 'next-connect';
+import middleware from '@/jikopoint/middleware/database';
+
+const handler = nextConnect();
+handler.use(middleware);
+handler.get(async (req, res) => {
+    let doc = await req.db.collection('elearning').findOne()
+    res.json(doc);
+});
+export default handler;
