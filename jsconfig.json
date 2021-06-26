@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/jikopoint/*": ["./src/*"]
+    }
+  },
+  "exclude": ["node_modules"]
+}

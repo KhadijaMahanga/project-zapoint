@@ -5,16 +5,19 @@
   "license": "MIT",
   "dependencies": {
     "@material-ui/core": "^4.11.4",
+    "@material-ui/utils": "^4.11.2",
     "@next/bundle-analyzer": "^11.0.1",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "next": "^11.0.1",
     "next-pwa": "^5.2.21",
+    "next-seo": "^4.26.0",
+    "nextjs-progressbar": "^0.0.11",
+    "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-scripts": "4.0.3",
-    "web-vitals": "^1.0.1"
+    "react-scripts": "4.0.3"
   },
   "scripts": {
     "dev": "next dev",
@@ -41,6 +44,12 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.14.6",
+    "@babel/eslint-parser": "^7.14.7",
+    "@babel/preset-env": "^7.14.7",
+    "babel-plugin-module-resolver": "^4.1.0",
+    "babel-plugin-transform-imports": "^2.0.0",
+    "eslint": "^7.29.0",
     "eslint-config-next": "^11.0.1"
   }
 }
