@@ -1,12 +1,13 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
-import nextConnect from 'next-connect';
-import middleware from '@/jikopoint/middleware/database';
+import { createHandler } from '@/jikopoint/middleware';
+import User from "@/jikopoint/models/User";
+// you can pass in middleware here
+// maybe you have some permissions middleware
+const handler = createHandler();
 
-const handler = nextConnect();
-handler.use(middleware);
 handler.get(async (req, res) => {
-    let doc = await req.db.collection('elearning').findOne()
+    let doc = await User.find().exec();
     res.json(doc);
 });
 export default handler;
