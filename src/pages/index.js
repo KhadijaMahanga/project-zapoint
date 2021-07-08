@@ -195,7 +195,6 @@ export default function Home({ isConnected }) {
 }
 
 export async function getStaticProps(context) {
-  const res = await fetch( process.env.NEXT_PUBLIC_APP_URL + '/api/hello');
   return {
     props: { isConnected: true },
   }
