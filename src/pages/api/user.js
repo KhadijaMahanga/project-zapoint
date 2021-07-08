@@ -8,7 +8,7 @@ const handler = createHandler();
 
 handler
   .get(async (req, res) => {
-    let doc = await User.findOne({ _id: req.});
+    let doc = await User.findOne({ _id: req.user.id });
     res.json(doc);
   })
   .use((req, res, next) => {
