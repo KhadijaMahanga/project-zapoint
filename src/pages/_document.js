@@ -31,7 +31,16 @@ export default class MyDocument extends Document {
             <link rel='manifest' href='/manifest.json' />
             {/* <link rel='mask-icon' href='/icons/safari-pinned-tab.svg' color='#5bbad5' /> */}
             <link rel='shortcut icon' href='/favicon.ico' />
-            <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=optional' />
+            <link
+            rel="preload"
+            href="https://fonts.googleapis.com/css?family=Montserrat:700|Valera+Round:400,700&display=swap"
+            as="style"
+          />
+          <link
+            href="https://fonts.googleapis.com/css?family=Montserrat:700|Valera+Round:400,700&display=swap"
+            rel="stylesheet"
+          />
+    
                 
         </Head>
         <body>
