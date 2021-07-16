@@ -13,9 +13,15 @@ function A({ children, href, ...props }) {
     </Link>
   );
 }
+
+A.defaultProps = {
+  children: undefined,
+  href: undefined,
+}
+
 A.propTypes = {
-  children: PropTypes.node.isRequired,
-  href: PropTypes.string.isRequired,
+  children: PropTypes.node,
+  href: PropTypes.string,
 };
 
 export default A;

@@ -32,15 +32,21 @@ const menuItems = [
     {   label: "Contact Us",
         href: "/contact"
     }
-    
-]
+];
+
+const social = {
+  facebook: "facebook.com",
+  instagram: "instagram.com",
+  linkedin: "linkedin.com",
+  twitter: "twitter.com",
+};
 
 function Navigation({ ...props }) {
   const classes = useStyles(props);
 
   return (
     <AppBar color="primary" position="sticky" className={classes.root}>
-      <TopBanner />
+      <TopBanner social={social} />
       <Toolbar disableGutters className={classes.toolbar}>
         <Hidden mdDown implementation="css">
           <DesktopNavigation
