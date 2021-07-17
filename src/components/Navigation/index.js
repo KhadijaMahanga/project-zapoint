@@ -1,6 +1,6 @@
 import { AppBar, Hidden, Toolbar } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import React from "react";
+import React, { useState } from "react";
 
 import DesktopNavigation from "./DesktopNavigation";
 import MobileNavigation from "./MobileNavigation";
@@ -17,21 +17,15 @@ const useStyles = makeStyles(({ typography, breakpoints, palette }) => ({
 }));
 
 const menuItems = [
-    {   label: "Courses",
-        href: "/courses"
+    {   label: "Darasa",
+        href: "/darasa"
     },
-    {   label: "Teachers",
-        href: "/teachers"
+    {   label: "Habari",
+        href: "/habari"
     },
-    {   label: "News",
-        href: "/news"
+    {   label: "Kuhusu Sisi",
+        href: "/kuhusu-sisi"
     },
-    {   label: "About Us",
-        href: "/about"
-    },
-    {   label: "Contact Us",
-        href: "/contact"
-    }
 ];
 
 const social = {
@@ -44,6 +38,18 @@ const social = {
 function Navigation({ ...props }) {
   const classes = useStyles(props);
 
+  const [openSearch, setOpenSearch] = useState(false);
+
+  const handleOpenSearch = (e) => {
+    e?.preventDefault();
+    setOpenSearch(true);
+  };
+  const handleCloseSearch = (e) => {
+    e?.preventDefault();
+    setOpenSearch(false);
+  };
+
+
   return (
     <AppBar color="primary" position="sticky" className={classes.root}>
       <TopBanner social={social} />
@@ -51,11 +57,23 @@ function Navigation({ ...props }) {
         <Hidden mdDown implementation="css">
           <DesktopNavigation
             menuItems={menuItems}
+            social={social}
+            openSearch={openSearch}
+            setOpenSearch={setOpenSearch}
+            handleOpenSearch={handleOpenSearch}
+            handleCloseSearch={handleCloseSearch}
             classes={{ section: classes.section }}
           />
         </Hidden>
         <Hidden lgUp implementation="css">
-          <MobileNavigation menuItems={menuItems} social={social} classes={{ section: classes.section }} />
+          <MobileNavigation 
+            menuItems={menuItems}
+            social={social}
+            openSearch={openSearch}
+            setOpenSearch={setOpenSearch}
+            handleOpenSearch={handleOpenSearch}
+            handleCloseSearch={handleCloseSearch}
+            classes={{ section: classes.section }} />
         </Hidden>
       </Toolbar>
     </AppBar>

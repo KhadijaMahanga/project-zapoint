@@ -6,25 +6,24 @@ import Link from "@/jikopoint/components/Link";
 import { ReactComponent as Logo } from "@/jikopoint/assets/logos/logo-foodlab-grey.svg";
 
 const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
-  root: (props) => ({
+  root: {
     justifyContent: "flex-start",
-    width: props?.width || typography.pxToRem(188),
-    borderRadius: typography.pxToRem(35),
-    background: "linear-gradient(to right, #F0EFEF 50%, #FFF 50%)",
+    borderRadius: 0,
     backgroundSize: "200% 100%",
     backgroundPosition: "bottom right",
     transition: "background-position .3s ease-out",
+    paddingLeft: 0,
     "&:hover": {
-      borderRadius: typography.pxToRem(35),
+      borderRadius: 0,
       backgroundPosition: "bottom left",
       color: palette.primary.main,
     },
-    [breakpoints.up("md")]: {
-      width: props?.width || typography.pxToRem(240),
-    },
-  }),
+  },
   image: {
-    width: typography.pxToRem(170),
+    width: typography.pxToRem(150),
+    [breakpoints.up("sm")]: {
+      width: typography.pxToRem(170),
+    },
     height: "auto",
   },
 }));

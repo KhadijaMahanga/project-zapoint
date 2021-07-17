@@ -22,6 +22,7 @@ import { ReactComponent as CloseIcon } from "@/jikopoint/assets/icons/icon-close
 import { ReactComponent as MenuIcon } from "@/jikopoint/assets/icons/icon-menu-grey.svg";
 import { ReactComponent as SearchIcon } from "@/jikopoint/assets/icons/icon-search-grey.svg";
 import { ReactComponent as SearchMenuIcon } from "@/jikopoint/assets/icons/icon-close-white.svg";
+import SearchDialog from "./SearchDialog";
 
 const useStyles = makeStyles(({ palette, typography }) => ({
   root: {
@@ -70,9 +71,6 @@ const useStyles = makeStyles(({ palette, typography }) => ({
       background: "none",
     },
   },
-  menuItems: {
-    padding: `${typography.pxToRem(20)} 0 ${typography.pxToRem(71)}`,
-  },
   link: {
     color: "white",
   },
@@ -104,11 +102,11 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="left" timeout={1000} ref={ref} {...props} />;
 });
 
-function MobileNavigation({ menuItems, social, ...props}) {
+function MobileNavigation({ ...props}) {
   const classes = useStyles(props);
+  const {menuItems, setOpenSearch, handleOpenSearch } = props;
 
   const [openMenu, setOpenMenu] = useState(false);
-  const [openSearch, setOpenSearch] = useState(false);
 
   const handleOpenMenu = (e) => {
     e?.preventDefault();
@@ -118,16 +116,6 @@ function MobileNavigation({ menuItems, social, ...props}) {
   const handleCloseMenu = (e) => {
     e?.preventDefault();
     setOpenMenu(false);
-  };
-
-  const handleOpenSearch = (e) => {
-    e?.preventDefault();
-    setOpenMenu(false);
-    setOpenSearch(true);
-  };
-  const handleCloseSearch = (e) => {
-    e?.preventDefault();
-    setOpenSearch(false);
   };
 
   return (
@@ -200,46 +188,7 @@ function MobileNavigation({ menuItems, social, ...props}) {
             </Grid>
           </DialogContent>
         </Dialog>
-        <Dialog
-          fullScreen
-          open={openSearch}
-          onClose={handleCloseSearch}
-          classes={{ root: classes.searchDialog, paper: classes.searchDialogPaper }}
-        >
-          <DialogActions disableSpacing className={classes.searchDialogActions}>
-              <TopBanner social={social} />
-              <Toolbar disableGutters className={classes.toolbar}>
-              <Section classes={{ root: classes.section }}>
-                <Grid container alignItems="center" justify="space-between">
-                  <Grid item>
-                    <LogoButton />
-                  </Grid>
-                  <Grid item>
-                    <IconButton
-                      aria-label="Open drawer"
-                      edge="start"
-                      onClick={handleOpenMenu}
-                      className={classes.menuButton}
-                    >
-                      <MenuIcon className={classes.icon} />
-                    </IconButton>
-                    <IconButton
-                      aria-label="Open drawer"
-                      edge="start"
-                      onClick={handleCloseSearch}
-                      className={classes.menuButton}
-                    >
-                      <CloseIcon className={classes.icon} />
-                    </IconButton>
-                  </Grid>
-                </Grid>
-              </Section>
-              </Toolbar>
-          </DialogActions>
-          <DialogContent className={classes.dialogContent}>
-              <Search classes={{ root: classes.search }}/>
-          </DialogContent>
-        </Dialog>
+       <SearchDialog {...props} />
       </Section>
     </div>
   );
