@@ -9,11 +9,12 @@ const theme = createMuiTheme({
     primary: { main: "#0050FF" },
     secondary: { main: "#68B78C" },
     highlight: { main: "#F9FF71" },
-    text: { primary: "#170F49", secondary: "#fff" },
+    text: { primary: "#727475", secondary: "#fff" },
     background: {
       default: "#fff",
       light: "#ceb28d",
     },
+    divider: "#b59974",
     info: {
       main: "#f6fbfa", // ice-blue
       other: "#9b9b9b",

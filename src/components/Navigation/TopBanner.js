@@ -20,7 +20,7 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
     minHeight: typography.pxToRem(40),
   },
   auth: {
-    borderTop: "1px solid #b59974",
+    borderTop: `1px solid ${palette.divider}`,
     justifyContent: "center",
     [breakpoints.up("lg")]: {
       justifyContent: "flex-end",
@@ -39,7 +39,7 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
     }
   },
   divider: {
-    color: "#b59974",
+    color: palette.divider,
     height: typography.pxToRem(20),
     margin: `auto ${typography.pxToRem(15)}`,
   },
