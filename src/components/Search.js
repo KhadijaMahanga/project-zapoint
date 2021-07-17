@@ -1,7 +1,7 @@
 import {
     IconButton,
-    InputAdornment,
-    InputBase,
+    Grid,
+    Input,
   } from "@material-ui/core";
   import { makeStyles } from "@material-ui/core/styles";
   import { useRouter } from "next/router";
@@ -9,23 +9,32 @@ import {
   
   import { ReactComponent as SearchIcon } from "@/jikopoint/assets/icons/icon-search-white.svg";
   
-  const useStyles = makeStyles(({ palette, typography }) => ({
-    root: {
+  const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
+    root: {},
+    inputRoot: {
       padding: typography.pxToRem(2),
-      backgroundColor: "#E1EDED",
-      borderRadius: typography.pxToRem(20),
-      color: palette.primary.main,
+      color: palette.text.secondary,
       border: "1px solid transparent",
-      width: typography.pxToRem(200),
       transition: "background-color 0.3s ease-out, border 0.3s ease-out",
       "&:hover, &:focus-within": {
         backgroundColor: palette.background.default,
         border: `1px solid ${palette.primary.main}`,
       },
+      [breakpoints.down("sm")]: {
+        width: typography.pxToRem(200),
+      }
     },
     button: {
-      padding: 0,
       backgroundColor: palette.secondary.main,
+      borderRadius: typography.pxToRem(3),
+      padding: typography.pxToRem(15),
+      marginLeft: typography.pxToRem(20),
+      [breakpoints.up("md")]: {
+        marginLeft: typography.pxToRem(30),
+      },
+      [breakpoints.up("lg")]: {
+        marginLeft: typography.pxToRem(40),
+      }
     },
     icon: {
       width: typography.pxToRem(25),
@@ -37,15 +46,29 @@ import {
       // For border-radius of 20px, we need to leave spacing
       marginLeft: typography.pxToRem(8),
       padding: `${typography.pxToRem(6)} 0`,
-      textAlign: "right",
+      "&::placeholder": {
+        fontFamily: typography.h2.fontFamily,
+        fontSize: typography.pxToRem(30),
+        fontWeight: 400,
+        opacity: 1,
+      },
       "&:hover::placeholder, &:focus::placeholder": {
         opacity: 0,
+        backgroundColor: "inherit",
       },
     },
+    underline: {
+      "&:after": {
+        borderBottom: `2px solid ${palette.background.default}`,
+      },
+      "&:before": {
+        borderBottom: `2px solid ${palette.background.default}`,
+      }
+      },
   }));
   
-  function Search() {
-    const classes = useStyles();
+  function Search({...props}) {
+    const classes = useStyles(props);
     const [query, setQuery] = useState("");
     const router = useRouter();
   
@@ -63,27 +86,31 @@ import {
     };
   
     return (
-      <InputBase
-        inputProps={{ "aria-label": "search" }}
-        endAdornment={
-          <InputAdornment position="end">
-            <IconButton
-              color="primary"
-              onClick={handleClick}
-              size="small"
-              className={classes.button}
-            >
-              <SearchIcon className={classes.icon} />
-            </IconButton>
-          </InputAdornment>
-        }
-        onChange={handleChange}
-        onKeyDown={handleKeyDown}
-        classes={{
-          root: classes.root,
-          input: classes.input,
-        }}
-      />
+      <Grid container justify="center" alignItems="flex-end" alignContent="center" className={classes.root}>
+        <Grid item>
+          <Input
+            inputProps={{ "aria-label": "search" }}
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
+            placeholder={"Tafuta.."}
+            classes={{
+              root: classes.inputRoot,
+              input: classes.input,
+              underline: classes.underline,
+            }}
+          />
+        </Grid>
+        <Grid item>
+          <IconButton
+            color="primary"
+            onClick={handleClick}
+            size="small"
+            className={classes.button}
+          >
+            <SearchIcon className={classes.icon} />
+          </IconButton>
+        </Grid>
+      </Grid>
     );
   }
   

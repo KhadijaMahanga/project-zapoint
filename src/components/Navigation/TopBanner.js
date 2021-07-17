@@ -99,7 +99,7 @@ function TopBanner({ social, ...props }) {
             startIcon={<IconUser className={classes.icon} />}
             classes={{ text : classes.button}}
           >
-            Login
+            Ingia
           </Button>
         </Grid>
         <Grid item><Divider orientation="vertical" flexItem classes={{ root: classes.divider }} /></Grid>
@@ -110,7 +110,7 @@ function TopBanner({ social, ...props }) {
             startIcon={<IconLogin className={classes.icon} />}
             classes={{ text : classes.button}}
           >
-            Register
+            Jiunge
           </Button>
           </Grid>
         </Grid>
