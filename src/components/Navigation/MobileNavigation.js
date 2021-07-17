@@ -46,7 +46,9 @@ const useStyles = makeStyles(({ palette, typography }) => ({
     display: "block",
     backgroundColor: palette.background.default,
   },
-  dialogContent: {},
+  dialogContent: {
+    position: "relative",
+  },
   dialogMenu: {
     padding: `${typography.pxToRem(10.35)} 0`,
   },
@@ -81,6 +83,10 @@ const useStyles = makeStyles(({ palette, typography }) => ({
     fontWeight: 700,
     lineHeight: 2.5,
     marginTop: 0,
+  },
+  search: {
+    position: "absolute",
+    top: "50%",
   },
   toolbar: {
     display: "block",
@@ -176,7 +182,7 @@ function MobileNavigation({ menuItems, social, ...props}) {
               </Grid>
             </Grid>
           </DialogActions>
-          <DialogContent className={classes.dialogContent}>
+          <DialogContent>
             <Grid container justify="center" alignItems="center">
               <List component="nav" className={classes.list}>
                 {menuItems.map(({ href, label }) => (
@@ -231,9 +237,7 @@ function MobileNavigation({ menuItems, social, ...props}) {
               </Toolbar>
           </DialogActions>
           <DialogContent className={classes.dialogContent}>
-            <Grid container justify="center" alignItems="center">
-              <Search />
-            </Grid>
+              <Search classes={{ root: classes.search }}/>
           </DialogContent>
         </Dialog>
       </Section>
