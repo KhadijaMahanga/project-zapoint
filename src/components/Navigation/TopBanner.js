@@ -120,5 +120,18 @@ function TopBanner({ social, ...props }) {
   );
 }
 
+TopBanner.propTypes = {
+  social: PropTypes.shape({
+      facebook: PropTypes.string,
+      twitter: PropTypes.string,
+      linkedin: PropTypes.string,
+      instagram: PropTypes.string,
+    })
+};
+
+TopBanner.defaultProps = {
+  social: undefined,
+};
+
 
 export default TopBanner;
