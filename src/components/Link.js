@@ -60,12 +60,11 @@ NextComposed.defaultProps = {
 
 // A styled version of the Next.js Link component:
 // https://nextjs.org/docs/api-reference/next/link/
-function Link(props) {
+const Link = React.forwardRef(function Link(props, ref) {
   const {
     href,
     activeClassName = "active",
     className: classNameProps,
-    innerRef,
     naked,
     ...other
   } = props;
@@ -87,7 +86,7 @@ function Link(props) {
       <A
         href={noProtocol ? `https://${href}` : href}
         className={className}
-        ref={innerRef}
+        ref={ref}
         {...other}
       />
     );
@@ -99,7 +98,7 @@ function Link(props) {
     return (
       <NextComposed
         className={className}
-        ref={innerRef}
+        ref={ref}
         href={pathname}
         {...other}
       />
@@ -109,19 +108,18 @@ function Link(props) {
     <MuiLink
       component={NextComposed}
       className={className}
-      ref={innerRef}
+      ref={ref}
       href={pathname}
       {...other}
     />
   );
-}
+});
 
 Link.propTypes = {
   activeClassName: PropTypes.string,
   as: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   className: PropTypes.string,
   href: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  innerRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   naked: PropTypes.bool,
   onClick: PropTypes.func,
   prefetch: PropTypes.bool,
@@ -132,12 +130,9 @@ Link.defaultProps = {
   as: undefined,
   className: undefined,
   href: undefined,
-  innerRef: undefined,
   naked: undefined,
   onClick: undefined,
   prefetch: undefined,
 };
 
-export default React.forwardRef((props, ref) => (
-  <Link {...props} innerRef={ref} />
-));
+export default Link;
