@@ -13,7 +13,7 @@ const useStyles = makeStyles(({ palette }) => ({
   },
   section: {},
 }));
-function DesktopNavigation({ menuItems , ...props}) {
+function MobileNavigation({ menuItems, ...props }) {
   const classes = useStyles(props);
 
   return (
@@ -27,19 +27,17 @@ function DesktopNavigation({ menuItems , ...props}) {
   );
 }
 
-DesktopNavigation.propTypes = {
+MobileNavigation.propTypes = {
   menuItems: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string,
       label: PropTypes.string,
-      path: PropTypes.string,
-      children: PropTypes.arrayOf(PropTypes.shape({})),
+      href: PropTypes.string,
     })
   ),
 };
 
-DesktopNavigation.defaultProps = {
+MobileNavigation.defaultProps = {
   menuItems: undefined,
 };
 
-export default DesktopNavigation;
+export default MobileNavigation;

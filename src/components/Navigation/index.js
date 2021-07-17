@@ -55,7 +55,7 @@ function Navigation({ ...props }) {
           />
         </Hidden>
         <Hidden lgUp implementation="css">
-          <MobileNavigation menuItems={menuItems} classes={{ section: classes.section }} />
+          <MobileNavigation menuItems={menuItems} social={social} classes={{ section: classes.section }} />
         </Hidden>
       </Toolbar>
     </AppBar>

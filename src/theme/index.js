@@ -7,7 +7,7 @@ const FONT_FAMILY_TEXT = "'Varela Round', sans-serif";
 const theme = createMuiTheme({
   palette: {
     primary: { main: "#0050FF" },
-    secondary: { main: "#170F49" },
+    secondary: { main: "#68B78C" },
     highlight: { main: "#F9FF71" },
     text: { primary: "#170F49", secondary: "#fff" },
     background: {
