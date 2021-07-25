@@ -15,7 +15,6 @@ import LogoButton from "@/jikopoint/components/LogoButton";
 import SearchDialog from "@/jikopoint/components/Navigation/SearchDialog";
 import Section from "@/jikopoint/components/Section";
 
-
 const useStyles = makeStyles(({ palette, typography }) => ({
   root: {
     backgroundColor: palette.background.default,

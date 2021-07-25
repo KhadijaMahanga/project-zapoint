@@ -1,4 +1,5 @@
 import { NextSeo } from "next-seo";
+import PropTypes from "prop-types";
 import React from "react";
 
 import Footer from "@/jikopoint/components/Footer";
@@ -41,5 +42,16 @@ function BasePage({ children, ...props }) {
     </>
   );
 }
+
+BasePage.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]),
+};
+
+BasePage.defaultProps = {
+  children: undefined,
+};
 
 export default BasePage;

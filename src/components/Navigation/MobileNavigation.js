@@ -13,9 +13,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import React, { useState } from "react";
 
+import { ReactComponent as SearchMenuIcon } from "@/jikopoint/assets/icons/icon-close-white.svg";
 import { ReactComponent as MenuIcon } from "@/jikopoint/assets/icons/icon-menu-grey.svg";
 import { ReactComponent as SearchIcon } from "@/jikopoint/assets/icons/icon-search-grey.svg";
-import { ReactComponent as SearchMenuIcon } from "@/jikopoint/assets/icons/icon-close-white.svg";
 import Link from "@/jikopoint/components/Link";
 import LogoButton from "@/jikopoint/components/LogoButton";
 import SearchDialog from "@/jikopoint/components/Navigation/SearchDialog";
