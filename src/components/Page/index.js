@@ -3,7 +3,6 @@ import React from "react";
 
 import Base from "./Base";
 
-
 function Page({ errorCode, ...props }) {
   return <Base {...props} />;
 }

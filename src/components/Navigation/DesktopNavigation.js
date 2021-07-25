@@ -1,21 +1,19 @@
-
-import { 
+import {
   Divider,
   IconButton,
   List,
   ListItemText,
   Grid,
- } from "@material-ui/core";
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import React, { Fragment } from "react";
 
+import { ReactComponent as SearchIcon } from "@/jikopoint/assets/icons/icon-search-grey.svg";
 import Link from "@/jikopoint/components/Link";
 import LogoButton from "@/jikopoint/components/LogoButton";
-import SearchDialog from "./SearchDialog";
+import SearchDialog from "@/jikopoint/components/Navigation/SearchDialog";
 import Section from "@/jikopoint/components/Section";
-
-import { ReactComponent as SearchIcon } from "@/jikopoint/assets/icons/icon-search-grey.svg";
 
 const useStyles = makeStyles(({ palette, typography }) => ({
   root: {
@@ -54,7 +52,7 @@ const useStyles = makeStyles(({ palette, typography }) => ({
   },
   flexDisplay: {
     display: "flex",
-  }
+  },
 }));
 
 function ListItemLink(props) {
@@ -76,28 +74,34 @@ function DesktopNavigation({ ...props }) {
             <LogoButton />
           </Grid>
           <Grid item className={classes.flexDisplay}>
-          <List component="nav" className={classes.list}>
-                {menuItems.map(({ href, label }, index) => (
-                  <Fragment key={href}>
-                  <ListItemLink
-                    underline="none"
-                    href={href}
-                  >
-                    <ListItemText disableTypography className={classes.listItemText}>
+            <List component="nav" className={classes.list}>
+              {menuItems.map(({ href, label }, index) => (
+                <Fragment key={href}>
+                  <ListItemLink underline="none" href={href}>
+                    <ListItemText
+                      disableTypography
+                      className={classes.listItemText}
+                    >
                       {label}
                     </ListItemText>
                   </ListItemLink>
-                  { (index + 1) !== menuItems.length && <Divider orientation="vertical" flexItem classes={{ root: classes.divider }} />}
-                  </Fragment>
-                ))}
-              </List>
-          <IconButton
+                  {index + 1 !== menuItems.length && (
+                    <Divider
+                      orientation="vertical"
+                      flexItem
+                      classes={{ root: classes.divider }}
+                    />
+                  )}
+                </Fragment>
+              ))}
+            </List>
+            <IconButton
               aria-label="Open drawer"
               edge="start"
               onClick={handleOpenSearch}
               className={classes.menuButton}
             >
-              <SearchIcon className={classes.icon}/>
+              <SearchIcon className={classes.icon} />
             </IconButton>
           </Grid>
         </Grid>

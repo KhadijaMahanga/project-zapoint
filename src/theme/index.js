@@ -8,11 +8,12 @@ const theme = createMuiTheme({
   palette: {
     primary: { main: "#0050FF" },
     secondary: { main: "#68B78C" },
-    highlight: { main: "#F9FF71" },
-    text: { primary: "#727475", secondary: "#fff" },
+    highlight: { main: "#a3a3a3" },
+    text: { primary: "#727475", secondary: "#fff", highlight: "#a3a3a3" },
     background: {
       default: "#fff",
       light: "#ceb28d",
+      dark: "#444444",
     },
     divider: "#b59974",
     info: {
@@ -107,6 +108,7 @@ const theme = createMuiTheme({
     caption: {
       fontFamily: FONT_FAMILY_TEXT,
       fontStretch: "normal",
+      color: "#a3a3a3",
       fontStyle: "normal",
       letterSpacing: 0,
     },
@@ -127,7 +129,7 @@ const theme = createMuiTheme({
 });
 
 // ## RESPONSIVE FONTS
-const { breakpoints, palette, typography } = theme;
+const { breakpoints, typography } = theme;
 const { pxToRem } = typography;
 deepmerge(
   typography,
@@ -257,32 +259,11 @@ deepmerge(
       },
     },
     caption: {
-      fontSize: pxToRem(16),
-      lineHeight: 24 / 16,
-      [breakpoints.up("md")]: {
-        fontSize: pxToRem(14),
-        lineHeight: 20 / 14,
-      },
-      [breakpoints.up("xl")]: {
-        fontSize: pxToRem(20),
-        lineHeight: 30 / 20,
-      },
-    },
-    overline: {
-      fontSize: pxToRem(16),
-      lineHeight: 24 / 16,
-      [breakpoints.up("md")]: {
-        fontSize: pxToRem(14),
-        lineHeight: 20 / 14,
-      },
-      [breakpoints.up("xl")]: {
-        fontSize: pxToRem(20),
-        lineHeight: 30 / 20,
-      },
+      fontSize: pxToRem(14),
+      lineHeight: 20 / 14,
     },
   },
   { clone: false }
 );
-
 
 export default theme;

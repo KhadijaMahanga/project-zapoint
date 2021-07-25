@@ -17,7 +17,7 @@ function A({ children, href, ...props }) {
 A.defaultProps = {
   children: undefined,
   href: undefined,
-}
+};
 
 A.propTypes = {
   children: PropTypes.node,

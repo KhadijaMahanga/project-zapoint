@@ -1,24 +1,24 @@
-import NextAuth from 'next-auth';
-import Providers from 'next-auth/providers';
+import NextAuth from "next-auth";
+import Providers from "next-auth/providers";
 
 export default NextAuth({
   // Configure one or more authentication providers
   providers: [
     Providers.Email({
-        server: process.env.EMAIL_SERVER,
-        from: process.env.EMAIL_FROM,
-      }),
+      server: process.env.EMAIL_SERVER,
+      from: process.env.EMAIL_FROM,
+    }),
     Providers.Facebook({
-        clientId: process.env.FACEBOOK_CLIENT_ID,
-        clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+      clientId: process.env.FACEBOOK_CLIENT_ID,
+      clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
     }),
     Providers.Google({
-        clientId: process.env.GOOGLE_ID,
-        clientSecret: process.env.GOOGLE_SECRET,
+      clientId: process.env.GOOGLE_ID,
+      clientSecret: process.env.GOOGLE_SECRET,
     }),
     Providers.Twitter({
-        clientId: process.env.TWITTER_ID,
-        clientSecret: process.env.TWITTER_SECRET,
+      clientId: process.env.TWITTER_ID,
+      clientSecret: process.env.TWITTER_SECRET,
     }),
   ],
 
@@ -81,11 +81,11 @@ export default NextAuth({
   // Events are useful for logging
   // https://next-auth.js.org/configuration/events
   events: {},
-  
+
   // You can set the theme to 'light', 'dark' or use 'auto' to default to the
   // whatever prefers-color-scheme is set to in the browser. Default is 'auto'
-  theme: 'light',
+  theme: "light",
 
   // Enable debug messages in the console if you are having problems
   debug: false,
-})
+});
