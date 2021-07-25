@@ -30,7 +30,6 @@ function Navigation({ ...props }) {
     setOpenSearch(false);
   };
 
-
   return (
     <AppBar color="primary" position="sticky" className={classes.root}>
       <TopBanner {...props} />
@@ -46,13 +45,14 @@ function Navigation({ ...props }) {
           />
         </Hidden>
         <Hidden lgUp implementation="css">
-          <MobileNavigation 
+          <MobileNavigation
             {...props}
             openSearch={openSearch}
             setOpenSearch={setOpenSearch}
             handleOpenSearch={handleOpenSearch}
             handleCloseSearch={handleCloseSearch}
-            classes={{ section: classes.section }} />
+            classes={{ section: classes.section }}
+          />
         </Hidden>
       </Toolbar>
     </AppBar>

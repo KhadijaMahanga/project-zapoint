@@ -6,11 +6,11 @@ export default function Index() {
     <Page>
       <div>HomePage</div>
     </Page>
-  )
+  );
 }
 
 export async function getStaticProps(context) {
   return {
     props: { isConnected: true },
-  }
+  };
 }

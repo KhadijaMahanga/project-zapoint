@@ -1,8 +1,7 @@
 export default {
   titleTemplate: "%s | Jiko Point",
   defaultTitle: "Jiko Class",
-  description:
-    "Jiko Point's class and news",
+  description: "Jiko Point's class and news",
   openGraph: {
     type: "website",
     url: "https://www.jikoni.co.tz",

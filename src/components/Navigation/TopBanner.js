@@ -1,4 +1,4 @@
-import { Button, Divider, Grid, IconButton, Toolbar } from '@material-ui/core';
+import { Button, Divider, Grid, IconButton, Toolbar } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import React from "react";
@@ -13,7 +13,6 @@ import { ReactComponent as TwitterIcon } from "@/jikopoint/assets/icons/icon-twi
 import Link from "@/jikopoint/components/Link";
 import Section from "@/jikopoint/components/Section";
 
-
 const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   root: {
     backgroundColor: palette.background.light,
@@ -25,7 +24,7 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
     [breakpoints.up("lg")]: {
       justifyContent: "flex-end",
       border: 0,
-    }
+    },
   },
   button: {
     textTransform: "uppercase",
@@ -36,7 +35,7 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
     fontWeight: 400,
     "& :hover": {
       color: palette.text.secondary,
-    }
+    },
   },
   divider: {
     color: palette.divider,
@@ -53,68 +52,77 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   },
 }));
 
-
 function TopBanner({ social, ...props }) {
   const classes = useStyles(props);
 
   return (
     <Toolbar className={classes.root}>
       <Section>
-      <Grid container>
-        <Grid item xs={12} lg={6} className={classes.social}>
-          <IconButton
-            component={Link}
-            href={social.facebook}
-            underline="none"
+        <Grid container>
+          <Grid item xs={12} lg={6} className={classes.social}>
+            <IconButton
+              component={Link}
+              href={social.facebook}
+              underline="none"
+            >
+              <FacebookIcon className={classes.icon} />
+            </IconButton>
+            <IconButton component={Link} href={social.twitter} underline="none">
+              <TwitterIcon className={classes.icon} />
+            </IconButton>
+            <IconButton
+              component={Link}
+              href={social.linkedin}
+              underline="none"
+            >
+              <LinkedInIcon className={classes.icon} />
+            </IconButton>
+            <IconButton
+              component={Link}
+              href={social.instagram}
+              underline="none"
+            >
+              <InstagramIcon className={classes.icon} viewBox="0 0 500 500" />
+            </IconButton>
+          </Grid>
+          <Grid
+            item
+            lg={6}
+            container
+            alignItems="center"
+            justify="flex-end"
+            direction="row"
+            className={classes.auth}
           >
-            <FacebookIcon className={classes.icon} />
-          </IconButton>
-          <IconButton
-            component={Link}
-            href={social.twitter}
-            underline="none"
-          >
-            <TwitterIcon className={classes.icon} />
-          </IconButton>
-          <IconButton
-            component={Link}
-            href={social.linkedin}
-            underline="none"
-          >
-            <LinkedInIcon className={classes.icon} />
-          </IconButton>
-          <IconButton
-            component={Link}
-            href={social.instagram}
-            underline="none"
-          >
-            <InstagramIcon className={classes.icon} viewBox="0 0 500 500" />
-          </IconButton>
-        </Grid>
-        <Grid item lg={6} container alignItems="center" justify="flex-end" direction="row" className={classes.auth}>
-        <Grid item>
-          <Button
-            component={Link}
-            underline="none"
-            startIcon={<IconUser className={classes.icon} />}
-            classes={{ text : classes.button}}
-          >
-            Ingia
-          </Button>
-        </Grid>
-        <Grid item><Divider orientation="vertical" flexItem classes={{ root: classes.divider }} /></Grid>
-          <Grid item>
-          <Button
-            component={Link}
-            underline="none"
-            startIcon={<IconLogin className={classes.icon} />}
-            classes={{ text : classes.button}}
-          >
-            Jiunge
-          </Button>
+            <Grid item>
+              <Button
+                component={Link}
+                underline="none"
+                startIcon={<IconUser className={classes.icon} />}
+                classes={{ text: classes.button }}
+              >
+                Ingia
+              </Button>
+            </Grid>
+            <Grid item>
+              <Divider
+                orientation="vertical"
+                flexItem
+                classes={{ root: classes.divider }}
+              />
+            </Grid>
+            <Grid item>
+              <Button
+                component={Link}
+                underline="none"
+                startIcon={<IconLogin className={classes.icon} />}
+                classes={{ text: classes.button }}
+              >
+                Jiunge
+              </Button>
+            </Grid>
           </Grid>
         </Grid>
-      </Grid>
       </Section>
     </Toolbar>
   );
@@ -122,16 +130,15 @@ function TopBanner({ social, ...props }) {
 
 TopBanner.propTypes = {
   social: PropTypes.shape({
-      facebook: PropTypes.string,
-      twitter: PropTypes.string,
-      linkedin: PropTypes.string,
-      instagram: PropTypes.string,
-    })
+    facebook: PropTypes.string,
+    twitter: PropTypes.string,
+    linkedin: PropTypes.string,
+    instagram: PropTypes.string,
+  }),
 };
 
 TopBanner.defaultProps = {
   social: undefined,
 };
-
 
 export default TopBanner;
