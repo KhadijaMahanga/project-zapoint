@@ -1,5 +1,6 @@
-import Page from "@/jikopoint/components/Page";
 import React from "react";
+
+import Page from "@/jikopoint/components/Page";
 
 export default function Index() {
   return (
@@ -9,7 +10,7 @@ export default function Index() {
   );
 }
 
-export async function getStaticProps(context) {
+export async function getStaticProps() {
   return {
     props: { isConnected: true },
   };

@@ -2,8 +2,8 @@ import { IconButton } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
 
-import Link from "@/jikopoint/components/Link";
 import { ReactComponent as Logo } from "@/jikopoint/assets/logos/logo-foodlab-grey.svg";
+import Link from "@/jikopoint/components/Link";
 
 const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   root: {
@@ -33,7 +33,7 @@ function LogoButton() {
   return (
     <IconButton
       component={Link}
-      href={"/"}
+      href="/"
       underline="none"
       className={classes.root}
     >

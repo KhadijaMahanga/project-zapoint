@@ -1,8 +1,9 @@
-import Layout from "@/jikopoint/components/Layout";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import PropTypes from "prop-types";
 import React from "react";
+
+import Layout from "@/jikopoint/components/Layout";
 
 const useStyles = makeStyles(({ breakpoints, typography, widths }) => ({
   /* Styles applied to the root element. */

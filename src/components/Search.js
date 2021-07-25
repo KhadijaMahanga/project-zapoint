@@ -94,7 +94,7 @@ function Search({ ...props }) {
           inputProps={{ "aria-label": "search" }}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
-          placeholder={"Tafuta.."}
+          placeholder="Tafuta.."
           classes={{
             root: classes.inputRoot,
             input: classes.input,

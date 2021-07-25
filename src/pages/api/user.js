@@ -8,7 +8,7 @@ const handler = createHandler();
 
 handler
   .get(async (req, res) => {
-    let doc = await User.findOne({ _id: req.user.id });
+    const doc = await User.findOne({ _id: req.user.id });
     res.json(doc);
   })
   .use((req, res, next) => {
@@ -19,15 +19,19 @@ handler
     } else {
       next();
     }
-  })
-  .put((req, res) => {
-    const { name } = req.body;
-    const user = updateUserByUsername(req, req.user.username, { name });
-    res.json({ user });
-  })
-  .delete((req, res) => {
-    deleteUser(req);
-    req.logOut();
-    res.status(204).end();
   });
+
+  /*
+  // .put((req, res) => {
+  //   const { name } = req.body;
+  //   const user = updateUserByUsername(req, req.user.username, { name });
+  //   res.json({ user });
+  // })
+  // .delete((req, res) => {
+  //   deleteUser(req);
+  //   req.logOut();
+  //   res.status(204).end();
+  // });
+  */
+ 
 export default handler;

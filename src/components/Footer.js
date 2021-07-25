@@ -11,13 +11,12 @@ import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import React, { Fragment } from "react";
 
-import { ReactComponent as Logo } from "@/jikopoint/assets/logos/logo-foodlab-white.svg";
 import { ReactComponent as FacebookIcon } from "@/jikopoint/assets/icons/icon-facebook-white.svg";
 import { ReactComponent as InstagramIcon } from "@/jikopoint/assets/icons/icon-instagram-white.svg";
 import { ReactComponent as LinkedInIcon } from "@/jikopoint/assets/icons/icon-linkedin-white.svg";
 import { ReactComponent as TwitterIcon } from "@/jikopoint/assets/icons/icon-twitter-white.svg";
 import { ReactComponent as YoutubeIcon } from "@/jikopoint/assets/icons/icon-youtube-white.svg";
-
+import { ReactComponent as Logo } from "@/jikopoint/assets/logos/logo-foodlab-white.svg";
 import Link from "@/jikopoint/components/Link";
 import Section from "@/jikopoint/components/Section";
 
@@ -103,7 +102,7 @@ function Footer({ social, footerItems }) {
           className={classes.logoSocial}
         >
           <Grid item>
-            <IconButton component={Link} href={"/"} underline="none">
+            <IconButton component={Link} href="/" underline="none">
               <Logo className={classes.logo} viewBox="156 0 180 100" />
             </IconButton>
           </Grid>
@@ -198,7 +197,13 @@ Footer.propTypes = {
       href: PropTypes.string,
     })
   ),
-  social: PropTypes.shape({}),
+  social: PropTypes.shape({
+    facebook: PropTypes.string,
+    twitter: PropTypes.string,
+    linkedin: PropTypes.string,
+    instagram: PropTypes.string,
+    youtube: PropTypes.string,
+  }),
 };
 
 Footer.defaultProps = {

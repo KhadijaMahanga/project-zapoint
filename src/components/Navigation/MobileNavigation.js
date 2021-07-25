@@ -13,14 +13,13 @@ import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import React, { useState } from "react";
 
-import Link from "@/jikopoint/components/Link";
-import LogoButton from "@/jikopoint/components/LogoButton";
-import Section from "@/jikopoint/components/Section";
-
 import { ReactComponent as MenuIcon } from "@/jikopoint/assets/icons/icon-menu-grey.svg";
 import { ReactComponent as SearchIcon } from "@/jikopoint/assets/icons/icon-search-grey.svg";
 import { ReactComponent as SearchMenuIcon } from "@/jikopoint/assets/icons/icon-close-white.svg";
-import SearchDialog from "./SearchDialog";
+import Link from "@/jikopoint/components/Link";
+import LogoButton from "@/jikopoint/components/LogoButton";
+import SearchDialog from "@/jikopoint/components/Navigation/SearchDialog";
+import Section from "@/jikopoint/components/Section";
 
 const useStyles = makeStyles(({ palette, typography }) => ({
   root: {
@@ -33,29 +32,15 @@ const useStyles = makeStyles(({ palette, typography }) => ({
     right: 0,
     margin: "auto 0 auto auto",
   },
-  searchDialog: {
-    padding: 0,
-  },
   dialogActions: {
     padding: `${typography.pxToRem(20)} ${typography.pxToRem(20)} 0`,
     transform: "matrix(-1, 0, 0, -1, 0, 0, )",
-  },
-  searchDialogActions: {
-    padding: 0,
-    display: "block",
-    backgroundColor: palette.background.default,
-  },
-  dialogContent: {
-    position: "relative",
   },
   dialogMenu: {
     padding: `${typography.pxToRem(10.35)} 0`,
   },
   dialogPaper: {
     backgroundColor: palette.secondary.main,
-  },
-  searchDialogPaper: {
-    backgroundColor: "inherit",
   },
   icon: {
     width: typography.pxToRem(25),
@@ -79,13 +64,6 @@ const useStyles = makeStyles(({ palette, typography }) => ({
     fontWeight: 700,
     lineHeight: 2.5,
     marginTop: 0,
-  },
-  search: {
-    position: "absolute",
-    top: "50%",
-  },
-  toolbar: {
-    display: "block",
   },
 }));
 
@@ -210,18 +188,22 @@ MobileNavigation.propTypes = {
       href: PropTypes.string,
     })
   ),
+  handleOpenSearch: PropTypes.func,
   menuItems: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string,
       href: PropTypes.string,
     })
   ),
+  setOpenSearch: PropTypes.func,
   social: PropTypes.shape({}),
 };
 
 MobileNavigation.defaultProps = {
   footerItems: undefined,
+  handleOpenSearch: undefined,
   menuItems: undefined,
+  setOpenSearch: undefined,
   social: undefined,
 };
 

@@ -9,12 +9,12 @@ import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import React, { Fragment } from "react";
 
+import { ReactComponent as SearchIcon } from "@/jikopoint/assets/icons/icon-search-grey.svg";
 import Link from "@/jikopoint/components/Link";
 import LogoButton from "@/jikopoint/components/LogoButton";
-import SearchDialog from "./SearchDialog";
+import SearchDialog from "@/jikopoint/components/Navigation/SearchDialog";
 import Section from "@/jikopoint/components/Section";
 
-import { ReactComponent as SearchIcon } from "@/jikopoint/assets/icons/icon-search-grey.svg";
 
 const useStyles = makeStyles(({ palette, typography }) => ({
   root: {

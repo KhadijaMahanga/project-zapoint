@@ -1,8 +1,8 @@
 import { NextSeo } from "next-seo";
 import React from "react";
 
-import Navigation from "@/jikopoint/components/Navigation";
 import Footer from "@/jikopoint/components/Footer";
+import Navigation from "@/jikopoint/components/Navigation";
 
 const footerItems = [
   { label: "Masharti na vigezo", href: "/masharti-na-vigezo" },
