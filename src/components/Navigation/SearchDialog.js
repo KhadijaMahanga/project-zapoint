@@ -22,7 +22,6 @@ import TopBanner from "@/jikopoint/components/Navigation/TopBanner";
 import Search from "@/jikopoint/components/Search";
 import Section from "@/jikopoint/components/Section";
 
-
 const useStyles = makeStyles(({ palette, typography }) => ({
   icon: {
     width: typography.pxToRem(25),

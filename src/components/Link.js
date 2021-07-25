@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-has-content */
 import { Link as MuiLink } from "@material-ui/core";
 import clsx from "clsx";
 import NextLink from "next/link";

@@ -20,7 +20,6 @@ handler
       next();
     }
   });
-
   /*
   // .put((req, res) => {
   //   const { name } = req.body;
@@ -33,5 +32,4 @@ handler
   //   res.status(204).end();
   // });
   */
- 
 export default handler;
