@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
-const MONGODB_URI = process.env.MONGODB_URI;
-const MONGODB = process.env.MONGODB;
+const { MONGODB_URI } = process.env;
+const { MONGODB } = process.env;
 
 if (!MONGODB_URI || !MONGODB) {
   throw new Error(
@@ -18,7 +18,7 @@ async function database(req, res, next) {
   let cached = global.mongoose;
 
   if (!cached) {
-    cached = global.mongoose = { conn: null, promise: null };
+    cached = { conn: null, promise: null };
   }
   try {
     if (!cached.conn) {
@@ -31,8 +31,8 @@ async function database(req, res, next) {
         useCreateIndex: true,
       };
 
-      cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
-        return mongoose;
+      cached.promise = mongoose.connect(MONGODB_URI, opts).then((mon) => {
+        return mon;
       });
       cached.conn = await cached.promise;
     }

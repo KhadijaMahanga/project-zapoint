@@ -45,7 +45,7 @@ const UserSchema = new Schema(
     },
   },
   { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } }
-); //automatically add while insert or update the object
+); // automatically add while insert or update the object
 
 const User =
   mongoose.models[MODEL_NAME] || mongoose.model(MODEL_NAME, UserSchema);
