@@ -1,5 +1,6 @@
 import { CssBaseline } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/core/styles";
+import { Provider } from "next-auth/client";
 import { DefaultSeo } from "next-seo";
 import NextNprogress from "nextjs-progressbar";
 import PropTypes from "prop-types";
@@ -7,7 +8,6 @@ import React from "react";
 
 import theme from "@/jikopoint/theme";
 import SEO from "next-seo.config";
-import { Provider } from "next-auth/client";
 
 export default function MyApp(props) {
   const { Component, pageProps } = props;
@@ -62,5 +62,7 @@ export default function MyApp(props) {
 
 MyApp.propTypes = {
   Component: PropTypes.elementType.isRequired,
-  pageProps: PropTypes.shape({}).isRequired,
+  pageProps: PropTypes.shape({
+    session: PropTypes.shape({}),
+  }).isRequired,
 };

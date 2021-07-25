@@ -7,7 +7,7 @@ export default class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          {/* PWA meta*/}
+          {/* PWA meta */}
           <meta name="application-name" content="Jiko Class" />
           <meta name="apple-mobile-web-app-capable" content="yes" />
           <meta

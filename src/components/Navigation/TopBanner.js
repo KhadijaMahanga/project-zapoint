@@ -3,13 +3,12 @@ import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import React from "react";
 
-import { ReactComponent as IconUser } from "@/jikopoint/assets/icons/icon-user-white.svg";
-import { ReactComponent as IconLogin } from "@/jikopoint/assets/icons/icon-login-white.svg";
 import { ReactComponent as FacebookIcon } from "@/jikopoint/assets/icons/icon-facebook-white.svg";
 import { ReactComponent as InstagramIcon } from "@/jikopoint/assets/icons/icon-instagram-white.svg";
 import { ReactComponent as LinkedInIcon } from "@/jikopoint/assets/icons/icon-linkedin-white.svg";
+import { ReactComponent as IconLogin } from "@/jikopoint/assets/icons/icon-login-white.svg";
 import { ReactComponent as TwitterIcon } from "@/jikopoint/assets/icons/icon-twitter-white.svg";
-
+import { ReactComponent as IconUser } from "@/jikopoint/assets/icons/icon-user-white.svg";
 import Link from "@/jikopoint/components/Link";
 import Section from "@/jikopoint/components/Section";
 

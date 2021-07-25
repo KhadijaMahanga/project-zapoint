@@ -7,7 +7,7 @@ import User from "@/jikopoint/models/User";
 const handler = createHandler();
 
 handler.get(async (req, res) => {
-  let doc = await User.find().exec();
+  const doc = await User.find().exec();
   res.json(doc);
 });
 export default handler;

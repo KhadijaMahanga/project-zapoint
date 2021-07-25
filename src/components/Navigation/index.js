@@ -2,11 +2,11 @@ import { AppBar, Hidden, Toolbar } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import React, { useState } from "react";
 
-import DesktopNavigation from "./DesktopNavigation";
-import MobileNavigation from "./MobileNavigation";
-import TopBanner from "./TopBanner";
+import DesktopNavigation from "@/jikopoint/components/Navigation/DesktopNavigation";
+import MobileNavigation from "@/jikopoint/components/Navigation/MobileNavigation";
+import TopBanner from "@/jikopoint/components/Navigation/TopBanner";
 
-const useStyles = makeStyles(({ typography, breakpoints, palette }) => ({
+const useStyles = makeStyles(({ palette }) => ({
   root: {
     backgroundColor: palette.background.default,
     boxShadow: "0px 2px 6px #0000001A",

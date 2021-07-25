@@ -14,16 +14,16 @@ import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import React, { Fragment } from "react";
 
-import Link from "@/jikopoint/components/Link";
-import LogoButton from "@/jikopoint/components/LogoButton";
-import Search from "@/jikopoint/components/Search";
-import Section from "@/jikopoint/components/Section";
-import TopBanner from "./TopBanner";
-
 import { ReactComponent as CloseIcon } from "@/jikopoint/assets/icons/icon-close-grey.svg";
 import { ReactComponent as MenuIcon } from "@/jikopoint/assets/icons/icon-menu-grey.svg";
+import Link from "@/jikopoint/components/Link";
+import LogoButton from "@/jikopoint/components/LogoButton";
+import TopBanner from "@/jikopoint/components/Navigation/TopBanner";
+import Search from "@/jikopoint/components/Search";
+import Section from "@/jikopoint/components/Section";
 
-const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
+
+const useStyles = makeStyles(({ palette, typography }) => ({
   icon: {
     width: typography.pxToRem(25),
     height: typography.pxToRem(25),
