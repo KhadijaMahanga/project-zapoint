@@ -3,22 +3,19 @@ import {  Dialog,
   DialogActions,
   DialogContent,
   Grid,
+  Hidden,
   IconButton,
   List,
   ListItemText,
-  Slide,
-  Toolbar } from "@material-ui/core";
+  Slide } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import React, { useState } from "react";
 
 import Link from "@/jikopoint/components/Link";
 import LogoButton from "@/jikopoint/components/LogoButton";
-import Search from "@/jikopoint/components/Search";
 import Section from "@/jikopoint/components/Section";
-import TopBanner from "./TopBanner";
 
-import { ReactComponent as CloseIcon } from "@/jikopoint/assets/icons/icon-close-grey.svg";
 import { ReactComponent as MenuIcon } from "@/jikopoint/assets/icons/icon-menu-grey.svg";
 import { ReactComponent as SearchIcon } from "@/jikopoint/assets/icons/icon-search-grey.svg";
 import { ReactComponent as SearchMenuIcon } from "@/jikopoint/assets/icons/icon-close-white.svg";
@@ -104,7 +101,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 function MobileNavigation({ ...props}) {
   const classes = useStyles(props);
-  const {menuItems, setOpenSearch, handleOpenSearch } = props;
+  const {menuItems, footerItems, setOpenSearch, handleOpenSearch } = props;
 
   const [openMenu, setOpenMenu] = useState(false);
 
@@ -184,6 +181,19 @@ function MobileNavigation({ ...props}) {
                     </ListItemText>
                   </ListItemLink>
                 ))}
+                <Hidden smUp implementation="css">
+                {footerItems.map(({ href, label }) => (
+                      <ListItemLink
+                        underline="none"
+                        key={href}
+                        href={href}
+                      >
+                        <ListItemText disableTypography className={classes.listItemText}>
+                          {label}
+                        </ListItemText>
+                      </ListItemLink>
+                    ))}
+                </Hidden>
               </List>
             </Grid>
           </DialogContent>
@@ -195,6 +205,12 @@ function MobileNavigation({ ...props}) {
 }
 
 MobileNavigation.propTypes = {
+  footerItems: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string,
+      href: PropTypes.string,
+    })
+  ),
   menuItems: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string,
@@ -205,6 +221,7 @@ MobileNavigation.propTypes = {
 };
 
 MobileNavigation.defaultProps = {
+  footerItems: undefined,
   menuItems: undefined,
   social: undefined,
 };

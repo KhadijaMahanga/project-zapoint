@@ -4,6 +4,18 @@ import React from "react";
 import Navigation from "@/jikopoint/components/Navigation";
 import Footer from "@/jikopoint/components/Footer";
 
+const footerItems = [
+  {   label: "Masharti na vigezo",
+      href: "/masharti-na-vigezo"
+  },
+  {   label: "Sera ya faragha",
+      href: "/sera-ya-faragha"
+  },
+  {   label: "Wasiliana Nasi",
+      href: "/kuhusu-sisi"
+  },
+];
+
 const menuItems = [
   {   label: "Darasa",
       href: "/darasa"
@@ -17,11 +29,11 @@ const menuItems = [
 ];
 
 const social = {
-facebook: "facebook.com",
-instagram: "instagram.com",
-linkedin: "linkedin.com",
-twitter: "twitter.com",
-youtube: "youtube.com",
+  facebook: "facebook.com",
+  instagram: "instagram.com",
+  linkedin: "linkedin.com",
+  twitter: "twitter.com",
+  youtube: "youtube.com",
 };
 
 /**
@@ -30,10 +42,10 @@ youtube: "youtube.com",
 function BasePage({ children, ...props}) {
   return (
     <>
-      <Navigation social={social} menuItems={menuItems} />
+      <Navigation social={social} menuItems={menuItems} footerItems={footerItems} />
       <NextSeo {...props} />
       {children}
-      <Footer social={social} />
+      <Footer social={social} footerItems={footerItems} />
     </>
   );
 }
