@@ -129,7 +129,7 @@ const theme = createMuiTheme({
 });
 
 // ## RESPONSIVE FONTS
-const { breakpoints, palette, typography } = theme;
+const { breakpoints, typography } = theme;
 const { pxToRem } = typography;
 deepmerge(
   typography,

@@ -1,9 +1,9 @@
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
+const withImages = require("next-images");
 const withPWA = require("next-pwa");
 const runtimeCaching = require("next-pwa/cache");
-const withImages = require("next-images");
 
 module.exports = withBundleAnalyzer(
   withPWA(
