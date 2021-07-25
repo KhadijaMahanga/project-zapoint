@@ -6275,6 +6275,11 @@ eslint-config-next@^11.0.1:
     eslint-plugin-react "^7.23.1"
     eslint-plugin-react-hooks "^4.2.0"
 
+eslint-config-prettier@^8.3.0:
+  version "8.3.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-8.3.0.tgz#f7471b20b6fe8a9a9254cc684454202886a2dd7a"
+  integrity sha512-BgZuLUSeKzvlL/VUjx/Yb787VQ26RU3gGjA3iiFvdsp/2bMfVIWUVP7tjxtjS0e+HP409cPlPvNkQloz8C91ew==
+
 eslint-config-react-app@^6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/eslint-config-react-app/-/eslint-config-react-app-6.0.0.tgz#ccff9fc8e36b322902844cbd79197982be355a0e"
@@ -6411,6 +6416,11 @@ eslint-plugin-markdown@^2.2.0:
   integrity sha512-Ctuc7aP1tU92qnFwVO1wDLEzf1jqMxwRkcSTw7gjbvnEqfh5CKUcTXM0sxg8CB2KDXrqpTuMZPgJ1XE9Olr7KA==
   dependencies:
     mdast-util-from-markdown "^0.8.5"
+
+eslint-plugin-module-resolver@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-module-resolver/-/eslint-plugin-module-resolver-1.4.0.tgz#f491e1a51d9ea9f7267163bb5e58a333e81132ee"
+  integrity sha512-B3fZRHrB39gkADPAEAhfvSm34qpn5Tq0CGZjWfoFvU0vODa3po3Sx2CTd3XESXUgEUvIbOdn21nhoq7zGX0aPQ==
 
 eslint-plugin-prettier@^3.4.0:
   version "3.4.0"
