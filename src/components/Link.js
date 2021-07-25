@@ -92,8 +92,6 @@ const Link = React.forwardRef(function Link(props, ref) {
     );
   }
 
-
-
   if (naked) {
     return (
       <NextComposed

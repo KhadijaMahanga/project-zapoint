@@ -5,27 +5,15 @@ import Navigation from "@/jikopoint/components/Navigation";
 import Footer from "@/jikopoint/components/Footer";
 
 const footerItems = [
-  {   label: "Masharti na vigezo",
-      href: "/masharti-na-vigezo"
-  },
-  {   label: "Sera ya faragha",
-      href: "/sera-ya-faragha"
-  },
-  {   label: "Wasiliana Nasi",
-      href: "/kuhusu-sisi"
-  },
+  { label: "Masharti na vigezo", href: "/masharti-na-vigezo" },
+  { label: "Sera ya faragha", href: "/sera-ya-faragha" },
+  { label: "Wasiliana Nasi", href: "/kuhusu-sisi" },
 ];
 
 const menuItems = [
-  {   label: "Darasa",
-      href: "/darasa"
-  },
-  {   label: "Habari",
-      href: "/habari"
-  },
-  {   label: "Kuhusu Sisi",
-      href: "/kuhusu-sisi"
-  },
+  { label: "Darasa", href: "/darasa" },
+  { label: "Habari", href: "/habari" },
+  { label: "Kuhusu Sisi", href: "/kuhusu-sisi" },
 ];
 
 const social = {
@@ -39,10 +27,14 @@ const social = {
 /**
  * Base page that can be used to build all other pages.
  */
-function BasePage({ children, ...props}) {
+function BasePage({ children, ...props }) {
   return (
     <>
-      <Navigation social={social} menuItems={menuItems} footerItems={footerItems} />
+      <Navigation
+        social={social}
+        menuItems={menuItems}
+        footerItems={footerItems}
+      />
       <NextSeo {...props} />
       {children}
       <Footer social={social} footerItems={footerItems} />

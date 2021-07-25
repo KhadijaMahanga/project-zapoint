@@ -1,5 +1,5 @@
-
-import {  Dialog,
+import {
+  Dialog,
   DialogActions,
   DialogContent,
   Grid,
@@ -7,7 +7,8 @@ import {  Dialog,
   IconButton,
   List,
   ListItemText,
-  Slide } from "@material-ui/core";
+  Slide,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import React, { useState } from "react";
@@ -99,9 +100,9 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="left" timeout={1000} ref={ref} {...props} />;
 });
 
-function MobileNavigation({ ...props}) {
+function MobileNavigation({ ...props }) {
   const classes = useStyles(props);
-  const {menuItems, footerItems, setOpenSearch, handleOpenSearch } = props;
+  const { menuItems, footerItems, setOpenSearch, handleOpenSearch } = props;
 
   const [openMenu, setOpenMenu] = useState(false);
 
@@ -137,7 +138,7 @@ function MobileNavigation({ ...props}) {
               onClick={handleOpenSearch}
               className={classes.menuButton}
             >
-              <SearchIcon className={classes.icon}/>
+              <SearchIcon className={classes.icon} />
             </IconButton>
           </Grid>
         </Grid>
@@ -171,34 +172,32 @@ function MobileNavigation({ ...props}) {
             <Grid container justify="center" alignItems="center">
               <List component="nav" className={classes.list}>
                 {menuItems.map(({ href, label }) => (
-                  <ListItemLink
-                    key={href}
-                    underline="none"
-                    href={href}
-                  >
-                    <ListItemText disableTypography className={classes.listItemText}>
+                  <ListItemLink key={href} underline="none" href={href}>
+                    <ListItemText
+                      disableTypography
+                      className={classes.listItemText}
+                    >
                       {label}
                     </ListItemText>
                   </ListItemLink>
                 ))}
                 <Hidden smUp implementation="css">
-                {footerItems.map(({ href, label }) => (
-                      <ListItemLink
-                        underline="none"
-                        key={href}
-                        href={href}
+                  {footerItems.map(({ href, label }) => (
+                    <ListItemLink underline="none" key={href} href={href}>
+                      <ListItemText
+                        disableTypography
+                        className={classes.listItemText}
                       >
-                        <ListItemText disableTypography className={classes.listItemText}>
-                          {label}
-                        </ListItemText>
-                      </ListItemLink>
-                    ))}
+                        {label}
+                      </ListItemText>
+                    </ListItemLink>
+                  ))}
                 </Hidden>
               </List>
             </Grid>
           </DialogContent>
         </Dialog>
-       <SearchDialog {...props} />
+        <SearchDialog {...props} />
       </Section>
     </div>
   );

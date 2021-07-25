@@ -1,4 +1,12 @@
-import { Divider, Hidden, IconButton, Grid, List, ListItemText, Typography } from "@material-ui/core";
+import {
+  Divider,
+  Hidden,
+  IconButton,
+  Grid,
+  List,
+  ListItemText,
+  Typography,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import React, { Fragment } from "react";
@@ -15,7 +23,7 @@ import Section from "@/jikopoint/components/Section";
 
 const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   root: {
-      backgroundColor: palette.background.dark,
+    backgroundColor: palette.background.dark,
   },
   belowBanner: {
     borderTop: "1px solid #595959",
@@ -24,7 +32,7 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   logoSocial: {
     padding: `${typography.pxToRem(45)} ${typography.pxToRem(15)}`,
     [breakpoints.up("lg")]: {
-        padding: `${typography.pxToRem(65)} ${typography.pxToRem(15)}`,
+      padding: `${typography.pxToRem(65)} ${typography.pxToRem(15)}`,
     },
   },
   button: {
@@ -36,9 +44,9 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
     width: typography.pxToRem(20),
     height: typography.pxToRem(20),
     [breakpoints.up("md")]: {
-        width: typography.pxToRem(25),
-        height: typography.pxToRem(25),
-    }
+      width: typography.pxToRem(25),
+      height: typography.pxToRem(25),
+    },
   },
   logo: {
     width: typography.pxToRem(200),
@@ -72,7 +80,7 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   },
   flexDisplay: {
     height: typography.pxToRem(18),
-  }
+  },
 }));
 
 function ListItemLink(props) {
@@ -86,102 +94,116 @@ function Footer({ social, footerItems }) {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-        <Section>
-            <Grid container justify="center" alignItems="center" direction="column" className={classes.logoSocial}>
-                <Grid item>
-                  <IconButton
-                      component={Link}
-                      href={"/"}
-                      underline="none"
-                  >
-                      <Logo className={classes.logo} viewBox="156 0 180 100" />
-                  </IconButton>
-                </Grid>
-                <Grid item className={classes.social}>
-                  <IconButton
-                      component={Link}
-                      className={classes.button}
-                      href={social.facebook}
-                      underline="none"
-                  >
-                      <FacebookIcon className={classes.icon} />
-                  </IconButton>
-                  <IconButton
-                      component={Link}
-                      className={classes.button}
-                      href={social.twitter}
-                      underline="none"
-                  >
-                      <TwitterIcon className={classes.icon} />
-                  </IconButton>
-                  <IconButton
-                      component={Link}
-                      className={classes.button}
-                      href={social.linkedin}
-                      underline="none"
-                  >
-                      <LinkedInIcon className={classes.icon} />
-                  </IconButton>
-                  <IconButton
-                      component={Link}
-                      className={classes.button}
-                      href={social.instagram}
-                      underline="none"
-                  >
-                      <InstagramIcon className={classes.icon} viewBox="0 0 500 500" />
-                  </IconButton>
-                  <IconButton
-                      component={Link}
-                      className={classes.button}
-                      href={social.youtube}
-                      underline="none"
-                  >
-                      <YoutubeIcon className={classes.icon} />
-                  </IconButton>
-                </Grid>
-            </Grid>
-            <Grid container alignItems="center" justify="space-between" className={classes.belowBanner}>
-                <Grid item>
-                  <Typography variant="caption">© Copyright 2021 JikoPoint</Typography>
-                </Grid>
-               <Hidden smDown implementation="css">
-                 <Grid item className={classes.flexDisplay}>
-                  <List component="nav" className={classes.list}>
-                    {footerItems.map(({ href, label }, index) => (
-                      <Fragment key={href}>
-                      <ListItemLink
-                        underline="none"
-                        href={href}
+      <Section>
+        <Grid
+          container
+          justify="center"
+          alignItems="center"
+          direction="column"
+          className={classes.logoSocial}
+        >
+          <Grid item>
+            <IconButton component={Link} href={"/"} underline="none">
+              <Logo className={classes.logo} viewBox="156 0 180 100" />
+            </IconButton>
+          </Grid>
+          <Grid item className={classes.social}>
+            <IconButton
+              component={Link}
+              className={classes.button}
+              href={social.facebook}
+              underline="none"
+            >
+              <FacebookIcon className={classes.icon} />
+            </IconButton>
+            <IconButton
+              component={Link}
+              className={classes.button}
+              href={social.twitter}
+              underline="none"
+            >
+              <TwitterIcon className={classes.icon} />
+            </IconButton>
+            <IconButton
+              component={Link}
+              className={classes.button}
+              href={social.linkedin}
+              underline="none"
+            >
+              <LinkedInIcon className={classes.icon} />
+            </IconButton>
+            <IconButton
+              component={Link}
+              className={classes.button}
+              href={social.instagram}
+              underline="none"
+            >
+              <InstagramIcon className={classes.icon} viewBox="0 0 500 500" />
+            </IconButton>
+            <IconButton
+              component={Link}
+              className={classes.button}
+              href={social.youtube}
+              underline="none"
+            >
+              <YoutubeIcon className={classes.icon} />
+            </IconButton>
+          </Grid>
+        </Grid>
+        <Grid
+          container
+          alignItems="center"
+          justify="space-between"
+          className={classes.belowBanner}
+        >
+          <Grid item>
+            <Typography variant="caption">
+              © Copyright 2021 JikoPoint
+            </Typography>
+          </Grid>
+          <Hidden smDown implementation="css">
+            <Grid item className={classes.flexDisplay}>
+              <List component="nav" className={classes.list}>
+                {footerItems.map(({ href, label }, index) => (
+                  <Fragment key={href}>
+                    <ListItemLink underline="none" href={href}>
+                      <ListItemText
+                        disableTypography
+                        className={classes.listItemText}
                       >
-                        <ListItemText disableTypography className={classes.listItemText}>
-                          {label}
-                        </ListItemText>
-                      </ListItemLink>
-                      { (index + 1) !== footerItems.length && <Divider orientation="vertical" flexItem classes={{ root: classes.divider }} />}
-                      </Fragment>
-                    ))}
-                  </List>
-                </Grid>
-              </Hidden>
+                        {label}
+                      </ListItemText>
+                    </ListItemLink>
+                    {index + 1 !== footerItems.length && (
+                      <Divider
+                        orientation="vertical"
+                        flexItem
+                        classes={{ root: classes.divider }}
+                      />
+                    )}
+                  </Fragment>
+                ))}
+              </List>
             </Grid>
-
-        </Section>
+          </Hidden>
+        </Grid>
+      </Section>
     </div>
   );
 }
 Footer.propTypes = {
-    footerItems: PropTypes.arrayOf(
-        PropTypes.shape({
-        label: PropTypes.string,
-        href: PropTypes.string,
-        })
-    ),
-    social: PropTypes.shape({}),
+  footerItems: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string,
+      href: PropTypes.string,
+    })
+  ),
+  social: PropTypes.shape({}),
 };
 
 Footer.defaultProps = {
-    footerItems: undefined,
-    social: undefined,
+  footerItems: undefined,
+  social: undefined,
 };
 
 export default Footer;
