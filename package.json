@@ -4,6 +4,7 @@
   "private": true,
   "license": "MIT",
   "dependencies": {
+    "@hapi/iron": "^6.0.0",
     "@material-ui/core": "^4.11.4",
     "@material-ui/utils": "^4.11.2",
     "@next/bundle-analyzer": "^11.0.1",
@@ -38,25 +39,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "format": "yarn prettier --write --ignore-path './.gitignore' '**/*.+(json|md|yml)' '.'",
+    "format-staged": "yarn prettier --write '**/*.+(json|md|yml)'",
+    "codemod": "yarn codemod-staged-optimal-imports './src' && yarn codemod-staged-top-level-imports './src'",
+    "codemod-staged-optimal-imports": "yarn jscodeshift --transform=node_modules/@material-ui/codemod/lib/v4.0.0/optimal-imports.js",
+    "codemod-staged-top-level-imports": "yarn jscodeshift --transform=node_modules/@material-ui/codemod/lib/v4.0.0/top-level-imports.js",
+    "lint": "yarn eslint --fix --ignore-path './.gitignore' './'",
+    "lint-staged": "yarn eslint --fix --ext '.js,.json,.md'",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@babel/core": "^7.14.6",
@@ -66,6 +56,39 @@
     "babel-plugin-module-resolver": "^4.1.0",
     "babel-plugin-transform-imports": "^2.0.0",
     "eslint": "^7.29.0",
-    "eslint-config-next": "^11.0.1"
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-next": "^11.0.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-import-resolver-babel-module": "^5.3.1",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-json": "^3.0.0",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-markdown": "^2.2.0",
+    "eslint-plugin-module-resolver": "^1.4.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-react": "^7.24.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "husky": "^7.0.1",
+    "jscodeshift": "^0.13.0",
+    "lint-staged": "^11.1.1",
+    "prettier": "^2.3.2",
+    "typescript": "^4.3.5"
+  },
+  "browserslist": [
+    "defaults"
+  ],
+  "lint-staged": {
+    "*.js": [
+      "yarn codemod-staged-optimal-imports",
+      "yarn codemod-staged-top-level-imports",
+      "yarn lint-staged"
+    ],
+    "*.{json,md}": [
+      "yarn lint-staged",
+      "yarn format-staged"
+    ],
+    "*.yml": [
+      "yarn format-staged"
+    ]
   }
 }

@@ -1,28 +1,25 @@
-
-import {  Dialog,
+import {
+  Dialog,
   DialogActions,
   DialogContent,
   Grid,
+  Hidden,
   IconButton,
   List,
   ListItemText,
   Slide,
-  Toolbar } from "@material-ui/core";
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import React, { useState } from "react";
 
-import Link from "@/jikopoint/components/Link";
-import LogoButton from "@/jikopoint/components/LogoButton";
-import Search from "@/jikopoint/components/Search";
-import Section from "@/jikopoint/components/Section";
-import TopBanner from "./TopBanner";
-
-import { ReactComponent as CloseIcon } from "@/jikopoint/assets/icons/icon-close-grey.svg";
+import { ReactComponent as SearchMenuIcon } from "@/jikopoint/assets/icons/icon-close-white.svg";
 import { ReactComponent as MenuIcon } from "@/jikopoint/assets/icons/icon-menu-grey.svg";
 import { ReactComponent as SearchIcon } from "@/jikopoint/assets/icons/icon-search-grey.svg";
-import { ReactComponent as SearchMenuIcon } from "@/jikopoint/assets/icons/icon-close-white.svg";
-import SearchDialog from "./SearchDialog";
+import Link from "@/jikopoint/components/Link";
+import LogoButton from "@/jikopoint/components/LogoButton";
+import SearchDialog from "@/jikopoint/components/Navigation/SearchDialog";
+import Section from "@/jikopoint/components/Section";
 
 const useStyles = makeStyles(({ palette, typography }) => ({
   root: {
@@ -35,29 +32,15 @@ const useStyles = makeStyles(({ palette, typography }) => ({
     right: 0,
     margin: "auto 0 auto auto",
   },
-  searchDialog: {
-    padding: 0,
-  },
   dialogActions: {
     padding: `${typography.pxToRem(20)} ${typography.pxToRem(20)} 0`,
     transform: "matrix(-1, 0, 0, -1, 0, 0, )",
-  },
-  searchDialogActions: {
-    padding: 0,
-    display: "block",
-    backgroundColor: palette.background.default,
-  },
-  dialogContent: {
-    position: "relative",
   },
   dialogMenu: {
     padding: `${typography.pxToRem(10.35)} 0`,
   },
   dialogPaper: {
     backgroundColor: palette.secondary.main,
-  },
-  searchDialogPaper: {
-    backgroundColor: "inherit",
   },
   icon: {
     width: typography.pxToRem(25),
@@ -82,13 +65,6 @@ const useStyles = makeStyles(({ palette, typography }) => ({
     lineHeight: 2.5,
     marginTop: 0,
   },
-  search: {
-    position: "absolute",
-    top: "50%",
-  },
-  toolbar: {
-    display: "block",
-  },
 }));
 
 function ListItemLink(props) {
@@ -102,9 +78,9 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="left" timeout={1000} ref={ref} {...props} />;
 });
 
-function MobileNavigation({ ...props}) {
+function MobileNavigation({ ...props }) {
   const classes = useStyles(props);
-  const {menuItems, setOpenSearch, handleOpenSearch } = props;
+  const { menuItems, footerItems, setOpenSearch, handleOpenSearch } = props;
 
   const [openMenu, setOpenMenu] = useState(false);
 
@@ -140,7 +116,7 @@ function MobileNavigation({ ...props}) {
               onClick={handleOpenSearch}
               className={classes.menuButton}
             >
-              <SearchIcon className={classes.icon}/>
+              <SearchIcon className={classes.icon} />
             </IconButton>
           </Grid>
         </Grid>
@@ -174,38 +150,60 @@ function MobileNavigation({ ...props}) {
             <Grid container justify="center" alignItems="center">
               <List component="nav" className={classes.list}>
                 {menuItems.map(({ href, label }) => (
-                  <ListItemLink
-                    key={href}
-                    underline="none"
-                    href={href}
-                  >
-                    <ListItemText disableTypography className={classes.listItemText}>
+                  <ListItemLink key={href} underline="none" href={href}>
+                    <ListItemText
+                      disableTypography
+                      className={classes.listItemText}
+                    >
                       {label}
                     </ListItemText>
                   </ListItemLink>
                 ))}
+                <Hidden smUp implementation="css">
+                  {footerItems.map(({ href, label }) => (
+                    <ListItemLink underline="none" key={href} href={href}>
+                      <ListItemText
+                        disableTypography
+                        className={classes.listItemText}
+                      >
+                        {label}
+                      </ListItemText>
+                    </ListItemLink>
+                  ))}
+                </Hidden>
               </List>
             </Grid>
           </DialogContent>
         </Dialog>
-       <SearchDialog {...props} />
+        <SearchDialog {...props} />
       </Section>
     </div>
   );
 }
 
 MobileNavigation.propTypes = {
+  footerItems: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string,
+      href: PropTypes.string,
+    })
+  ),
+  handleOpenSearch: PropTypes.func,
   menuItems: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string,
       href: PropTypes.string,
     })
   ),
+  setOpenSearch: PropTypes.func,
   social: PropTypes.shape({}),
 };
 
 MobileNavigation.defaultProps = {
+  footerItems: undefined,
+  handleOpenSearch: undefined,
   menuItems: undefined,
+  setOpenSearch: undefined,
   social: undefined,
 };
 

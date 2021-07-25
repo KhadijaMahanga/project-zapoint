@@ -2,11 +2,11 @@ import { AppBar, Hidden, Toolbar } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import React, { useState } from "react";
 
-import DesktopNavigation from "./DesktopNavigation";
-import MobileNavigation from "./MobileNavigation";
-import TopBanner from "./TopBanner";
+import DesktopNavigation from "@/jikopoint/components/Navigation/DesktopNavigation";
+import MobileNavigation from "@/jikopoint/components/Navigation/MobileNavigation";
+import TopBanner from "@/jikopoint/components/Navigation/TopBanner";
 
-const useStyles = makeStyles(({ typography, breakpoints, palette }) => ({
+const useStyles = makeStyles(({ palette }) => ({
   root: {
     backgroundColor: palette.background.default,
     boxShadow: "0px 2px 6px #0000001A",
@@ -15,25 +15,6 @@ const useStyles = makeStyles(({ typography, breakpoints, palette }) => ({
     display: "block",
   },
 }));
-
-const menuItems = [
-    {   label: "Darasa",
-        href: "/darasa"
-    },
-    {   label: "Habari",
-        href: "/habari"
-    },
-    {   label: "Kuhusu Sisi",
-        href: "/kuhusu-sisi"
-    },
-];
-
-const social = {
-  facebook: "facebook.com",
-  instagram: "instagram.com",
-  linkedin: "linkedin.com",
-  twitter: "twitter.com",
-};
 
 function Navigation({ ...props }) {
   const classes = useStyles(props);
@@ -49,15 +30,13 @@ function Navigation({ ...props }) {
     setOpenSearch(false);
   };
 
-
   return (
     <AppBar color="primary" position="sticky" className={classes.root}>
-      <TopBanner social={social} />
+      <TopBanner {...props} />
       <Toolbar disableGutters className={classes.toolbar}>
         <Hidden mdDown implementation="css">
           <DesktopNavigation
-            menuItems={menuItems}
-            social={social}
+            {...props}
             openSearch={openSearch}
             setOpenSearch={setOpenSearch}
             handleOpenSearch={handleOpenSearch}
@@ -66,14 +45,14 @@ function Navigation({ ...props }) {
           />
         </Hidden>
         <Hidden lgUp implementation="css">
-          <MobileNavigation 
-            menuItems={menuItems}
-            social={social}
+          <MobileNavigation
+            {...props}
             openSearch={openSearch}
             setOpenSearch={setOpenSearch}
             handleOpenSearch={handleOpenSearch}
             handleCloseSearch={handleCloseSearch}
-            classes={{ section: classes.section }} />
+            classes={{ section: classes.section }}
+          />
         </Hidden>
       </Toolbar>
     </AppBar>
