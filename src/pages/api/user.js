@@ -20,16 +20,5 @@ handler
       next();
     }
   });
-  /*
-  // .put((req, res) => {
-  //   const { name } = req.body;
-  //   const user = updateUserByUsername(req, req.user.username, { name });
-  //   res.json({ user });
-  // })
-  // .delete((req, res) => {
-  //   deleteUser(req);
-  //   req.logOut();
-  //   res.status(204).end();
-  // });
-  */
+  
 export default handler;
