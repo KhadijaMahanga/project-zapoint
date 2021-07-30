@@ -1,4 +1,4 @@
-import { Grid, Hidden, Typography } from "@material-ui/core";
+import { Button, Grid, Hidden, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Image from "next/image";
 import PropTypes from "prop-types";
@@ -6,6 +6,7 @@ import React from "react";
 import Typewriter from "typewriter-effect";
 
 import heroImg from "@/jikopoint/assets/images/megan-thomas-xMh_ww8HN_Q-unsplash.jpg";
+import Link from "@/jikopoint/components/Link";
 import Section from "@/jikopoint/components/Section";
 
 const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
@@ -32,6 +33,7 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   },
   section: {
     display: "flex",
+    color: palette.text.secondary,
     height: typography.pxToRem(450),
     [breakpoints.up("lg")]: {
       height: typography.pxToRem(680),
@@ -55,9 +57,20 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   typewriter: {
     display: "inline",
   },
+  outlined: {
+    padding: `${typography.pxToRem(10)} ${typography.pxToRem(20)}`,
+  },
 }));
 
-function Hero({ tagline, title, starterText, subtitle, ...props }) {
+function Hero({
+  ctaText,
+  href,
+  tagline,
+  title,
+  starterText,
+  subtitle,
+  ...props
+}) {
   const classes = useStyles(props);
   return (
     <div className={classes.root}>
@@ -72,7 +85,7 @@ function Hero({ tagline, title, starterText, subtitle, ...props }) {
       <div className={classes.colorBg}>
         <Section classes={{ root: classes.section }}>
           <Grid container alignItems="center" justify="flex-start">
-            <Grid item xs={12} lg={8}>
+            <Grid item xs={10} lg={8}>
               <Typography variant="h1" className={classes.text}>
                 {title}
               </Typography>
@@ -95,6 +108,18 @@ function Hero({ tagline, title, starterText, subtitle, ...props }) {
               <Typography variant="body1" className={classes.text}>
                 {tagline}
               </Typography>
+              {href && ctaText && (
+                <Button
+                  classes={{ outlined: classes.outlined }}
+                  color="inherit"
+                  component={Link}
+                  href={href}
+                  underline="none"
+                  variant="outlined"
+                >
+                  {ctaText}
+                </Button>
+              )}
             </Grid>
           </Grid>
         </Section>
@@ -104,6 +129,8 @@ function Hero({ tagline, title, starterText, subtitle, ...props }) {
 }
 
 Hero.propTypes = {
+  ctaText: PropTypes.string,
+  href: PropTypes.string,
   title: PropTypes.string,
   tagline: PropTypes.string,
   starterText: PropTypes.string,
@@ -111,6 +138,8 @@ Hero.propTypes = {
 };
 
 Hero.defaultProps = {
+  ctaText: undefined,
+  href: undefined,
   title: undefined,
   tagline: undefined,
   starterText: "Jifunze jinsi ya ",
