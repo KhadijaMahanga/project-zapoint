@@ -135,27 +135,19 @@ deepmerge(
   typography,
   {
     h1: {
-      fontSize: pxToRem(35),
-      lineHeight: 40 / 35,
+      fontSize: pxToRem(40),
+      lineHeight: 40 / 40,
       [breakpoints.up("lg")]: {
-        fontSize: pxToRem(50),
-        lineHeight: 80 / 50,
-      },
-      [breakpoints.up("xl")]: {
-        fontSize: pxToRem(80),
-        lineHeight: 100 / 80,
+        fontSize: pxToRem(70),
+        lineHeight: 70 / 70,
       },
     },
     h2: {
       fontSize: pxToRem(35),
       lineHeight: 40 / 35,
       [breakpoints.up("lg")]: {
-        fontSize: pxToRem(50),
-        lineHeight: 80 / 50,
-      },
-      [breakpoints.up("xl")]: {
-        fontSize: pxToRem(80),
-        lineHeight: 100 / 80,
+        fontSize: pxToRem(40),
+        lineHeight: 45 / 40,
       },
     },
     h3: {
@@ -230,10 +222,6 @@ deepmerge(
       [breakpoints.up("lg")]: {
         fontSize: pxToRem(20),
         lineHeight: 30 / 20,
-      },
-      [breakpoints.up("xl")]: {
-        fontSize: pxToRem(30),
-        lineHeight: 40 / 30,
       },
     },
     body2: {
