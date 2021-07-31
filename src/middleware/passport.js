@@ -3,7 +3,7 @@ import crypto from "crypto";
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 
-import User from "@/jikopoint/models/User";
+import User from "@/jikopoint/models/user";
 
 export function validatePassword(user, inputPassword) {
   const inputHash = crypto
