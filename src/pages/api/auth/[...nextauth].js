@@ -1,10 +1,11 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable no-param-reassign */
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
 
 import User from "@/jikopoint/models/user";
+import validateCredentials from "@/jikopoint/utils/auth/validateCredentials";
 import dbConnect from "@/jikopoint/utils/mongoose";
 
 export default NextAuth({
@@ -32,33 +33,30 @@ export default NextAuth({
         },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials, req) {
+      async authorize(credentials) {
         // logic to look up the user from the credentials supplied
         if (mongoose.connections[0].readyState !== 1) {
           await dbConnect();
         }
-
         try {
-          const { email, password } = credentials;
+          const { email } = credentials;
           const user = await User.findByEmail(email);
 
-          const isValidPassword = user.validPassword(password);
-
-          if (user && isValidPassword && user.is_active) {
-            return Promise.resolve(user);
+          if (user) {
+            return user;
           }
-
           return (
             !user &&
             "/auth/credentials-signin?error=User could not be authorized"
           );
         } catch (e) {
-          return `/auth/credentials-signin?error=${e}`;
+          throw new Error(
+            `${e.response.data.message}&email=${credentials.email}`
+          );
         }
       },
     }),
   ],
-
   // A database is optional, but required to persist accounts in a database
   database: process.env.MONGO_URL,
   secret: process.env.SECRET,
@@ -108,6 +106,29 @@ export default NextAuth({
     // async redirect(url, baseUrl) { return baseUrl },
     // async session(session, user) { return session },
     // async jwt(token, user, account, profile, isNewUser) { return token }
+    async signIn(user, account, profile) {
+      console.log("............profile...........");
+      console.log(profile);
+      if (account.type === "oauth" || account.type === "email") {
+        return true;
+      }
+      return validateCredentials(user);
+    },
+    async session(session, token) {
+      if (token?.user) {
+        session.user = token.user;
+      }
+      session.accessToken = token.accessToken;
+
+      return session;
+    },
+    async jwt(token, user) {
+      if (typeof user !== typeof undefined) {
+        token.auth_time = Number(new Date());
+        token.user = user;
+      }
+      return token;
+    },
   },
 
   // Events are useful for logging
