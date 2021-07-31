@@ -1,6 +1,6 @@
 import { CssBaseline } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/core/styles";
-import { Provider } from "next-auth/client";
+import { Provider as AuthProvider } from "next-auth/client";
 import { DefaultSeo } from "next-seo";
 import NextNprogress from "nextjs-progressbar";
 import PropTypes from "prop-types";
@@ -23,7 +23,7 @@ export default function MyApp(props) {
   return (
     <>
       <DefaultSeo {...SEO} />
-      <Provider
+      <AuthProvider
         // Provider options are not required but can be useful in situations where
         // you have a short session maxAge time. Shown here with default values.
         options={{
@@ -55,7 +55,7 @@ export default function MyApp(props) {
           />
           <Component {...pageProps} />
         </ThemeProvider>
-      </Provider>
+      </AuthProvider>
     </>
   );
 }

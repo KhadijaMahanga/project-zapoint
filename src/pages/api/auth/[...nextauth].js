@@ -1,5 +1,11 @@
+/* eslint-disable no-unused-vars */
+import jwt from "jsonwebtoken";
+import mongoose from "mongoose";
 import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
+
+import User from "@/jikopoint/models/user";
+import dbConnect from "@/jikopoint/utils/mongoose";
 
 export default NextAuth({
   // Configure one or more authentication providers
@@ -16,6 +22,41 @@ export default NextAuth({
       clientId: process.env.TWITTER_ID,
       clientSecret: process.env.TWITTER_SECRET,
     }),
+    Providers.Credentials({
+      name: "Credentials",
+      credentials: {
+        email: {
+          label: "Email",
+          type: "email",
+          placeholder: "jsmith@example.com",
+        },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials, req) {
+        // logic to look up the user from the credentials supplied
+        if (mongoose.connections[0].readyState !== 1) {
+          await dbConnect();
+        }
+
+        try {
+          const { email, password } = credentials;
+          const user = await User.findByEmail(email);
+
+          const isValidPassword = user.validPassword(password);
+
+          if (user && isValidPassword && user.is_active) {
+            return Promise.resolve(user);
+          }
+
+          return (
+            !user &&
+            "/auth/credentials-signin?error=User could not be authorized"
+          );
+        } catch (e) {
+          return `/auth/credentials-signin?error=${e}`;
+        }
+      },
+    }),
   ],
 
   // A database is optional, but required to persist accounts in a database
@@ -23,18 +64,13 @@ export default NextAuth({
   secret: process.env.SECRET,
 
   session: {
-    // Use JSON Web Tokens for session instead of database sessions.
-    // This option can be used with or without a database for users/accounts.
-    // Note: `jwt` is automatically set to `true` if no database is specified.
     jwt: true,
-
-    // Seconds - How long until an idle session expires and is no longer valid.
-    // maxAge: 30 * 24 * 60 * 60, // 30 days
+    maxAge: 30 * 24 * 60 * 60, // 30 days
 
     // Seconds - Throttle how frequently to write to database to extend a session.
     // Use it to limit write operations. Set to 0 to always update the database.
     // Note: This option is ignored if using JSON Web Tokens
-    // updateAge: 24 * 60 * 60, // 24 hours
+    updateAge: 24 * 60 * 60, // 24 hours
   },
 
   // JSON Web tokens are only used for sessions if the `jwt: true` session
@@ -42,13 +78,13 @@ export default NextAuth({
   // https://next-auth.js.org/configuration/options#jwt
   jwt: {
     // A secret to use for key generation (you should set this explicitly)
-    // secret: 'INp8IvdIyeMcoGAgFGoA61DdBglwwSqnXJZkgz8PSnw',
+    secret: process.env.JWT_SECRET,
     // Set to true to use encryption (default: false)
     // encryption: true,
     // You can define your own encode/decode functions for signing and encryption
     // if you want to override the default behaviour.
-    // encode: async ({ secret, token, maxAge }) => {},
-    // decode: async ({ secret, token, maxAge }) => {},
+    encode: async ({ secret, token }) => jwt.sign(token, secret),
+    decode: async ({ secret, token }) => jwt.verify(token, secret),
   },
 
   // You can define custom pages to override the built-in ones. These will be regular Next.js pages
@@ -57,10 +93,10 @@ export default NextAuth({
   // pages is not specified for that route.
   // https://next-auth.js.org/configuration/pages
   pages: {
-    // signIn: '/auth/signin',  // Displays signin buttons
-    // signOut: '/auth/signout', // Displays form with sign out button
-    // error: '/auth/error', // Error code passed in query string as ?error=
-    // verifyRequest: '/auth/verify-request', // Used for check email page
+    signIn: "/auth/signin", // Displays signin buttons
+    signOut: "/auth/signout", // Displays form with sign out button
+    error: "/auth/error", // Error code passed in query string as ?error=
+    verifyRequest: "/auth/verify-request", // Used for check email page
     // newUser: null // If set, new users will be directed here on first sign in
   },
 
