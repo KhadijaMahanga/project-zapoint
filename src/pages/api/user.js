@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
 import createHandler from "@/jikopoint/middleware";
-import User from "@/jikopoint/models/User";
+import User from "@/jikopoint/models/user";
 // you can pass in middleware here
 // maybe you have some permissions middleware
 const handler = createHandler();
