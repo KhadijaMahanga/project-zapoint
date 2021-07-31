@@ -6,11 +6,11 @@ const MODEL_NAME = "User";
 
 const UserSchema = new Schema(
   {
-    first_name: {
+    firstName: {
       type: String,
       lowercase: true,
     },
-    last_name: {
+    lastName: {
       type: String,
       lowercase: true,
     },
@@ -23,9 +23,6 @@ const UserSchema = new Schema(
       validate(value) {
         if (!validator.isEmail(value)) throw new Error("Email is invalid");
       },
-    },
-    emailVerified: {
-      type: Date,
     },
     password: {
       type: String,
@@ -47,7 +44,7 @@ const UserSchema = new Schema(
     },
     is_active: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     is_deleted: {
       type: Boolean,
@@ -58,7 +55,6 @@ const UserSchema = new Schema(
 ); // automatically add while insert or update the object
 
 UserSchema.statics.findByEmail = async function (email) {
-  console.log("🔵 finding user by credentials");
   const currentUser = this;
   const user = await currentUser.findOne({ email }).exec();
 
@@ -90,7 +86,6 @@ UserSchema.pre("save", async function (next) {
 });
 
 UserSchema.methods.validPassword = async function (password) {
-  console.log("------validPassword------");
   return bcrypt.compare(password, this.password);
 };
 
