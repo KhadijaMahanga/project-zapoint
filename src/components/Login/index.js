@@ -49,7 +49,8 @@ function Login({ signIn, csrfToken }) {
   const [loginError, setLoginError] = useState("");
 
   const validate = (value, fieldName) => {
-    console.log("I am here");
+    setEmailError("");
+    setPasswordError("");
     if (!value.length && fieldName === "email") {
       setEmailError("Barua pepe inahitajika");
     }
@@ -59,8 +60,6 @@ function Login({ signIn, csrfToken }) {
     if (fieldName === "email" && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(value)) {
       setEmailError("Barua pepe ni batili");
     }
-    setEmailError("");
-    setPasswordError("");
   };
 
   const handleSubmit = async (e) => {
