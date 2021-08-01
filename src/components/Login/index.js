@@ -71,7 +71,6 @@ function Login({ signIn, csrfToken }) {
       const res = await signIn("credentials", {
         email,
         password,
-        csrfToken,
         redirect: false,
         callbackUrl: `${process.env.NEXTAUTH_URL}`,
       });
