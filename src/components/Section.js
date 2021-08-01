@@ -12,7 +12,7 @@ const useStyles = makeStyles(({ breakpoints, typography, widths }) => ({
     display: "block", // Fix IE 11 layout when used with main.
     marginLeft: "auto",
     marginRight: "auto",
-    minWidth: typography.pxToRem(360),
+    minWidth: typography.pxToRem(320),
     padding: `0 ${typography.pxToRem(15)}`,
     width: "100%",
   },

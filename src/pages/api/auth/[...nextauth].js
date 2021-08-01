@@ -25,14 +25,6 @@ export default NextAuth({
     }),
     Providers.Credentials({
       name: "Credentials",
-      credentials: {
-        email: {
-          label: "Email",
-          type: "email",
-          placeholder: "jsmith@example.com",
-        },
-        password: { label: "Password", type: "password" },
-      },
       async authorize(credentials) {
         // logic to look up the user from the credentials supplied
         if (mongoose.connections[0].readyState !== 1) {
@@ -50,6 +42,7 @@ export default NextAuth({
             "/auth/credentials-signin?error=User could not be authorized"
           );
         } catch (e) {
+          console.log(e);
           throw new Error(
             `${e.response.data.message}&email=${credentials.email}`
           );
@@ -60,7 +53,7 @@ export default NextAuth({
   // A database is optional, but required to persist accounts in a database
   database: process.env.MONGO_URL,
   secret: process.env.SECRET,
-
+  redirect: false,
   session: {
     jwt: true,
     maxAge: 30 * 24 * 60 * 60, // 30 days
@@ -91,10 +84,9 @@ export default NextAuth({
   // pages is not specified for that route.
   // https://next-auth.js.org/configuration/pages
   pages: {
-    signIn: "/auth/signin", // Displays signin buttons
-    signOut: "/auth/signout", // Displays form with sign out button
-    error: "/auth/error", // Error code passed in query string as ?error=
-    verifyRequest: "/auth/verify-request", // Used for check email page
+    signIn: "/auth/ingia", // Displays signin buttons
+    // error: "/auth/ingia", // Error code passed in query string as ?error=
+    // verifyRequest: "/auth/verify-request", // Used for check email page
     // newUser: null // If set, new users will be directed here on first sign in
   },
 
@@ -106,9 +98,7 @@ export default NextAuth({
     // async redirect(url, baseUrl) { return baseUrl },
     // async session(session, user) { return session },
     // async jwt(token, user, account, profile, isNewUser) { return token }
-    async signIn(user, account, profile) {
-      console.log("............profile...........");
-      console.log(profile);
+    async signIn(user, account) {
       if (account.type === "oauth" || account.type === "email") {
         return true;
       }
