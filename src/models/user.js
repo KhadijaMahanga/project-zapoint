@@ -59,7 +59,6 @@ UserSchema.statics.findByEmail = async function (email) {
   const user = await currentUser.findOne({ email }).exec();
 
   if (!user) {
-    console.log("findbycredentials: user does not exist");
     return Promise.resolve(false);
   }
   return user;

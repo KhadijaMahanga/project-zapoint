@@ -97,6 +97,7 @@ function TopBanner({ social, ...props }) {
               <Button
                 component={Link}
                 underline="none"
+                href="/auth/ingia"
                 startIcon={<IconUser className={classes.icon} />}
                 classes={{ text: classes.button }}
               >

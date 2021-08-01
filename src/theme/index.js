@@ -1,12 +1,12 @@
-import { createMuiTheme } from "@material-ui/core/styles";
+import { createTheme } from "@material-ui/core/styles";
 import { deepmerge } from "@material-ui/utils";
 
 const FONT_FAMILY_HEADING = "'Montserrat', sans-serif";
 const FONT_FAMILY_TEXT = "'Varela Round', sans-serif";
 
-const theme = createMuiTheme({
+const theme = createTheme({
   palette: {
-    primary: { main: "#0050FF" },
+    primary: { main: "#68B78C" },
     secondary: { main: "#68B78C" },
     highlight: { main: "#a3a3a3" },
     text: { primary: "#727475", secondary: "#fff", highlight: "#a3a3a3" },
@@ -116,6 +116,7 @@ const theme = createMuiTheme({
       fontFamily: FONT_FAMILY_TEXT,
       fontStretch: "normal",
       fontStyle: "normal",
+      color: "red",
       letterSpacing: 0,
       textTransform: "none",
     },
