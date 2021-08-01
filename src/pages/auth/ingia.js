@@ -5,8 +5,8 @@ import clsx from "clsx";
 import {
   signIn,
   getSession,
-  providers as Providers,
-  csrfToken as CsrfToken,
+  getProviders,
+  getCsrfToken,
 } from "next-auth/client";
 import PropTypes from "prop-types";
 import React from "react";
@@ -172,7 +172,7 @@ Ingia.defaultProps = {
   csrfToken: undefined,
 };
 
-Ingia.getInitialProps = async (context) => {
+export async function getServerSideProps(context) {
   const { req, res } = context;
   const session = await getSession({ req });
 
@@ -184,10 +184,12 @@ Ingia.getInitialProps = async (context) => {
     return null;
   }
   return {
-    session: undefined,
-    providers: await Providers(context),
-    csrfToken: await CsrfToken(context),
+    props: {
+      session: null,
+      providers: await getProviders(context),
+      csrfToken: await getCsrfToken(context),
+    },
   };
-};
+}
 
 export default Ingia;
