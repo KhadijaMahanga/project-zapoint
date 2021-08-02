@@ -9,7 +9,7 @@ const VerificationRequestsSchema = new Schema(
     },
     expires: Date,
   },
-  { timestamps: { currentTime: () => Math.floor(Date.now() / 1000) } }
+  { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } }
 );
 
 export default models.VerificationRequest ||

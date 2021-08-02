@@ -12,8 +12,13 @@ const SessionSchema = new Schema(
       type: String,
       unique: true,
     },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
   },
-  { timestamps: { currentTime: () => Math.floor(Date.now() / 1000) } }
+  { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } }
 );
 
 export default mongoose.models.Session ||

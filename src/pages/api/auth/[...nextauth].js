@@ -1,12 +1,9 @@
 /* eslint-disable no-param-reassign */
 import jwt from "jsonwebtoken";
-import mongoose from "mongoose";
 import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
 
-import User from "@/jikopoint/models/user";
 import validateCredentials from "@/jikopoint/utils/auth/validateCredentials";
-import dbConnect from "@/jikopoint/utils/mongoose";
 
 export default NextAuth({
   // Configure one or more authentication providers
@@ -27,25 +24,14 @@ export default NextAuth({
       name: "Credentials",
       async authorize(credentials) {
         // logic to look up the user from the credentials supplied
-        if (mongoose.connections[0].readyState !== 1) {
-          await dbConnect();
-        }
         try {
-          const { email } = credentials;
-          const user = await User.findByEmail(email);
-
-          if (user) {
+          const user = validateCredentials(credentials);
+          if (user !== null) {
             return user;
           }
-          return (
-            !user &&
-            "/auth/credentials-signin?error=User could not be authorized"
-          );
+          return null;
         } catch (e) {
-          console.log(e);
-          throw new Error(
-            `${e.response.data.message}&email=${credentials.email}`
-          );
+          throw new Error(e);
         }
       },
     }),
@@ -102,7 +88,10 @@ export default NextAuth({
       if (account.type === "oauth" || account.type === "email") {
         return true;
       }
-      return validateCredentials(user);
+      if (!user?.isActive) {
+        return false;
+      }
+      return true;
     },
     async session(session, token) {
       if (token?.user) {

@@ -25,8 +25,13 @@ const AccountSchema = new Schema(
     refreshToken: String,
     accessToken: String,
     accessTokenExpires: Date,
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
   },
-  { timestamps: { currentTime: () => Math.floor(Date.now() / 1000) } }
+  { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } }
 );
 
 const Account = models[MODEL_NAME] || model("Account", AccountSchema);

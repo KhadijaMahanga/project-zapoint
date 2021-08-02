@@ -71,7 +71,6 @@ function Login({ signIn, csrfToken }) {
         email,
         password,
         redirect: false,
-        callbackUrl: `${process.env.NEXTAUTH_URL}`,
       });
 
       if (res?.error) {
