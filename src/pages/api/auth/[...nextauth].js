@@ -1,13 +1,13 @@
+/* eslint-disable no-param-reassign */
+import jwt from "jsonwebtoken";
 import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
+
+import validateCredentials from "@/jikopoint/utils/auth/validateCredentials";
 
 export default NextAuth({
   // Configure one or more authentication providers
   providers: [
-    Providers.Email({
-      server: process.env.EMAIL_SERVER,
-      from: process.env.EMAIL_FROM,
-    }),
     Providers.Facebook({
       clientId: process.env.FACEBOOK_CLIENT_ID,
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
@@ -20,25 +20,34 @@ export default NextAuth({
       clientId: process.env.TWITTER_ID,
       clientSecret: process.env.TWITTER_SECRET,
     }),
+    Providers.Credentials({
+      name: "Credentials",
+      async authorize(credentials) {
+        // logic to look up the user from the credentials supplied
+        try {
+          const user = validateCredentials(credentials);
+          if (user !== null) {
+            return user;
+          }
+          return null;
+        } catch (e) {
+          throw new Error(e);
+        }
+      },
+    }),
   ],
-
   // A database is optional, but required to persist accounts in a database
   database: process.env.MONGO_URL,
   secret: process.env.SECRET,
-
+  redirect: false,
   session: {
-    // Use JSON Web Tokens for session instead of database sessions.
-    // This option can be used with or without a database for users/accounts.
-    // Note: `jwt` is automatically set to `true` if no database is specified.
     jwt: true,
-
-    // Seconds - How long until an idle session expires and is no longer valid.
-    // maxAge: 30 * 24 * 60 * 60, // 30 days
+    maxAge: 30 * 24 * 60 * 60, // 30 days
 
     // Seconds - Throttle how frequently to write to database to extend a session.
     // Use it to limit write operations. Set to 0 to always update the database.
     // Note: This option is ignored if using JSON Web Tokens
-    // updateAge: 24 * 60 * 60, // 24 hours
+    updateAge: 24 * 60 * 60, // 24 hours
   },
 
   // JSON Web tokens are only used for sessions if the `jwt: true` session
@@ -46,13 +55,13 @@ export default NextAuth({
   // https://next-auth.js.org/configuration/options#jwt
   jwt: {
     // A secret to use for key generation (you should set this explicitly)
-    // secret: 'INp8IvdIyeMcoGAgFGoA61DdBglwwSqnXJZkgz8PSnw',
+    secret: process.env.JWT_SECRET,
     // Set to true to use encryption (default: false)
     // encryption: true,
     // You can define your own encode/decode functions for signing and encryption
     // if you want to override the default behaviour.
-    // encode: async ({ secret, token, maxAge }) => {},
-    // decode: async ({ secret, token, maxAge }) => {},
+    encode: async ({ secret, token }) => jwt.sign(token, secret),
+    decode: async ({ secret, token }) => jwt.verify(token, secret),
   },
 
   // You can define custom pages to override the built-in ones. These will be regular Next.js pages
@@ -61,10 +70,9 @@ export default NextAuth({
   // pages is not specified for that route.
   // https://next-auth.js.org/configuration/pages
   pages: {
-    // signIn: '/auth/signin',  // Displays signin buttons
-    // signOut: '/auth/signout', // Displays form with sign out button
-    // error: '/auth/error', // Error code passed in query string as ?error=
-    // verifyRequest: '/auth/verify-request', // Used for check email page
+    signIn: "/auth/ingia", // Displays signin buttons
+    // error: "/auth/ingia", // Error code passed in query string as ?error=
+    // verifyRequest: "/auth/verify-request", // Used for check email page
     // newUser: null // If set, new users will be directed here on first sign in
   },
 
@@ -76,6 +84,30 @@ export default NextAuth({
     // async redirect(url, baseUrl) { return baseUrl },
     // async session(session, user) { return session },
     // async jwt(token, user, account, profile, isNewUser) { return token }
+    async signIn(user, account) {
+      if (account.type === "oauth" || account.type === "email") {
+        return true;
+      }
+      if (!user?.isActive) {
+        return false;
+      }
+      return true;
+    },
+    async session(session, token) {
+      if (token?.user) {
+        session.user = token.user;
+      }
+      session.accessToken = token.accessToken;
+
+      return session;
+    },
+    async jwt(token, user) {
+      if (typeof user !== typeof undefined) {
+        token.auth_time = Number(new Date());
+        token.user = user;
+      }
+      return token;
+    },
   },
 
   // Events are useful for logging
