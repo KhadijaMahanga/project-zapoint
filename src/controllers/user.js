@@ -35,11 +35,11 @@ export const updateUser = async (id, updates = {}) => {
  * we don't really delete users, instead we mark them as deleted
  */
 export const deleteUser = async (id) => {
-  return updateUser(id, { is_deleted: true });
+  return updateUser(id, { isDeleted: true });
 };
 
 export const getUsers = async () => {
-  return User.find({ is_deleted: false })
+  return User.find({ isDeleted: false })
     .select("-__v")
     .then((users) => users)
     .catch((e) => new Error(e));

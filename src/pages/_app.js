@@ -2,7 +2,6 @@ import { CssBaseline } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/core/styles";
 import { Provider as AuthProvider } from "next-auth/client";
 import { DefaultSeo } from "next-seo";
-import NextNprogress from "nextjs-progressbar";
 import PropTypes from "prop-types";
 import React from "react";
 
@@ -46,13 +45,6 @@ export default function MyApp(props) {
         <ThemeProvider theme={theme}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
-          <NextNprogress
-            color={theme.palette.primary.light}
-            startPosition={0.2}
-            stopDelayMs={200}
-            height={2}
-            showOnShallow
-          />
           <Component {...pageProps} />
         </ThemeProvider>
       </AuthProvider>

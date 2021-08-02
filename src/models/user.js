@@ -33,20 +33,33 @@ const UserSchema = new Schema(
           throw new Error("password cannot be 'password'");
       },
     },
-    accounts: {
-      type: Schema.Types.ObjectId,
-      ref: "Account",
+    emailVerified: {
+      type: Date,
     },
+    accounts: [
+      {
+        type: Schema.Types.ObjectId,
+        default: undefined,
+        ref: "Account",
+      },
+    ],
+    sessions: [
+      {
+        type: Schema.Types.ObjectId,
+        default: undefined,
+        ref: "Session",
+      },
+    ],
     role: {
       type: Schema.Types.ObjectId,
       ref: "UserRole",
       required: true,
     },
-    is_active: {
+    isActive: {
       type: Boolean,
       default: false,
     },
-    is_deleted: {
+    isDeleted: {
       type: Boolean,
       default: false,
     },
@@ -57,10 +70,6 @@ const UserSchema = new Schema(
 UserSchema.statics.findByEmail = async function (email) {
   const currentUser = this;
   const user = await currentUser.findOne({ email }).exec();
-
-  if (!user) {
-    return Promise.resolve(false);
-  }
   return user;
 };
 

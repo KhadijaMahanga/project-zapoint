@@ -15,7 +15,7 @@ import { ReactComponent as IconFacebook } from "@/jikopoint/assets/icons/icon-fa
 import { ReactComponent as IconGoogle } from "@/jikopoint/assets/icons/icon-google-color.svg";
 import { ReactComponent as IconLogin } from "@/jikopoint/assets/icons/icon-login-white.svg";
 import { ReactComponent as IconTwitter } from "@/jikopoint/assets/icons/icon-twitter-white.svg";
-import Login from "@/jikopoint/components/Login";
+import Login from "@/jikopoint/components/Auth/Login";
 import Page from "@/jikopoint/components/Page";
 import Section from "@/jikopoint/components/Section";
 
