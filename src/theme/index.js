@@ -146,20 +146,16 @@ deepmerge(
       fontSize: pxToRem(35),
       lineHeight: 40 / 35,
       [breakpoints.up("lg")]: {
-        fontSize: pxToRem(40),
-        lineHeight: 45 / 40,
+        fontSize: pxToRem(50),
+        lineHeight: 50 / 50,
       },
     },
     h3: {
-      fontSize: pxToRem(30),
-      lineHeight: 40 / 30,
+      fontSize: pxToRem(35),
+      lineHeight: 40 / 35,
       [breakpoints.up("lg")]: {
         fontSize: pxToRem(40),
-        lineHeight: 40 / 40,
-      },
-      [breakpoints.up("xl")]: {
-        fontSize: pxToRem(50),
-        lineHeight: 60 / 50,
+        lineHeight: 45 / 40,
       },
     },
     h4: {
@@ -171,11 +167,11 @@ deepmerge(
       lineHeight: 15 / 15,
     },
     h6: {
-      fontSize: pxToRem(12),
-      lineHeight: 20 / 12,
-      [breakpoints.up("xl")]: {
-        fontSize: pxToRem(16),
-        lineHeight: 24 / 16,
+      fontSize: pxToRem(16),
+      lineHeight: 20 / 16,
+      [breakpoints.up("lg")]: {
+        fontSize: pxToRem(20),
+        lineHeight: 30 / 20,
       },
     },
     subtitle1: {

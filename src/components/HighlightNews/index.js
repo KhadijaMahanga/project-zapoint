@@ -9,21 +9,19 @@ import Section from "@/jikopoint/components/Section";
 
 const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   root: {
-    marginBottom: typography.pxToRem(44),
-    marginTop: typography.pxToRem(44),
+    margin: typography.pxToRem(50, 0),
     [breakpoints.up("md")]: {
-      marginBottom: typography.pxToRem(58),
-      marginTop: typography.pxToRem(58),
+      margin: typography.pxToRem(50, 0),
     },
   },
   section: {},
   title: {
-    marginBottom: typography.pxToRem(32),
-    display: "block",
+    marginBottom: typography.pxToRem(10),
   },
-  button: {
-    paddingLeft: 0,
-    color: palette.info.main,
+  subtitle: {
+    marginBottom: typography.pxToRem(30),
+    display: "block",
+    color: palette.text.primary,
   },
   grid: {
     [breakpoints.up("md")]: {
@@ -42,15 +40,6 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
       },
     },
   },
-  cta: {
-    borderTop: ".01rem solid #eeeeee99",
-    marginTop: typography.pxToRem(40),
-    paddingTop: typography.pxToRem(20),
-    width: "100%",
-    [breakpoints.up("md")]: {
-      marginTop: typography.pxToRem(16),
-    },
-  },
 }));
 
 function HighlightNews({ items: itemsProp, title, subtitle, ...props }) {
@@ -66,14 +55,15 @@ function HighlightNews({ items: itemsProp, title, subtitle, ...props }) {
   return (
     <div className={classes.root}>
       <Section classes={{ root: classes.section }}>
-        <Typography variant="subtitle1" className={classes.title}>
+        <Typography variant="h3" className={classes.title}>
           {title}
         </Typography>
         <Typography
-          variant="subtitle1"
+          underline="none"
+          variant="h6"
           component={Link}
           href="/habari"
-          className={classes.title}
+          className={classes.subtitle}
         >
           {subtitle}
         </Typography>

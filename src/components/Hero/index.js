@@ -47,9 +47,9 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
     color: palette.text.secondary,
     margin: `${typography.pxToRem(20)} 0`,
   },
-  textH2: {
-    fontSize: typography.h2.fontSize,
-    fontFamily: typography.h2.fontFamily,
+  textH3: {
+    fontSize: typography.h3.fontSize,
+    fontFamily: typography.h3.fontFamily,
     color: palette.text.secondary,
     borderBottom: `5px solid ${palette.background.light}`,
     fontWeight: "bold",
@@ -91,7 +91,7 @@ function Hero({
               </Typography>
               <Hidden mdDown implementation="css">
                 <Grid item container>
-                  <Typography variant="h2" className={classes.starter}>
+                  <Typography variant="h3" className={classes.starter}>
                     {starterText}{" "}
                   </Typography>
                   <Typewriter
@@ -99,8 +99,8 @@ function Hero({
                       strings: subtitle,
                       autoStart: true,
                       loop: true,
-                      cursorClassName: classes.textH2,
-                      wrapperClassName: classes.textH2,
+                      cursorClassName: classes.textH3,
+                      wrapperClassName: classes.textH3,
                     }}
                   />
                 </Grid>
