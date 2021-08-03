@@ -1,4 +1,5 @@
 import {
+  Button,
   Card,
   CardActionArea,
   CardContent,
@@ -63,6 +64,20 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   cardActionAreaFocusHighlight: {
     backgroundColor: "inherit",
   },
+  category: {
+    color: palette.text.secondary,
+    backgroundColor: palette.secondary.main,
+    position: "absolute",
+    top: typography.pxToRem(20),
+    right: typography.pxToRem(20),
+    padding: typography.pxToRem(8),
+    fontSize: typography.pxToRem(13),
+    fontWeight: "normal",
+    "&:hover": {
+      color: palette.text.secondary,
+      backgroundColor: "#a0a0a0",
+    },
+  },
 }));
 
 function NewsCard({
@@ -98,7 +113,14 @@ function NewsCard({
       >
         <div className={classes.image}>
           <Image src={image?.url} alt={title} layout="fill" />
-          <Typography>{category?.name}</Typography>
+          <Button
+            underline="none"
+            component={Link}
+            href={`/habari/${category?.slug}`}
+            className={classes.category}
+          >
+            {category?.name}
+          </Button>
         </div>
         <CardContent classes={{ root: classes.cardContentRoot }}>
           {date && (
