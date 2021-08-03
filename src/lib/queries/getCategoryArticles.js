@@ -5,6 +5,7 @@ const CATEGORY_ARTICLES_QUERY = gql`
     categories(where: { slug: $slug }) {
       name
       articles(start: $start, limit: $limit, sort: "published_at:desc") {
+        date: published_at
         slug
         title
         content
