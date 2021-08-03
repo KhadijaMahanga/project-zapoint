@@ -97,7 +97,7 @@ function MobileNavigation({ ...props }) {
   return (
     <div className={classes.root}>
       <Section classes={{ root: classes.section }}>
-        <Grid container alignItems="center" justify="space-between">
+        <Grid container alignItems="center" justifyContent="space-between">
           <Grid item>
             <LogoButton />
           </Grid>
@@ -133,7 +133,7 @@ function MobileNavigation({ ...props }) {
           classes={{ root: classes.menuDialog, paper: classes.dialogPaper }}
         >
           <DialogActions className={classes.dialogActions}>
-            <Grid container alignItems="center" justify="flex-end">
+            <Grid container alignItems="center" justifyContent="flex-end">
               <Grid item>
                 <IconButton
                   aria-label="close drawer"
@@ -147,7 +147,7 @@ function MobileNavigation({ ...props }) {
             </Grid>
           </DialogActions>
           <DialogContent>
-            <Grid container justify="center" alignItems="center">
+            <Grid container justifyContent="center" alignItems="center">
               <List component="nav" className={classes.list}>
                 {menuItems.map(({ href, label }) => (
                   <ListItemLink key={href} underline="none" href={href}>

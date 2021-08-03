@@ -89,7 +89,7 @@ function TopBanner({ social, ...props }) {
             lg={6}
             container
             alignItems="center"
-            justify="flex-end"
+            justifyContent="flex-end"
             direction="row"
             className={classes.auth}
           >

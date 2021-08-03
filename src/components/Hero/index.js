@@ -84,7 +84,7 @@ function Hero({
       </div>
       <div className={classes.colorBg}>
         <Section classes={{ root: classes.section }}>
-          <Grid container alignItems="center" justify="flex-start">
+          <Grid container alignItems="center" justifyContent="flex-start">
             <Grid item xs={10} lg={8}>
               <Typography variant="h1" className={classes.text}>
                 {title}

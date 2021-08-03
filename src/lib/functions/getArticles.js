@@ -15,18 +15,17 @@ export default async function getArticles(limit = 10, start = 0) {
   };
 
   const variables = { start, limit };
-  console.log(query);
 
   await apolloClient
     .query({ query, variables })
     .then(({ data }) => {
-      if (!data) {
+      if (!data?.articles) {
         response.error = true;
         response.errorMessage =
           "An error occurred while trying to retrieve articles";
         return null;
       }
-      response.articles = data;
+      response.articles = data.articles;
       return null;
     })
     .catch((error) => {

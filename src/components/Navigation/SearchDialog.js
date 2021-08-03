@@ -111,7 +111,11 @@ function SearchDialog({
         <Toolbar disableGutters className={classes.toolbar}>
           <Section classes={{ root: classes.section }}>
             <Hidden lgUp implementation="css">
-              <Grid container alignItems="center" justify="space-between">
+              <Grid
+                container
+                alignItems="center"
+                justifyContent="space-between"
+              >
                 <Grid item>
                   <LogoButton />
                 </Grid>
@@ -136,7 +140,11 @@ function SearchDialog({
               </Grid>
             </Hidden>
             <Hidden mdDown implementation="css">
-              <Grid container alignItems="center" justify="space-between">
+              <Grid
+                container
+                alignItems="center"
+                justifyContent="space-between"
+              >
                 <Grid item>
                   <LogoButton />
                 </Grid>

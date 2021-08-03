@@ -74,12 +74,12 @@ function NewsCard({
     <Card className={classes.root}>
       <CardActionArea
         component={Component}
-        href={`/habari/${category}/${slug}`}
+        href={`/habari/${category?.slug}/${slug}`}
         classes={{ focusHighlight: classes.cardActionAreaFocusHighlight }}
       >
         <div className={classes.image}>
-          <Image src={image} alt={title} layout="fill" />
-          <Typography>{category}</Typography>
+          <Image src={image?.url} alt={title} layout="fill" />
+          <Typography>{category?.name}</Typography>
         </div>
         <CardContent classes={{ root: classes.cardContentRoot }}>
           {date && (
@@ -99,9 +99,14 @@ NewsCard.propTypes = {
   date: PropTypes.string,
   description: PropTypes.string,
   slug: PropTypes.string,
-  image: PropTypes.string,
+  image: PropTypes.shape({
+    url: PropTypes.string,
+  }),
   title: PropTypes.string,
-  category: PropTypes.string,
+  category: PropTypes.shape({
+    slug: PropTypes.string,
+    name: PropTypes.string,
+  }),
 };
 
 NewsCard.defaultProps = {

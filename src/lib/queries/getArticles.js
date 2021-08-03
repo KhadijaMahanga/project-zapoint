@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 
 const ARTICLES_QUERY = gql`
   query Posts($start: Int!, $limit: Int!) {
-    articles(start: $start, limit: $limit) {
+    articles(start: $start, limit: $limit, sort: "published_at:desc") {
       published_at
       author {
         name
