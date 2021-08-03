@@ -19,13 +19,10 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
     width: "100%",
     border: "1px solid #f1f1f1",
     height: typography.pxToRem(470),
-    [breakpoints.up("md")]: {
-      maxWidth: typography.pxToRem(320),
-      height: typography.pxToRem(440),
-    },
+    marginBottom: typography.pxToRem(20),
     [breakpoints.up("lg")]: {
       maxWidth: typography.pxToRem(388),
-      height: typography.pxToRem(470),
+      marginBottom: 0,
     },
   },
   date: {
