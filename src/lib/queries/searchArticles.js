@@ -3,6 +3,7 @@ import { gql } from "@apollo/client";
 const SEARCH_ARTICLES_QUERY = gql`
   query Posts($searchTerm: String!) {
     articles(
+      sort: "published_at:desc"
       where: {
         _or: [
           { title_contains: $searchTerm }

@@ -96,7 +96,7 @@ function Footer({ social, footerItems }) {
       <Section>
         <Grid
           container
-          justify="center"
+          justifyContent="center"
           alignItems="center"
           direction="column"
           className={classes.logoSocial}
@@ -152,7 +152,7 @@ function Footer({ social, footerItems }) {
         <Grid
           container
           alignItems="center"
-          justify="space-between"
+          justifyContent="space-between"
           className={classes.belowBanner}
         >
           <Grid item>
