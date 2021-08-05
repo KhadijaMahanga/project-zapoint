@@ -33,6 +33,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
+    "react-share": "^4.4.0",
     "remove": "^0.1.5",
     "svg-url-loader": "^7.1.1",
     "swr": "^0.5.6",

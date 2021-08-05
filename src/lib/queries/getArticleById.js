@@ -1,9 +1,9 @@
 import { gql } from "@apollo/client";
 
 const ARTICLE_QUERY = gql`
-  query Post($slug: String!) {
-    articles(where: { slug: $slug }) {
-      published_at
+  query Post($id: ID!) {
+    articles(where: { id: $id }) {
+      date: published_at
       author {
         name
       }
@@ -19,6 +19,10 @@ const ARTICLE_QUERY = gql`
         url
         alternativeText
       }
+    }
+    headers: categories {
+      slug
+      name
     }
   }
 `;
