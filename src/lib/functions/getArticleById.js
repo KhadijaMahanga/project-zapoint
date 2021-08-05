@@ -1,20 +1,20 @@
 import { addApolloState } from "@/jikopoint/lib/apolloConfig";
 import { initializeStrapiApollo } from "@/jikopoint/lib/connector";
-import ARTICLES_QUERY from "@/jikopoint/lib/queries/getArticles";
+import ARTICLE_QUERY from "@/jikopoint/lib/queries/getArticleById";
 
-export default async function getArticles(limit = 10, start = 0) {
-  const query = ARTICLES_QUERY;
+export default async function getArticleById(id) {
+  const query = ARTICLE_QUERY;
   const apolloClient = initializeStrapiApollo();
 
   // Set revalidate length (seconds).
-  const revalidate = 10;
+  const revalidate = 60 * 3;
   const response = {
-    articles: null,
+    article: null,
     error: false,
     errorMessage: null,
   };
 
-  const variables = { start, limit };
+  const variables = { id };
 
   await apolloClient
     .query({ query, variables })
@@ -25,9 +25,12 @@ export default async function getArticles(limit = 10, start = 0) {
           "An error occurred while trying to retrieve articles";
         return null;
       }
-      const { articles, categories } = data;
-      response.articles = articles;
-      response.categories = categories;
+      const {
+        articles: [article],
+        headers,
+      } = data;
+      response.article = article;
+      response.headers = headers;
 
       return null;
     })
@@ -39,7 +42,7 @@ export default async function getArticles(limit = 10, start = 0) {
   return addApolloState(apolloClient, {
     props: {
       ...response,
-      archive: true,
+      archive: false,
     },
     revalidate,
   });

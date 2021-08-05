@@ -3,11 +3,13 @@ import { gql } from "@apollo/client";
 const CATEGORY_ARTICLES_QUERY = gql`
   query Category($start: Int!, $limit: Int!, $slug: String!) {
     categories(where: { slug: $slug }) {
-      name
+      slug
       articles(start: $start, limit: $limit, sort: "published_at:desc") {
+        id
         date: published_at
         slug
         title
+        description
         content
         image {
           url
@@ -17,6 +19,10 @@ const CATEGORY_ARTICLES_QUERY = gql`
           name
         }
       }
+    }
+    headers: categories {
+      slug
+      name
     }
   }
 `;
