@@ -3,86 +3,86 @@ import PropTypes from "prop-types";
 import React from "react";
 import {
   TwitterShareButton,
+  TwitterIcon,
+  FacebookIcon,
   LinkedinShareButton,
+  LinkedinIcon,
   FacebookShareButton,
-  EmailShareButton,
+  WhatsappShareButton,
+  WhatsappIcon,
+  TelegramShareButton,
+  TelegramIcon,
 } from "react-share";
 
-import ShareButton from "./ShareButton";
 import useStyles from "./useStyles";
 
-import { ReactComponent as FacebookIcon } from "@/jikopoint/assets/icons/icon-facebook-color.svg";
-import { ReactComponent as LinkedInIcon } from "@/jikopoint/assets/icons/icon-linkedin-color.svg";
-import { ReactComponent as EmailIcon } from "@/jikopoint/assets/icons/icon-mail-color.svg";
-import { ReactComponent as TwitterIcon } from "@/jikopoint/assets/icons/icon-twitter-color.svg";
-import { ReactComponent as WhatsAppIcon } from "@/jikopoint/assets/icons/whatsapp-svgrepo-com.svg";
-
-const ShareBar = ({ socialLinks, title, children, ...props }) => {
+const ShareBar = ({ socialLinks, title, text, ...props }) => {
   const classes = useStyles(props);
   if (!socialLinks?.length) {
     return null;
   }
   const url = typeof window !== "undefined" ? window.location : null;
+
+  console.log(text);
   return (
     <div className={classes.root}>
-      {children && (
-        <Typography variant="body2" className={classes.children}>
-          {children}
+      {text && (
+        <Typography variant="body2" className={classes.text}>
+          {text}
         </Typography>
       )}
       {socialLinks.map((social) => {
         switch (social.name) {
           case "facebook":
             return (
-              <ShareButton
-                component={FacebookShareButton}
+              <FacebookShareButton
+                key={social.name}
                 title={title}
                 url={url}
-                alt={social.alt}
-                icon={FacebookIcon}
-              />
+                hashtag="jikoni"
+              >
+                <FacebookIcon className={classes.icon} alt={social.alt} />
+              </FacebookShareButton>
             );
           case "twitter":
             return (
-              <ShareButton
-                component={TwitterShareButton}
+              <TwitterShareButton
+                key={social.name}
                 title={title}
                 url={url}
+                hashtags={["#jikoni"]}
                 alt={social.alt}
-                icon={TwitterIcon}
-              />
+              >
+                <TwitterIcon className={classes.icon} />
+              </TwitterShareButton>
             );
           case "linkedin":
             return (
-              <ShareButton
-                component={LinkedinShareButton}
-                icon={LinkedInIcon}
-                title={title}
-                url={url}
-                alt={social.alt}
-              />
+              <LinkedinShareButton key={social.name} title={title} url={url}>
+                <LinkedinIcon className={classes.icon} />
+              </LinkedinShareButton>
             );
-          case "email":
+          case "whatsApp":
             return (
-              <ShareButton
-                component={EmailShareButton}
-                icon={EmailIcon}
+              <WhatsappShareButton
+                key={social.name}
                 title={title}
                 url={url}
                 alt={social.alt}
-                viewBox="0 0 24 24"
-              />
+              >
+                <WhatsappIcon className={classes.icon} />
+              </WhatsappShareButton>
             );
-          case "whatsapp":
+          case "telegram":
             return (
-              <ShareButton
-                component={EmailShareButton}
-                icon={WhatsAppIcon}
+              <TelegramShareButton
+                key={social.name}
                 title={title}
                 url={url}
                 alt={social.alt}
-                viewBox="0 0 24 24"
-              />
+              >
+                <TelegramIcon className={classes.icon} />
+              </TelegramShareButton>
             );
           default:
             return null;
@@ -97,16 +97,15 @@ ShareBar.propTypes = {
     PropTypes.shape({
       name: PropTypes.string,
       alt: PropTypes.string,
-      url: PropTypes.string,
     })
   ),
   title: PropTypes.string,
-  children: PropTypes.string,
+  text: PropTypes.string,
 };
 
 ShareBar.defaultProps = {
   socialLinks: undefined,
-  children: undefined,
+  text: undefined,
   title: undefined,
 };
 

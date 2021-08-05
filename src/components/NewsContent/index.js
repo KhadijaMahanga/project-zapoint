@@ -15,16 +15,13 @@ function NewsContent({ date, content, children, image, title, ...props }) {
   if (!content?.length && !image) {
     return null;
   }
-  const shareArgs = {
-    title,
-    socialLinks: [
-      { name: "facebook", alt: "facebook" },
-      { name: "twitter", alt: "twitter" },
-      { name: "linkedin", alt: "linkedin" },
-      { name: "whatsApp", alt: "whatsApp" },
-      { name: "email", alt: "email" },
-    ],
-  };
+  const socialLinks = [
+    { name: "facebook", alt: "facebook" },
+    { name: "twitter", alt: "twitter" },
+    { name: "linkedin", alt: "linkedin" },
+    { name: "whatsApp", alt: "whatsApp" },
+    { name: "telegram", alt: "telegram" },
+  ];
 
   const options = {
     year: "numeric",
@@ -57,7 +54,7 @@ function NewsContent({ date, content, children, image, title, ...props }) {
             </div>
           )}
         </Grid>
-        <ShareBar {...shareArgs}>{children}</ShareBar>
+        <ShareBar socialLinks={socialLinks} text="Shirikisha" title={title} />
         {content && (
           <Grid item md={8}>
             <RichTypography className={classes.content} variant="body1">
