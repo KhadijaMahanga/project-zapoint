@@ -13,6 +13,7 @@ const useStyles = makeStyles(({ palette }) => ({
   },
   toolbar: {
     display: "block",
+    minHeight: "unset",
   },
 }));
 
