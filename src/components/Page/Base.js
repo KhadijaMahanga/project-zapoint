@@ -35,6 +35,7 @@ function BasePage({ children, ...props }) {
         social={social}
         menuItems={menuItems}
         footerItems={footerItems}
+        {...props}
       />
       <NextSeo {...props} />
       {children}

@@ -2,6 +2,7 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
+  Divider,
   Grid,
   Hidden,
   IconButton,
@@ -10,6 +11,7 @@ import {
   Slide,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import clsx from "clsx";
 import PropTypes from "prop-types";
 import React, { useState } from "react";
 
@@ -42,6 +44,10 @@ const useStyles = makeStyles(({ palette, typography }) => ({
   dialogPaper: {
     backgroundColor: palette.secondary.main,
   },
+  divider: {
+    marginBottom: typography.pxToRem(30),
+    backgroundColor: palette.secondary.main,
+  },
   icon: {
     width: typography.pxToRem(25),
     height: typography.pxToRem(25),
@@ -62,8 +68,14 @@ const useStyles = makeStyles(({ palette, typography }) => ({
     top: "-1rem",
     color: palette.text.secondary,
     fontWeight: 700,
-    lineHeight: 2.5,
     marginTop: 0,
+    marginBottom: typography.pxToRem(20),
+  },
+  active: {
+    borderBottom: `1px solid ${palette.text.secondary}`,
+  },
+  category: {
+    marginLeft: typography.pxToRem(20),
   },
 }));
 
@@ -80,7 +92,14 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 function MobileNavigation({ ...props }) {
   const classes = useStyles(props);
-  const { menuItems, footerItems, setOpenSearch, handleOpenSearch } = props;
+  const {
+    menuItems,
+    footerItems,
+    setOpenSearch,
+    handleOpenSearch,
+    categories,
+    active,
+  } = props;
 
   const [openMenu, setOpenMenu] = useState(false);
 
@@ -149,17 +168,49 @@ function MobileNavigation({ ...props }) {
           <DialogContent>
             <Grid container justifyContent="center" alignItems="center">
               <List component="nav" className={classes.list}>
-                {menuItems.map(({ href, label }) => (
-                  <ListItemLink key={href} underline="none" href={href}>
-                    <ListItemText
-                      disableTypography
-                      className={classes.listItemText}
+                {menuItems
+                  .filter((a) => a.label.toLowerCase() !== "habari")
+                  .map(({ href, label }) => (
+                    <ListItemLink key={href} underline="none" href={href}>
+                      <ListItemText
+                        disableTypography
+                        className={classes.listItemText}
+                      >
+                        {label}
+                      </ListItemText>
+                    </ListItemLink>
+                  ))}
+                <ListItemLink underline="none" href="/habari">
+                  <ListItemText
+                    disableTypography
+                    className={classes.listItemText}
+                  >
+                    Habari
+                  </ListItemText>
+                </ListItemLink>
+                {categories &&
+                  categories?.map(({ slug, name }) => (
+                    <ListItemLink
+                      underline="none"
+                      key={slug}
+                      href={`/habari/${slug}`}
                     >
-                      {label}
-                    </ListItemText>
-                  </ListItemLink>
-                ))}
+                      <ListItemText
+                        disableTypography
+                        className={clsx(
+                          classes.listItemText,
+                          classes.category,
+                          {
+                            [classes.active]: slug === active,
+                          }
+                        )}
+                      >
+                        {name}
+                      </ListItemText>
+                    </ListItemLink>
+                  ))}
                 <Hidden smUp implementation="css">
+                  <Divider classes={{ root: classes.divider }} />
                   {footerItems.map(({ href, label }) => (
                     <ListItemLink underline="none" key={href} href={href}>
                       <ListItemText
@@ -195,6 +246,13 @@ MobileNavigation.propTypes = {
       href: PropTypes.string,
     })
   ),
+  categories: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      slug: PropTypes.string,
+    })
+  ),
+  active: PropTypes.string,
   setOpenSearch: PropTypes.func,
   social: PropTypes.shape({}),
 };
@@ -205,6 +263,8 @@ MobileNavigation.defaultProps = {
   menuItems: undefined,
   setOpenSearch: undefined,
   social: undefined,
+  categories: undefined,
+  active: undefined,
 };
 
 export default MobileNavigation;
