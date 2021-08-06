@@ -30,6 +30,9 @@ const useStyles = makeStyles(({ palette, typography, breakpoints }) => ({
   content: {
     marginTop: typography.pxToRem(20),
     lineHeight: 1.8,
+    "& > iframe": {
+      width: "100%",
+    },
   },
   description: {
     fontFamily: typography.h2.fontFamily,

@@ -56,10 +56,16 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   facebook: {
     color: palette.text.secondary,
     background: "#1a538a",
+    "&:hover": {
+      background: "#1a538a",
+    },
   },
   twitter: {
     background: "rgba(29,161,242,1.00)",
     color: palette.text.secondary,
+    "&:hover": {
+      background: "rgba(29,161,242,1.00)",
+    },
   },
   divider: {
     marginTop: typography.pxToRem(20),
