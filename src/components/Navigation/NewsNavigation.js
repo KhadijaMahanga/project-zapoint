@@ -85,7 +85,7 @@ function NewsNavigation({ categories, active, ...props }) {
             <Button
               underline="none"
               component={Link}
-              href="habari"
+              href="/habari"
               className={classes.news}
             >
               Habari
