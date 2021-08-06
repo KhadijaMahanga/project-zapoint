@@ -24,7 +24,7 @@ const useStyles = makeStyles(({ typography }) => ({
 function Index({ articles, categories }) {
   const classes = useStyles();
   return (
-    <Page>
+    <Page categories={categories}>
       <NewsNavigation categories={categories} />
       <Section classes={{ root: classes.section }}>
         <Grid container justifyContent="space-between">
