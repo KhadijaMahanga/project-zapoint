@@ -25,14 +25,21 @@ const useStyles = makeStyles(({ typography }) => ({
   },
 }));
 
-function Index({ article, articles, headers, archive, activeCategory }) {
+function Index({
+  article,
+  articles,
+  headers,
+  archive,
+  activeCategory,
+  ...props
+}) {
   const classes = useStyles();
   return (
-    <Page>
+    <Page categories={headers} active={activeCategory} {...props}>
       <NewsNavigation categories={headers} active={activeCategory} />
       {archive ? (
         <Section classes={{ root: classes.section }}>
-          <Grid container justifyContent="space-between">
+          <Grid container>
             {articles?.length &&
               articles?.map((art) => (
                 <Grid xs={12} md={6} lg={4} key={art.slug} item>

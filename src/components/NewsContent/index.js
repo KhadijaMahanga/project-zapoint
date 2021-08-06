@@ -62,13 +62,13 @@ function NewsContent({
           )}
         </Grid>
         {description && (
-          <Grid item md={8}>
+          <Grid item xs={12} md={8}>
             <RichTypography className={classes.description} variant="body1">
               {description}
             </RichTypography>
           </Grid>
         )}
-        <Grid item md={8}>
+        <Grid item xs={12} md={8}>
           {image?.url && (
             <div className={classes.image}>
               <Image
@@ -82,7 +82,7 @@ function NewsContent({
         </Grid>
         <ShareBar socialLinks={socialLinks} title={title} />
         {content && (
-          <Grid item md={8}>
+          <Grid xs={12} item md={8}>
             <RichTypography className={classes.content} variant="body1">
               {content}
             </RichTypography>

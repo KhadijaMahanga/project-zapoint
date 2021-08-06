@@ -1,4 +1,11 @@
-import { Button, Divider, List, ListItemText, Grid } from "@material-ui/core";
+import {
+  Button,
+  Divider,
+  Hidden,
+  List,
+  ListItemText,
+  Grid,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import PropTypes from "prop-types";
@@ -7,9 +14,12 @@ import React, { Fragment } from "react";
 import Link from "@/jikopoint/components/Link";
 import Section from "@/jikopoint/components/Section";
 
-const useStyles = makeStyles(({ palette, typography }) => ({
+const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   root: {
-    marginTop: typography.pxToRem(5),
+    marginTop: typography.pxToRem(10),
+    [breakpoints.up("md")]: {
+      marginTop: typography.pxToRem(20),
+    },
   },
   section: {},
   divider: {
@@ -91,31 +101,33 @@ function NewsNavigation({ categories, active, ...props }) {
               Habari
             </Button>
           </Grid>
-          <Grid item className={classes.flexDisplay}>
-            <List component="nav" className={classes.list}>
-              {categories.map(({ slug, name }, index) => (
-                <Fragment key={slug}>
-                  <ListItemLink underline="none" href={`/habari/${slug}`}>
-                    <ListItemText
-                      disableTypography
-                      className={clsx(classes.listItemText, {
-                        [classes.active]: slug === active,
-                      })}
-                    >
-                      {name}
-                    </ListItemText>
-                  </ListItemLink>
-                  {index + 1 !== categories.length && (
-                    <Divider
-                      orientation="vertical"
-                      flexItem
-                      classes={{ root: classes.divider }}
-                    />
-                  )}
-                </Fragment>
-              ))}
-            </List>
-          </Grid>
+          <Hidden mdDown implementation="css">
+            <Grid item className={classes.flexDisplay}>
+              <List component="nav" className={classes.list}>
+                {categories.map(({ slug, name }, index) => (
+                  <Fragment key={slug}>
+                    <ListItemLink underline="none" href={`/habari/${slug}`}>
+                      <ListItemText
+                        disableTypography
+                        className={clsx(classes.listItemText, {
+                          [classes.active]: slug === active,
+                        })}
+                      >
+                        {name}
+                      </ListItemText>
+                    </ListItemLink>
+                    {index + 1 !== categories.length && (
+                      <Divider
+                        orientation="vertical"
+                        flexItem
+                        classes={{ root: classes.divider }}
+                      />
+                    )}
+                  </Fragment>
+                ))}
+              </List>
+            </Grid>
+          </Hidden>
         </Grid>
       </Section>
     </div>
