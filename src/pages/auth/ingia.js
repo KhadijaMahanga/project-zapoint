@@ -133,7 +133,7 @@ function Ingia({ providers, csrfToken }) {
         <Grid
           container
           alignItems="center"
-          justify="space-around"
+          justifyContent="space-around"
           direction="column"
         >
           <div className={classes.iconDiv}>

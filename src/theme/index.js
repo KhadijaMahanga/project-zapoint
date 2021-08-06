@@ -52,9 +52,8 @@ const theme = createTheme({
       fontFamily: FONT_FAMILY_HEADING,
       fontStretch: "normal",
       fontStyle: "normal",
-      fontWeight: 700,
+      fontWeight: 400,
       letterSpacing: 0,
-      textTransform: "uppercase",
     },
     h5: {
       fontFamily: FONT_FAMILY_TEXT,
@@ -147,50 +146,32 @@ deepmerge(
       fontSize: pxToRem(35),
       lineHeight: 40 / 35,
       [breakpoints.up("lg")]: {
+        fontSize: pxToRem(50),
+        lineHeight: 50 / 50,
+      },
+    },
+    h3: {
+      fontSize: pxToRem(35),
+      lineHeight: 40 / 35,
+      [breakpoints.up("lg")]: {
         fontSize: pxToRem(40),
         lineHeight: 45 / 40,
       },
     },
-    h3: {
-      fontSize: pxToRem(30),
-      lineHeight: 40 / 30,
-      [breakpoints.up("lg")]: {
-        fontSize: pxToRem(40),
-        lineHeight: 40 / 40,
-      },
-      [breakpoints.up("xl")]: {
-        fontSize: pxToRem(50),
-        lineHeight: 60 / 50,
-      },
-    },
     h4: {
-      fontSize: pxToRem(20),
-      lineHeight: 29 / 20,
-      letterSpacing: pxToRem(2),
-      [breakpoints.up("xl")]: {
-        fontSize: pxToRem(30),
-        lineHeight: 38 / 30,
-        letterSpacing: pxToRem(3),
-      },
+      fontSize: pxToRem(25),
+      lineHeight: 35 / 25,
     },
     h5: {
-      fontSize: pxToRem(18),
-      lineHeight: 20 / 18,
-      [breakpoints.up("lg")]: {
-        fontSize: pxToRem(16),
-        lineHeight: 20 / 16,
-      },
-      [breakpoints.up("xl")]: {
-        fontSize: pxToRem(20),
-        lineHeight: 30 / 20,
-      },
+      fontSize: pxToRem(15),
+      lineHeight: 15 / 15,
     },
     h6: {
-      fontSize: pxToRem(12),
-      lineHeight: 20 / 12,
-      [breakpoints.up("xl")]: {
-        fontSize: pxToRem(16),
-        lineHeight: 24 / 16,
+      fontSize: pxToRem(16),
+      lineHeight: 20 / 16,
+      [breakpoints.up("lg")]: {
+        fontSize: pxToRem(20),
+        lineHeight: 30 / 20,
       },
     },
     subtitle1: {

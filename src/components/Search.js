@@ -84,7 +84,7 @@ function Search({ ...props }) {
   return (
     <Grid
       container
-      justify="center"
+      justifyContent="center"
       alignItems="flex-end"
       alignContent="center"
       className={classes.root}

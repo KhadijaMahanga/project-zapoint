@@ -1,23 +1,15 @@
-import {
-  Divider,
-  IconButton,
-  List,
-  ListItemText,
-  Grid,
-} from "@material-ui/core";
+import { Button, Divider, List, ListItemText, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import clsx from "clsx";
 import PropTypes from "prop-types";
 import React, { Fragment } from "react";
 
-import { ReactComponent as SearchIcon } from "@/jikopoint/assets/icons/icon-search-grey.svg";
 import Link from "@/jikopoint/components/Link";
-import LogoButton from "@/jikopoint/components/LogoButton";
-import SearchDialog from "@/jikopoint/components/Navigation/SearchDialog";
 import Section from "@/jikopoint/components/Section";
 
 const useStyles = makeStyles(({ palette, typography }) => ({
   root: {
-    backgroundColor: palette.background.default,
+    marginTop: typography.pxToRem(5),
   },
   section: {},
   divider: {
@@ -31,7 +23,7 @@ const useStyles = makeStyles(({ palette, typography }) => ({
     height: typography.pxToRem(25),
   },
   menuButton: {
-    color: palette.background.dark,
+    color: palette.text.primary,
     padding: 0,
     marginLeft: typography.pxToRem(30),
     "&:hover": {
@@ -50,8 +42,24 @@ const useStyles = makeStyles(({ palette, typography }) => ({
     fontWeight: 400,
     textTransform: "uppercase",
   },
+  active: {
+    borderBottom: `1px solid ${palette.secondary.main}`,
+  },
   flexDisplay: {
     display: "flex",
+    padding: `0 ${typography.pxToRem(10)}`,
+  },
+  news: {
+    color: palette.text.secondary,
+    backgroundColor: palette.secondary.main,
+    padding: typography.pxToRem(8),
+    fontSize: typography.pxToRem(20),
+    fontFamily: typography.h2.fontFamily,
+    fontWeight: "normal",
+    "&:hover": {
+      color: palette.text.secondary,
+      backgroundColor: "#a0a0a0",
+    },
   },
 }));
 
@@ -62,30 +70,42 @@ function ListItemLink(props) {
   );
 }
 
-function DesktopNavigation({ ...props }) {
+function NewsNavigation({ categories, active, ...props }) {
   const classes = useStyles(props);
-  const { handleOpenSearch, menuItems } = props;
+
+  if (!categories?.length) {
+    return null;
+  }
 
   return (
     <div className={classes.root}>
       <Section classes={{ root: classes.section }}>
         <Grid container alignItems="center" justifyContent="space-between">
           <Grid item>
-            <LogoButton />
+            <Button
+              underline="none"
+              component={Link}
+              href="/habari"
+              className={classes.news}
+            >
+              Habari
+            </Button>
           </Grid>
           <Grid item className={classes.flexDisplay}>
             <List component="nav" className={classes.list}>
-              {menuItems.map(({ href, label }, index) => (
-                <Fragment key={href}>
-                  <ListItemLink underline="none" href={href}>
+              {categories.map(({ slug, name }, index) => (
+                <Fragment key={slug}>
+                  <ListItemLink underline="none" href={`/habari/${slug}`}>
                     <ListItemText
                       disableTypography
-                      className={classes.listItemText}
+                      className={clsx(classes.listItemText, {
+                        [classes.active]: slug === active,
+                      })}
                     >
-                      {label}
+                      {name}
                     </ListItemText>
                   </ListItemLink>
-                  {index + 1 !== menuItems.length && (
+                  {index + 1 !== categories.length && (
                     <Divider
                       orientation="vertical"
                       flexItem
@@ -95,37 +115,28 @@ function DesktopNavigation({ ...props }) {
                 </Fragment>
               ))}
             </List>
-            <IconButton
-              aria-label="Open drawer"
-              edge="start"
-              onClick={handleOpenSearch}
-              className={classes.menuButton}
-            >
-              <SearchIcon className={classes.icon} />
-            </IconButton>
           </Grid>
         </Grid>
       </Section>
-      <SearchDialog {...props} />
     </div>
   );
 }
 
-DesktopNavigation.propTypes = {
-  handleOpenSearch: PropTypes.func,
-  menuItems: PropTypes.arrayOf(
+NewsNavigation.propTypes = {
+  categories: PropTypes.arrayOf(
     PropTypes.shape({
-      label: PropTypes.string,
-      href: PropTypes.string,
+      name: PropTypes.string,
+      slug: PropTypes.string,
     })
   ),
+  active: PropTypes.string,
   social: PropTypes.shape({}),
 };
 
-DesktopNavigation.defaultProps = {
-  handleOpenSearch: undefined,
-  menuItems: undefined,
+NewsNavigation.defaultProps = {
+  active: undefined,
+  categories: undefined,
   social: undefined,
 };
 
-export default DesktopNavigation;
+export default NewsNavigation;
