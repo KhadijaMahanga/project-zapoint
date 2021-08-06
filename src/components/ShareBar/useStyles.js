@@ -18,17 +18,14 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
     fontSize: 11,
   },
   icon: {
-    // padding: typography.pxToRem(14),
-    // fill: palette.primary.main, // temporary until we get correct icons
-    // background: palette.background.light,
     borderRadius: "50%",
-    height: typography.pxToRem(43),
-    width: typography.pxToRem(43),
-    marginRight: typography.pxToRem(1),
+    height: typography.pxToRem(40),
+    width: typography.pxToRem(40),
+    marginLeft: typography.pxToRem(3),
     cursor: "pointer",
     [breakpoints.up("md")]: {
-      height: typography.pxToRem(48),
-      width: typography.pxToRem(48),
+      height: typography.pxToRem(45),
+      width: typography.pxToRem(45),
     },
   },
 }));

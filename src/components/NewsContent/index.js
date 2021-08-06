@@ -9,7 +9,15 @@ import RichTypography from "@/jikopoint/components/RichTypography";
 import Section from "@/jikopoint/components/Section";
 import ShareBar from "@/jikopoint/components/ShareBar";
 
-function NewsContent({ date, content, children, image, title, ...props }) {
+function NewsContent({
+  date,
+  content,
+  author,
+  description,
+  image,
+  title,
+  ...props
+}) {
   const classes = useStyles(props);
 
   if (!content?.length && !image) {
@@ -37,10 +45,28 @@ function NewsContent({ date, content, children, image, title, ...props }) {
         </Typography>
       )}
       <Grid container direction="column" className={classes.root}>
-        {date && (
-          <Typography className={classes.date} variant="h6">
-            {new Date(date).toLocaleString("en-GB", options)}
-          </Typography>
+        <Grid item container md={8} justifyContent="space-between">
+          {author?.name && (
+            <Grid item>
+              <Typography className={classes.date} variant="h6">
+                {`Na ${author?.name}`}
+              </Typography>
+            </Grid>
+          )}
+          {date && (
+            <Grid item>
+              <Typography className={classes.date} variant="h6">
+                {new Date(date).toLocaleString("en-GB", options)}
+              </Typography>
+            </Grid>
+          )}
+        </Grid>
+        {description && (
+          <Grid item md={8}>
+            <RichTypography className={classes.description} variant="body1">
+              {description}
+            </RichTypography>
+          </Grid>
         )}
         <Grid item md={8}>
           {image?.url && (
@@ -54,7 +80,7 @@ function NewsContent({ date, content, children, image, title, ...props }) {
             </div>
           )}
         </Grid>
-        <ShareBar socialLinks={socialLinks} text="Shirikisha" title={title} />
+        <ShareBar socialLinks={socialLinks} title={title} />
         {content && (
           <Grid item md={8}>
             <RichTypography className={classes.content} variant="body1">
@@ -69,19 +95,23 @@ function NewsContent({ date, content, children, image, title, ...props }) {
 
 NewsContent.propTypes = {
   title: PropTypes.string,
+  description: PropTypes.string,
   date: PropTypes.string,
   content: PropTypes.string,
-  children: PropTypes.string,
   image: PropTypes.shape({
     url: PropTypes.string,
+  }),
+  author: PropTypes.shape({
+    name: PropTypes.string,
   }),
 };
 
 NewsContent.defaultProps = {
   title: undefined,
+  description: undefined,
   date: undefined,
   content: undefined,
-  children: undefined,
+  author: undefined,
   image: undefined,
 };
 

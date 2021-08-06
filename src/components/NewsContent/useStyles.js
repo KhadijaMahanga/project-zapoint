@@ -13,6 +13,7 @@ const useStyles = makeStyles(({ palette, typography, breakpoints }) => ({
   date: {
     marginTop: typography.pxToRem(20),
     marginBottom: typography.pxToRem(20),
+    fontSize: typography.pxToRem(18),
   },
   image: {
     position: "relative",
@@ -23,12 +24,18 @@ const useStyles = makeStyles(({ palette, typography, breakpoints }) => ({
       height: typography.pxToRem(320),
     },
     [breakpoints.up("lg")]: {
-      width: typography.pxToRem(792),
       height: typography.pxToRem(526),
     },
   },
   content: {
     marginTop: typography.pxToRem(20),
+    lineHeight: 1.8,
+  },
+  description: {
+    fontFamily: typography.h2.fontFamily,
+    marginBottom: typography.pxToRem(40),
+    paddingBottom: typography.pxToRem(10),
+    borderBottom: "1px solid #f1f1f1",
   },
   title: {
     fontWeight: 400,
