@@ -35,7 +35,7 @@ function Pagination({ next, previous, size, ...props }) {
 
   return (
     <div className={classes.root}>
-      <Grid container justify="center">
+      <Grid container justifyContent="center">
         <Grid item className={classes.buttonGrid}>
           <PaginationButton
             {...props}
