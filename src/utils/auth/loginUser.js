@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import User from "@/jikopoint/models/user";
 import dbConnect from "@/jikopoint/utils/mongoose";
 
-async function validateCredentials({ email, password }) {
+async function loginUser({ email, password }) {
   if (!password) {
     return false;
   }
@@ -20,7 +20,7 @@ async function validateCredentials({ email, password }) {
   if (!isValidUser) {
     throw new Error("Barua pepe/nywila iliyotumika si sahisi");
   }
-  return true;
+  return dbUser;
 }
 
-export default validateCredentials;
+export default loginUser;

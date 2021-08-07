@@ -3,11 +3,23 @@ import jwt from "jsonwebtoken";
 import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
 
-import validateCredentials from "@/jikopoint/utils/auth/validateCredentials";
+import loginUser from "@/jikopoint/utils/auth/loginUser";
+import registerUser from "@/jikopoint/utils/auth/registerUser";
 
 export default NextAuth({
   // Configure one or more authentication providers
   providers: [
+    Providers.Email({
+      server: {
+        host: process.env.EMAIL_SERVER_HOST,
+        port: process.env.EMAIL_SERVER_PORT,
+        auth: {
+          user: process.env.EMAIL_SERVER_USER,
+          pass: process.env.EMAIL_SERVER_PASSWORD,
+        },
+      },
+      from: process.env.EMAIL_FROM,
+    }),
     Providers.Facebook({
       clientId: process.env.FACEBOOK_CLIENT_ID,
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
@@ -21,15 +33,33 @@ export default NextAuth({
       clientSecret: process.env.TWITTER_SECRET,
     }),
     Providers.Credentials({
-      name: "Credentials",
+      id: "login",
+      name: "Login",
       async authorize(credentials) {
         // logic to look up the user from the credentials supplied
         try {
-          const user = validateCredentials(credentials);
+          const user = loginUser(credentials);
+          if (!user?.isActive) {
+            throw new Error(
+              "Akaunti yako si kamilifu. Pitia kwenye barua pepe yako kuikamilisha"
+            );
+          }
+          return user;
+        } catch (e) {
+          throw new Error(e);
+        }
+      },
+    }),
+    Providers.Credentials({
+      id: "register",
+      name: "Register",
+      async authorize(credentials) {
+        try {
+          const user = await registerUser(credentials);
           if (user !== null) {
             return user;
           }
-          return null;
+          throw new Error("Tafadhali jaribu tena");
         } catch (e) {
           throw new Error(e);
         }
@@ -70,7 +100,7 @@ export default NextAuth({
   // pages is not specified for that route.
   // https://next-auth.js.org/configuration/pages
   pages: {
-    signIn: "/auth/ingia", // Displays signin buttons
+    signIn: "/auth/jiunge", // Displays signin buttons
     // error: "/auth/ingia", // Error code passed in query string as ?error=
     // verifyRequest: "/auth/verify-request", // Used for check email page
     // newUser: null // If set, new users will be directed here on first sign in
@@ -84,15 +114,15 @@ export default NextAuth({
     // async redirect(url, baseUrl) { return baseUrl },
     // async session(session, user) { return session },
     // async jwt(token, user, account, profile, isNewUser) { return token }
-    async signIn(user, account) {
-      if (account.type === "oauth" || account.type === "email") {
-        return true;
-      }
-      if (!user?.isActive) {
-        return false;
-      }
-      return true;
-    },
+    // async signIn(user, account) {
+    //   if (account.type === "oauth" || account.type === "email") {
+    //     return true;
+    //   }
+    //   if (!user?.isActive) {
+    //     return false;
+    //   }
+    //   return true;
+    // },
     async session(session, token) {
       if (token?.user) {
         session.user = token.user;

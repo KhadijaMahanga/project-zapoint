@@ -115,6 +115,7 @@ function TopBanner({ social, ...props }) {
               <Button
                 component={Link}
                 underline="none"
+                href="/auth/jiunge"
                 startIcon={<IconLogin className={classes.icon} />}
                 classes={{ text: classes.button }}
               >
