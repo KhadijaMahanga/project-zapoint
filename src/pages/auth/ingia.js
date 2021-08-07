@@ -2,14 +2,10 @@ import { Button, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import clsx from "clsx";
-import {
-  signIn,
-  getSession,
-  getProviders,
-  getCsrfToken,
-} from "next-auth/client";
+import { getSession, getProviders, getCsrfToken } from "next-auth/client";
+import { useRouter } from "next/router";
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useEffect } from "react";
 
 import { ReactComponent as IconFacebook } from "@/jikopoint/assets/icons/icon-facebook-white.svg";
 import { ReactComponent as IconGoogle } from "@/jikopoint/assets/icons/icon-google-color.svg";
@@ -18,6 +14,7 @@ import { ReactComponent as IconTwitter } from "@/jikopoint/assets/icons/icon-twi
 import Login from "@/jikopoint/components/Auth/Login";
 import Page from "@/jikopoint/components/Page";
 import Section from "@/jikopoint/components/Section";
+import useAuth from "@/jikopoint/hooks/useAuth";
 
 const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   section: {
@@ -81,7 +78,7 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
     margin: `0 ${typography.pxToRem(5)}`,
   },
 }));
-function SwitchCase({ provider }) {
+function SwitchCase({ provider, signIn }) {
   const classes = useStyles();
   switch (provider.name) {
     case "Facebook":
@@ -114,7 +111,8 @@ function SwitchCase({ provider }) {
           Ingia kupitia {provider.name}
         </Button>
       );
-    case "Credentials":
+    case "Login":
+    case "Register":
     default:
       return null;
   }
@@ -124,15 +122,24 @@ SwitchCase.propTypes = {
     id: PropTypes.string,
     name: PropTypes.string,
   }),
+  signIn: PropTypes.func,
 };
 
 SwitchCase.defaultProps = {
   provider: undefined,
+  signIn: undefined,
 };
 
 function Ingia({ providers, csrfToken }) {
   const classes = useStyles();
+  const router = useRouter();
+  const { isAuthenticated, signIn } = useAuth();
 
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push("/auth/profile");
+    }
+  }, [isAuthenticated]);
   return (
     <Page>
       <Section className={classes.section}>
@@ -157,7 +164,7 @@ function Ingia({ providers, csrfToken }) {
             </div>
             {providers &&
               Object.values(providers).map((provider) => (
-                <SwitchCase provider={provider} />
+                <SwitchCase provider={provider} signIn={signIn} />
               ))}
           </Grid>
         </Grid>
@@ -184,7 +191,7 @@ export async function getServerSideProps(context) {
 
   if (session && res && session.accessToken) {
     res.writeHead(302, {
-      Location: "/",
+      Location: "/auth/profile",
     });
     res.end();
     return null;

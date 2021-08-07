@@ -1,6 +1,8 @@
 import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
+import { signIn, getCsrfToken } from "next-auth/client";
+import PropTypes from "prop-types";
 import React from "react";
 
 import { ReactComponent as IconLogin } from "@/jikopoint/assets/icons/icon-login-white.svg";
@@ -40,7 +42,7 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   },
 }));
 
-function Jiunge() {
+function Jiunge({ csrfToken }) {
   const classes = useStyles();
 
   return (
@@ -59,12 +61,28 @@ function Jiunge() {
             <Typography variant="h4">Fungua akaunti mpya</Typography>
           </Grid>
           <Grid item xs={12} md={4}>
-            <Rgister />
+            <Rgister signIn={signIn} csrfToken={csrfToken} />
           </Grid>
         </Grid>
       </Section>
     </Page>
   );
+}
+
+Jiunge.propTypes = {
+  csrfToken: PropTypes.string,
+};
+
+Jiunge.defaultProps = {
+  csrfToken: undefined,
+};
+
+export async function getServerSideProps(context) {
+  return {
+    props: {
+      csrfToken: await getCsrfToken(context),
+    },
+  };
 }
 
 export default Jiunge;

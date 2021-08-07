@@ -67,18 +67,20 @@ function Login({ signIn, csrfToken }) {
     e.stopPropagation();
 
     if (!emailError.length && !passwordError.length && email && password) {
-      const res = await signIn("credentials", {
+      const res = await signIn("login", {
         email,
         password,
         redirect: false,
       });
 
-      if (res?.error) {
+      if (res.error) {
         setLoginError(res.error);
+      } else {
+        router.push("/auth/profile");
       }
-      if (res.url) {
-        router.push(res.url);
-      }
+      // if (res.url) {
+      //   router.push(res.url);
+      // }
     }
   };
 

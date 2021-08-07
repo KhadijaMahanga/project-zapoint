@@ -22,7 +22,7 @@ function isJson(item) {
   return false;
 }
 
-async function registerUser(credentials, req) {
+async function registerUser(credentials) {
   // logic here to look up the user from the credentials supplied
   const creds = isJson(credentials) ? credentials : JSON.parse(credentials);
 
@@ -33,13 +33,13 @@ async function registerUser(credentials, req) {
   }
 
   if (!email || !password) {
-    return Promise.resolve(false);
+    throw new Error("Email and Password are required");
   }
 
   const userExists = await User.findOne({ email }).exec();
 
   if (userExists) {
-    return Promise.resolve(false);
+    throw new Error("A user with that email address already exists");
   }
 
   const doc = {
@@ -47,22 +47,22 @@ async function registerUser(credentials, req) {
     lastName,
     role: role ?? "trainee",
     email,
+    username: email,
     password,
   };
 
-  const created = await new User(doc)
-    .save()
-    .catch((e) => console.log("err!", e));
-
-  if (!created) {
-    return Promise.resolve(false);
+  try {
+    const created = await new User(doc).save();
+    if (!created) {
+      return Promise.resolve(false);
+    }
+    // FIXME: verification does not get generated to sent
+    const response = await sendVerificationRequest(created.email, csrfToken);
+    console.log("🚀 ~ verification: ~ response status:", response);
+    return Promise.resolve(created);
+  } catch (e) {
+    throw new Error(e);
   }
-
-  // FIXME: verification does not get generated to sent
-  const response = await sendVerificationRequest(created.email, csrfToken);
-  console.log("🚀 ~ verification: ~ response status:", response.status);
-
-  return Promise.resolve(created);
 }
 
 export default registerUser;

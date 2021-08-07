@@ -14,6 +14,11 @@ const UserSchema = new Schema(
       type: String,
       lowercase: true,
     },
+    username: {
+      type: String,
+      unique: true,
+      lowercase: true,
+    },
     email: {
       type: String,
       lowercase: true,
@@ -51,8 +56,7 @@ const UserSchema = new Schema(
       },
     ],
     role: {
-      type: Schema.Types.ObjectId,
-      ref: "UserRole",
+      type: String,
       required: true,
     },
     isActive: {

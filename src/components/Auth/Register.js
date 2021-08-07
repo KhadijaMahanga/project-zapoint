@@ -8,6 +8,7 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useRouter } from "next/router";
+import PropTypes from "prop-types";
 import React, { useState } from "react";
 
 import Link from "@/jikopoint/components/Link";
@@ -35,7 +36,7 @@ const useStyles = makeStyles(({ palette, typography }) => ({
   },
 }));
 
-function Register() {
+function Register({ signIn, csrfToken }) {
   const classes = useStyles();
   const router = useRouter();
 
@@ -69,23 +70,18 @@ function Register() {
     e.stopPropagation();
 
     if (!emailError.length && !passwordError.length && email && password) {
-      const credentials = {
+      const res = await signIn("register", {
         email,
         password,
         firstName,
         lastName,
-      };
-      const res = await fetch(`${process.env.NEXTAUTH_URL}/api/users/`, {
-        method: "POST",
-        "Content-Type": "application/json",
-        body: JSON.stringify(credentials),
+        redirect: false,
       });
 
-      if (res?.error) {
+      if (res.error) {
         setRegisterError(res.error);
-      }
-      if (res.url) {
-        router.push(res.url);
+      } else {
+        router.push("/auth/activate");
       }
     }
   };
@@ -95,6 +91,7 @@ function Register() {
       {registerError.length > 0 && (
         <Typography variant="overline"> {registerError}</Typography>
       )}
+      <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
       <Grid container spacing={1}>
         <Grid item xs={12} sm={6}>
           <TextField
@@ -190,5 +187,15 @@ function Register() {
     </form>
   );
 }
+
+Register.propTypes = {
+  signIn: PropTypes.func,
+  csrfToken: PropTypes.string,
+};
+
+Register.defaultProps = {
+  signIn: undefined,
+  csrfToken: undefined,
+};
 
 export default Register;
