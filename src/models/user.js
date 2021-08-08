@@ -6,17 +6,8 @@ const MODEL_NAME = "User";
 
 const UserSchema = new Schema(
   {
-    firstName: {
+    name: {
       type: String,
-      lowercase: true,
-    },
-    lastName: {
-      type: String,
-      lowercase: true,
-    },
-    username: {
-      type: String,
-      unique: true,
       lowercase: true,
     },
     email: {
@@ -55,13 +46,13 @@ const UserSchema = new Schema(
         ref: "Session",
       },
     ],
+    image: {
+      type: String,
+      lowercase: true,
+    },
     role: {
       type: String,
-      required: true,
-    },
-    isActive: {
-      type: Boolean,
-      default: false,
+      default: "trainee",
     },
     isDeleted: {
       type: Boolean,

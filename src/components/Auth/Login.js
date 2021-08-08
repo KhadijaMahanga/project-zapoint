@@ -78,9 +78,6 @@ function Login({ signIn, csrfToken }) {
       } else {
         router.push("/auth/profile");
       }
-      // if (res.url) {
-      //   router.push(res.url);
-      // }
     }
   };
 

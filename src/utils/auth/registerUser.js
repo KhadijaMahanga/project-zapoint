@@ -26,7 +26,7 @@ async function registerUser(credentials) {
   // logic here to look up the user from the credentials supplied
   const creds = isJson(credentials) ? credentials : JSON.parse(credentials);
 
-  const { csrfToken, firstName, lastName, email, password, role } = creds;
+  const { csrfToken, name, email, password, role } = creds;
 
   if (mongoose.connections[0].readyState !== 1) {
     await dbConnect();
@@ -43,8 +43,7 @@ async function registerUser(credentials) {
   }
 
   const doc = {
-    firstName,
-    lastName,
+    name,
     role: role ?? "trainee",
     email,
     username: email,
@@ -57,7 +56,7 @@ async function registerUser(credentials) {
       return Promise.resolve(false);
     }
     // FIXME: verification does not get generated to sent
-    const response = await sendVerificationRequest(created.email, csrfToken);
+    const response = await sendVerificationRequest(created.email);
     console.log("🚀 ~ verification: ~ response status:", response);
     return Promise.resolve(created);
   } catch (e) {
