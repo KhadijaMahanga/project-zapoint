@@ -10,14 +10,7 @@ export default NextAuth({
   // Configure one or more authentication providers
   providers: [
     Providers.Email({
-      server: {
-        host: process.env.EMAIL_SERVER_HOST,
-        port: process.env.EMAIL_SERVER_PORT,
-        auth: {
-          user: process.env.EMAIL_SERVER_USER,
-          pass: process.env.EMAIL_SERVER_PASSWORD,
-        },
-      },
+      server: process.env.SMTP_SERVER,
       from: process.env.EMAIL_FROM,
     }),
     Providers.Facebook({
@@ -67,7 +60,7 @@ export default NextAuth({
     }),
   ],
   // A database is optional, but required to persist accounts in a database
-  database: process.env.MONGO_URL,
+  database: process.env.MONGODB_URI,
   secret: process.env.SECRET,
   redirect: false,
   session: {
@@ -102,7 +95,7 @@ export default NextAuth({
   pages: {
     signIn: "/auth/jiunge", // Displays signin buttons
     // error: "/auth/ingia", // Error code passed in query string as ?error=
-    // verifyRequest: "/auth/verify-request", // Used for check email page
+    verifyRequest: "/auth/kamilisha", // Used for check email page
     // newUser: null // If set, new users will be directed here on first sign in
   },
 
@@ -114,27 +107,39 @@ export default NextAuth({
     // async redirect(url, baseUrl) { return baseUrl },
     // async session(session, user) { return session },
     // async jwt(token, user, account, profile, isNewUser) { return token }
-    // async signIn(user, account) {
-    //   if (account.type === "oauth" || account.type === "email") {
-    //     return true;
-    //   }
-    //   if (!user?.isActive) {
-    //     return false;
-    //   }
-    //   return true;
-    // },
+    async signIn(user, account, profile) {
+      if (account.type === "oauth" || account.type === "email") {
+        console.log(user);
+        // save/ update user here
+      }
+      console.log("Sign in call back");
+      console.log(user);
+      console.log(account);
+      console.log(profile);
+      return true;
+    },
     async session(session, token) {
       if (token?.user) {
         session.user = token.user;
       }
-      session.accessToken = token.accessToken;
-
+      if (token?.accessToken) {
+        session.accessToken = token.accessToken;
+      }
+      if (token?.roles) {
+        session.user.roles = token.roles;
+      }
       return session;
     },
-    async jwt(token, user) {
+    async jwt(token, user, account) {
       if (typeof user !== typeof undefined) {
         token.auth_time = Number(new Date());
         token.user = user;
+      }
+      if (account?.accessToken) {
+        token.accessToken = account.accessToken;
+      }
+      if (user?.roles) {
+        token.roles = user.roles;
       }
       return token;
     },

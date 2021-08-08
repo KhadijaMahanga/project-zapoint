@@ -40,8 +40,7 @@ function Register({ signIn, csrfToken }) {
   const classes = useStyles();
   const router = useRouter();
 
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [name, setName] = useState("");
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -73,15 +72,17 @@ function Register({ signIn, csrfToken }) {
       const res = await signIn("register", {
         email,
         password,
-        firstName,
-        lastName,
+        name,
+        csrfToken,
         redirect: false,
       });
+
+      console.log(res);
 
       if (res.error) {
         setRegisterError(res.error);
       } else {
-        router.push("/auth/activate");
+        router.push("/auth/kamilisha/");
       }
     }
   };
@@ -93,31 +94,18 @@ function Register({ signIn, csrfToken }) {
       )}
       <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
       <Grid container spacing={1}>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12}>
           <TextField
             autoComplete="fname"
-            name="firstName"
+            name="name"
             variant="outlined"
             required
             fullWidth
-            id="firstName"
-            label="Jina la kwanza"
+            id="name"
+            label="Jina"
             autoFocus
             InputLabelProps={{ classes: { root: classes.label } }}
-            onChange={(e) => setFirstName(e.target.value)}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            variant="outlined"
-            required
-            fullWidth
-            id="lastName"
-            label="Jina la mwisho"
-            name="lastName"
-            autoComplete="lname"
-            InputLabelProps={{ classes: { root: classes.label } }}
-            onChange={(e) => setLastName(e.target.value)}
+            onChange={(e) => setName(e.target.value)}
           />
         </Grid>
         <Grid item xs={12}>

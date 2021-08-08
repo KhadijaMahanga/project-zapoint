@@ -7,10 +7,10 @@ import Section from "@/jikopoint/components/Section";
 function Kamilisha() {
   return (
     <Page>
-      <Section>
-        <Typography variant="h2">
-          Ahsante kwa kujiandikisha, nenda kwenye barua pepe yako kukamilisha
-          akaunti yako.
+      <Section style={{ height: "100vh", padding: "50px" }}>
+        <Typography variant="subtitle1">
+          {`Ahsante kwa kujiandikisha, nenda kwenye kisanduku pokezi kukamilisha
+          akaunti yako.`}
         </Typography>
       </Section>
     </Page>

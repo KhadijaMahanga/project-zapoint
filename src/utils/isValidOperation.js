@@ -1,5 +1,5 @@
 const allowedFields = {
-  user: ["firstName", "lastName", "password"],
+  user: ["name", "password"],
 };
 
 // all fields must exist for this to return true
