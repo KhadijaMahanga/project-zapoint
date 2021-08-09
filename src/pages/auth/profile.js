@@ -1,12 +1,12 @@
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 import React from "react";
 
 import Page from "@/jikopoint/components/Page";
 import useAuth from "@/jikopoint/hooks/useAuth";
 
 function Profile() {
-  const { session, loading } = useAuth();
-  const router = useRouter();
+  const { session } = useAuth();
+  // const router = useRouter();
 
   // useEffect(() => {
   //   if (!(isAuthenticated || loading)) {
@@ -15,9 +15,9 @@ function Profile() {
   // });
 
   // Prevent unauth flash
-  if (!session && !loading) {
-    router.push("/auth/ingia");
-  }
+  // if (!session && !loading) {
+  //   router.push("/auth/ingia");
+  // }
 
   return (
     <Page>
