@@ -3,11 +3,6 @@ import mongoose, { Schema } from "mongoose";
 const MODEL_NAME = "UserRole";
 
 const UserRoleSchema = new Schema({
-  slug: {
-    type: String,
-    required: true,
-    unique: true,
-  },
   name: {
     type: String,
     required: true,
