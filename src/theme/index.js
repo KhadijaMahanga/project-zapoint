@@ -5,6 +5,14 @@ const FONT_FAMILY_HEADING = "'Montserrat', sans-serif";
 const FONT_FAMILY_TEXT = "'Varela Round', sans-serif";
 
 const theme = createTheme({
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 390, // mobile
+      md: 768, // tablet
+      lg: 1280, // desktop
+    },
+  },
   palette: {
     primary: { main: "#68B78C" },
     secondary: { main: "#68B78C" },
@@ -122,7 +130,7 @@ const theme = createTheme({
   },
   widths: {
     values: {
-      md: 912, // 0, 24, 0, 24 margins
+      md: 608, // 0, 24, 0, 24 margins
       lg: 1200, // 0, 40, 0, 40 margins
     },
   },

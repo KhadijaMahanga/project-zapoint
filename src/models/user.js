@@ -51,8 +51,8 @@ const UserSchema = new Schema(
       lowercase: true,
     },
     role: {
-      type: String,
-      default: "trainee",
+      type: Schema.Types.ObjectId,
+      ref: "UserRole",
     },
     isDeleted: {
       type: Boolean,

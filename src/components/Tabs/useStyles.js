@@ -7,18 +7,16 @@ const useStyles = makeStyles(({ palette, typography, transitions }) => ({
   },
   tabs: {
     backgroundColor: "inherit",
-    borderBottom: "1px solid #044E3D80",
     minHeight: typography.pxToRem(62),
   },
   tabsIndicator: {
     display: "none",
   },
   tab: {
-    backgroundColor: palette.primary.main,
-    color: palette.text.secondary,
-    border: `1px solid ${palette.primary.main}`,
-    borderRadius: 4,
-    marginRight: typography.pxToRem(20),
+    color: palette.text.primary,
+    border: 0,
+    borderRadius: 0,
+    backgroundColor: palette.background.default,
     opacity: 1.0,
     minHeight: typography.pxToRem(40),
     padding: `${typography.pxToRem(10)} ${typography.pxToRem(24)}`,
@@ -28,19 +26,14 @@ const useStyles = makeStyles(({ palette, typography, transitions }) => ({
     }),
     "&:hover": {
       color: "#A0A0A0",
-      border: "1px solid #A0A0A0",
-      backgroundColor: palette.divider,
     },
     "&:focus": {
       color: "#A0A0A0",
-      border: "1px solid #A0A0A0",
-      backgroundColor: palette.divider,
     },
   },
   tabSelected: {
     color: "#A0A0A0",
-    border: "1px solid #A0A0A0",
-    backgroundColor: palette.divider,
+    borderBottom: `2px solid ${palette.primary.main}`,
   },
   tabPanel: (props) => ({
     opacity: props.index === props.value ? 1 : 0,
