@@ -1,3 +1,4 @@
+import { getSession } from "next-auth/client";
 import nc from "next-connect";
 
 import { createRole, getRoles } from "@/jikopoint/controllers/role";
@@ -16,6 +17,10 @@ const handler = nc({ onNoMatch, onError })
   })
   .post(async (req, res) => {
     try {
+      const session = await getSession({ req });
+      if (!session && session?.user?.role?.name !== "admin") {
+        throw new Error("Hiki kitendo hakijathibitishwa");
+      }
       const role = await createRole(req?.body);
       res.json({ success: true, data: role });
     } catch (e) {

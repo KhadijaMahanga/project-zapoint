@@ -9,7 +9,11 @@ function Tab(props) {
   return (
     <MuiTab
       {...props}
-      classes={{ root: classes.tab, selected: classes.tabSelected }}
+      classes={{
+        root: classes.tab,
+        selected: classes.tabSelected,
+        wrapper: classes.wrapper,
+      }}
     />
   );
 }
