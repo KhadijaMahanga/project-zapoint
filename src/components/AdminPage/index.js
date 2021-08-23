@@ -2,7 +2,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import React from "react";
 
-import Roles from "./Roles";
+import Categories from "./Categories";
+import Courses from "./Courses";
 
 import Section from "@/jikopoint/components/Section";
 import Tabs from "@/jikopoint/components/Tabs";
@@ -14,6 +15,7 @@ const useStyles = makeStyles(({ palette, typography, breakpoints }) => ({
     [breakpoints.up("lg")]: {
       padding: `${typography.pxToRem(40)} 0 ${typography.pxToRem(80)}`,
     },
+    height: "100vh",
   },
   section: {},
 }));
@@ -31,16 +33,12 @@ function AdminPage({ ...props }) {
               panel: <div />,
             },
             {
-              label: "Jukumu",
-              panel: <Roles {...props} />,
-            },
-            {
               label: "Aina ya Kozi",
-              panel: <div />,
+              panel: <Categories {...props} />,
             },
             {
               label: "Kozi",
-              panel: <div />,
+              panel: <Courses {...props} />,
             },
             {
               label: "Watumiaji",

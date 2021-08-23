@@ -14,7 +14,7 @@ const handler = nextConnect({ onError, onNoMatch })
     res.json({ success: "ok", users });
   })
   .post(async (req, res) => {
-    const user = await registerUser(req.body);
+    const user = await registerUser(req?.body);
     if (!user) {
       res.status(400).json({ error: "error creating user" });
     }

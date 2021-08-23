@@ -1,30 +1,27 @@
 import React from "react";
 
-import AdminPage from "@/jikopoint/components/AdminPage";
+import Add from "@/jikopoint/components/Course/Add";
 import Page from "@/jikopoint/components/Page";
 import fetcher from "@/jikopoint/utils/fetcher";
 
-function Admin(props) {
+function Course(props) {
   return (
     <Page>
-      <AdminPage {...props} />
+      <Add {...props} />
     </Page>
   );
 }
 
 export async function getStaticProps() {
-  const courses =
-    (await fetcher(`${process.env.NEXT_PUBLIC_APP_URL}/api/courses`)) ?? null;
   const categories = await fetcher(
     `${process.env.NEXT_PUBLIC_APP_URL}/api/categories`
   );
 
   return {
     props: {
-      courses,
-      categoriesData: categories,
+      categories: categories?.data,
     },
   };
 }
 
-export default Admin;
+export default Course;
