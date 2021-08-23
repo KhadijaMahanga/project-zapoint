@@ -1,16 +1,19 @@
 import { getSession } from "next-auth/client";
 import nc from "next-connect";
 
-import { createRole, getRoles } from "@/jikopoint/controllers/role";
-import middleware from "@/jikopoint/middleware/index";
+import {
+  createCategory,
+  getCategories,
+} from "@/jikopoint/controllers/coursecategory";
+import middleware from "@/jikopoint/middleware";
 import { onNoMatch, onError } from "@/jikopoint/utils/handlers";
 
 const handler = nc({ onNoMatch, onError })
   .use(middleware) // currently only database in middleware
   .get(async (req, res) => {
     try {
-      const roles = await getRoles();
-      res.json({ success: true, data: roles });
+      const categories = await getCategories();
+      res.json({ success: true, data: categories });
     } catch (e) {
       res.status(401).send({ message: e, success: false });
     }
@@ -18,11 +21,11 @@ const handler = nc({ onNoMatch, onError })
   .post(async (req, res) => {
     try {
       const session = await getSession({ req });
-      if (!session && session?.user?.role?.name !== "admin") {
+      if (!session && session?.user?.role !== "admin") {
         throw new Error("Hiki kitendo hakijathibitishwa");
       }
-      const role = await createRole(req?.body);
-      res.json({ success: true, data: role });
+      const category = await createCategory(req?.body);
+      res.json({ success: true, data: category });
     } catch (e) {
       res.status(401).send({ message: e, success: false });
     }

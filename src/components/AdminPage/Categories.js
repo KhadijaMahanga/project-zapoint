@@ -1,11 +1,12 @@
+/* eslint-disable no-underscore-dangle */
 import { Typography, Button, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useSWR from "swr";
 
-import RoleDialog from "@/jikopoint/components/AdminPage/RoleDialog";
+import CategoryDialog from "@/jikopoint/components/AdminPage/CategoryDialog";
 import fetcher from "@/jikopoint/utils/fetcher";
 
 const useStyles = makeStyles(({ typography, palette }) => ({
@@ -39,31 +40,52 @@ const useStyles = makeStyles(({ typography, palette }) => ({
     color: palette.text.secondary,
     margin: `${typography.pxToRem(20)} 0`,
   },
+  button: {
+    color: palette.text.secondary,
+  },
 }));
 
-function Roles({ roles: rolesProp, ...props }) {
+function Categories({ categoriesData: categoriesProp, ...props }) {
   const classes = useStyles(props);
-
+  const [categories, setCategories] = useState([]);
   const [openDialog, setOpenDialog] = useState(false);
   const [variant, setVariant] = useState("add");
+  const [row, setRow] = useState(null);
+  const [refreshList, setRefreshList] = useState(false);
 
-  const { data: roles } = useSWR("/api/roles", fetcher, {
-    initialData: rolesProp,
-  });
+  useEffect(() => {
+    if (categoriesProp?.data) {
+      setCategories(categoriesProp?.data);
+    }
+  }, [categoriesProp]);
 
-  const handleAddRole = (e) => {
+  const { data: res } = useSWR(refreshList ? "/api/categories" : null, fetcher);
+
+  useEffect(() => {
+    if (res?.success && res?.data) {
+      setCategories(res?.data);
+      setRefreshList(false);
+    }
+  }, [res]);
+
+  const handleAddCategory = (e) => {
     e?.preventDefault();
     setVariant("add");
     setOpenDialog(true);
   };
-  const handleEditRole = (e) => {
+  const handleEditCategory = (e, n) => {
     e?.preventDefault();
     setVariant("edit");
+    setRow(n);
     setOpenDialog(true);
   };
   const handleCloseDialog = (e) => {
     e?.preventDefault();
     setOpenDialog(false);
+  };
+
+  const updateCategoriesList = () => {
+    setRefreshList(true);
   };
 
   return (
@@ -72,47 +94,56 @@ function Roles({ roles: rolesProp, ...props }) {
         variant="contained"
         color="primary"
         className={classes.addButton}
-        onClick={handleAddRole}
+        onClick={handleAddCategory}
       >
-        Ongeza Jukumu
+        Ongeza Kundi la Kozi
       </Button>
-      {roles?.data?.length && (
+      {categories?.length && (
         <Grid container className={classes.tableRoot}>
           <Grid
             item
             container
-            justifyContent="space-between"
+            justifyContent="flex-start"
             alignItems="center"
             className={classes.row}
           >
-            <Grid item>
+            <Grid item xs={4}>
               <Typography className={clsx(classes.cell, classes.header)}>
                 Name
               </Typography>
             </Grid>
-            <Grid item>
+            <Grid item xs={4}>
+              <Typography className={clsx(classes.cell, classes.header)}>
+                Slug
+              </Typography>
+            </Grid>
+            <Grid item xs={4}>
               <Typography className={clsx(classes.cell, classes.header)}>
                 Action
               </Typography>
             </Grid>
           </Grid>
-          {roles?.data?.map((role) => (
+          {categories?.map((cat) => (
             <Grid
               item
               container
-              justifyContent="space-between"
+              justifyContent="flex-start"
               alignItems="center"
               className={classes.row}
-              key={role.name}
+              key={cat.slug}
             >
-              <Grid item>
-                <Typography className={classes.cell}>{role.name}</Typography>
+              <Grid item xs={4}>
+                <Typography className={classes.cell}>{cat.name}</Typography>
               </Grid>
-              <Grid item>
+              <Grid item xs={4}>
+                <Typography className={classes.cell}>{cat.slug}</Typography>
+              </Grid>
+              <Grid item xs={4}>
                 <Button
                   variant="contained"
                   color="primary"
-                  onClick={handleEditRole}
+                  className={classes.button}
+                  onClick={(e) => handleEditCategory(e, cat)}
                 >
                   Hariri
                 </Button>
@@ -121,23 +152,30 @@ function Roles({ roles: rolesProp, ...props }) {
           ))}
         </Grid>
       )}
-      <RoleDialog
+      <CategoryDialog
         variant={variant}
         handleCloseDialog={handleCloseDialog}
         openDialog={openDialog}
+        updateCategoriesList={updateCategoriesList}
+        value={row}
       />
     </div>
   );
 }
 
-Roles.propTypes = {
-  roles: PropTypes.shape({
-    data: PropTypes.arrayOf(PropTypes.shape({ name: PropTypes.string })),
+Categories.propTypes = {
+  categoriesData: PropTypes.shape({
+    data: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string,
+        slug: PropTypes.string,
+      })
+    ),
   }),
 };
 
-Roles.defaultProps = {
-  roles: undefined,
+Categories.defaultProps = {
+  categoriesData: undefined,
 };
 
-export default Roles;
+export default Categories;

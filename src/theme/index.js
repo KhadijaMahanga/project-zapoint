@@ -134,6 +134,13 @@ const theme = createTheme({
       lg: 1200, // 0, 40, 0, 40 margins
     },
   },
+  props: {
+    MuiButtonBase: {
+      // Disable ripple effect globally
+      disableRipple: true,
+      disableTouchRipple: true,
+    },
+  },
 });
 
 // ## RESPONSIVE FONTS

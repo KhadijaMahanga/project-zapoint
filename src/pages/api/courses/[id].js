@@ -1,45 +1,49 @@
 /* eslint-disable consistent-return */
 import nextConnect from "next-connect";
 
-import { getRole, updateRole, deleteRole } from "@/jikopoint/controllers/role";
-import middleware from "@/jikopoint/middleware/index";
+import {
+  getCourse,
+  updateCourse,
+  deleteCourse,
+} from "@/jikopoint/controllers/course";
+import middleware from "@/jikopoint/middleware";
 import { onNoMatch, onError } from "@/jikopoint/utils/handlers";
 import isValidOperation from "@/jikopoint/utils/isValidOperation";
 
 const handler = nextConnect({ onNoMatch, onError })
   .use(middleware)
   .get(async (req, res) => {
-    const role = await getRole(req?.query?.id);
-    if (!role) {
+    const course = await getCourse(req?.query?.id);
+    if (!course) {
       return res
         .status(400)
-        .json({ success: false, message: "role not found" });
+        .json({ success: false, message: "Course not found" });
     }
-    res.json({ success: true, data: role });
+    res.json({ success: true, data: course });
   })
   .put(async (req, res) => {
-    if (!isValidOperation("role", req?.body)) {
+    if (!isValidOperation("course", req?.body)) {
       return res.status(400).send({ message: "Invalid Updates!" });
     }
     try {
-      const role = await updateRole(req?.query?.id, req?.body);
-      if (!role) {
+      const course = await updateCourse(req?.query?.id, req?.body);
+      if (!course) {
         return res
           .status(400)
-          .json({ success: false, message: "role not found" });
+          .json({ success: false, message: "Course not found" });
       }
-      res.json({ success: true, data: role });
+      res.json({ success: true, data: course });
     } catch (e) {
       res.status(401).send({ message: e, success: false });
     }
   })
   .delete(async (req, res) => {
     try {
-      const deletedRole = await deleteRole(req?.query?.id);
-      if (!deletedRole) {
+      const deletedCourse = await deleteCourse(req?.query?.id);
+      if (!deletedCourse) {
         return res
           .status(400)
-          .json({ success: false, message: "role could not be deleted" });
+          .json({ success: false, message: "Course could not be deleted" });
       }
       res.json({ success: true, data: {} });
     } catch (e) {
