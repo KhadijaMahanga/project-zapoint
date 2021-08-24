@@ -44,7 +44,7 @@ const useStyles = makeStyles(({ typography, palette }) => ({
 
 function Courses({
   courses: coursesProp,
-  categories: { data: categories },
+  categoriesData: { data: categories },
   ...props
 }) {
   const classes = useStyles(props);
@@ -147,14 +147,14 @@ Courses.propTypes = {
       })
     ),
   }),
-  categories: PropTypes.shape({
+  categoriesData: PropTypes.shape({
     data: PropTypes.arrayOf(PropTypes.shape({ slug: PropTypes.string })),
   }),
 };
 
 Courses.defaultProps = {
   courses: undefined,
-  categories: undefined,
+  categoriesData: undefined,
 };
 
 export default Courses;

@@ -42,6 +42,11 @@ const useStyles = makeStyles(({ palette, typography, transitions }) => ({
       easing: transitions.easing.easeOut,
     }),
   }),
+  divider: {
+    marginTop: typography.pxToRem(-14),
+    height: typography.pxToRem(2),
+    backgroundColor: "rgb(241, 241, 241)",
+  },
 }));
 
 export default useStyles;
