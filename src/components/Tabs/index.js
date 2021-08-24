@@ -1,4 +1,4 @@
-import { Tabs as MuiTabs } from "@material-ui/core";
+import { Tabs as MuiTabs, Divider } from "@material-ui/core";
 import PropTypes from "prop-types";
 import React from "react";
 
@@ -57,6 +57,7 @@ function Tabs({ name, items, ...props }) {
           />
         ))}
       </MuiTabs>
+      <Divider className={classes.divider} />
       {items.map((item, index) => (
         <TabPanel
           key={item.label}

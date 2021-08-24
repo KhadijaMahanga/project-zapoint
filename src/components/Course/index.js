@@ -1,3 +1,4 @@
+import { Typography, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import React from "react";
@@ -12,33 +13,24 @@ const useStyles = makeStyles(({ palette, typography, breakpoints }) => ({
   },
   video: {
     position: "relative",
-    height: typography.pxToRem(227),
-    width: "100%",
+    height: typography.pxToRem(250),
     "& .video-js": {
       width: "100%",
       height: "100%",
     },
     "& .vjs-poster": {
-      backgroundColor: "#ffffffE6",
-      backgroundSize: "120%",
-    },
-    "& .video-js .vjs-big-play-button": {
-      display: "none",
+      backgroundSize: "cover",
     },
     [breakpoints.up("md")]: {
-      height: typography.pxToRem(194),
-      width: typography.pxToRem(299),
-      "& .vjs-poster": {
-        backgroundSize: "auto",
-      },
+      height: typography.pxToRem(320),
     },
     [breakpoints.up("lg")]: {
-      height: typography.pxToRem(244),
-      width: typography.pxToRem(376),
+      height: typography.pxToRem(400),
     },
   },
   section: {
     paddingTop: typography.pxToRem(40),
+    paddingBottom: typography.pxToRem(10),
   },
   label: {
     color: palette.text.primary,
@@ -55,31 +47,64 @@ const useStyles = makeStyles(({ palette, typography, breakpoints }) => ({
   },
 }));
 
-function Index({ course, ...props }) {
+function Index({ course, owner, category, ...props }) {
   const classes = useStyles(props);
 
   return (
     <div className={classes.root}>
-      <div className={classes.video}>
-        <Player
-          videoSrc="https://www.youtube.com/watch?v=yGG01tj9wi4"
-          videoType="video/youtube"
-          videoImg={course?.image}
-        />
-      </div>
-      <Section classes={{ root: classes.section }} />
+      <Section className={classes.section}>
+        <Grid container>
+          <Grid item xs={12} container>
+            <Grid item xs={12} lg={8}>
+              <div className={classes.video}>
+                <Player
+                  videoSrc="https://www.youtube.com/watch?v=yGG01tj9wi4"
+                  videoType="video/youtube"
+                  videoImg={course?.image}
+                />
+              </div>
+            </Grid>
+            <Grid item xs={12} lg={4} />
+          </Grid>
+          <Grid item xs={12} md={8} container>
+            <Grid item xs={12} className={classes.section}>
+              <Typography variant="h3" className={classes.title}>
+                {course?.name}
+              </Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography className={classes.title}>{owner?.name}</Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography className={classes.title}>
+                {category?.name}
+              </Typography>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Section>
     </div>
   );
 }
 
 Index.propTypes = {
   course: PropTypes.shape({
+    name: PropTypes.string,
     image: PropTypes.string,
+  }),
+  owner: PropTypes.shape({
+    name: PropTypes.string,
+    image: PropTypes.string,
+  }),
+  category: PropTypes.shape({
+    name: PropTypes.string,
   }),
 };
 
 Index.defaultProps = {
   course: undefined,
+  owner: undefined,
+  category: undefined,
 };
 
 export default Index;
