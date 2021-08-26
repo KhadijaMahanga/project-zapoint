@@ -137,7 +137,7 @@ function Ingia({ providers, csrfToken }) {
 
   useEffect(() => {
     if (isAuthenticated) {
-      router.push("/auth/profile");
+      router.push("/auth/account");
     }
   }, [isAuthenticated]);
   return (
@@ -191,7 +191,7 @@ export async function getServerSideProps(context) {
 
   if (session && res && session.accessToken) {
     res.writeHead(302, {
-      Location: "/auth/profile",
+      Location: "/auth/account",
     });
     res.end();
     return null;

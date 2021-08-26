@@ -15,6 +15,12 @@ export const getCourses = async () => {
     .catch((e) => new Error(e));
 };
 
+export const getInstructorCourses = async (instructor) => {
+  return Course.find({ instructor })
+    .then((courses) => courses)
+    .catch((e) => new Error(e));
+};
+
 export const getCourse = async (id) => {
   return Course.findById(id)
     .then((course) => course)

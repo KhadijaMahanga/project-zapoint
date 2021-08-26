@@ -3,10 +3,10 @@ import { Typography, Button, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import useSWR from "swr";
 
-import Link from "@/jikopoint/components/Link";
+import CategoryDialog from "@/jikopoint/components/Admin/CategoryDialog";
 import fetcher from "@/jikopoint/utils/fetcher";
 
 const useStyles = makeStyles(({ typography, palette }) => ({
@@ -16,7 +16,6 @@ const useStyles = makeStyles(({ typography, palette }) => ({
     borderRadius: `${typography.pxToRem(4)}`,
     overflowX: "hidden",
     height: "100%",
-    margin: `${typography.pxToRem(20)} 0`,
     "& div:nth-child(odd)": {
       backgroundColor: "#F9FAFB",
     },
@@ -37,29 +36,69 @@ const useStyles = makeStyles(({ typography, palette }) => ({
     fontWeight: "bold",
     fontFamily: typography.h1.fontFamily,
   },
+  addButton: {
+    color: palette.text.secondary,
+    margin: `${typography.pxToRem(20)} 0`,
+  },
   button: {
     color: palette.text.secondary,
   },
 }));
 
-function Courses({
-  courses: coursesProp,
-  categoriesData: { data: categories },
-  ...props
-}) {
+function Categories({ categories: categoriesProp, ...props }) {
   const classes = useStyles(props);
+  const [categories, setCategories] = useState([]);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [variant, setVariant] = useState("add");
+  const [row, setRow] = useState(null);
+  const [refreshList, setRefreshList] = useState(false);
 
-  const { data: courses } = useSWR("/api/courses", fetcher, {
-    initialData: coursesProp,
-  });
+  useEffect(() => {
+    if (categoriesProp?.length) {
+      setCategories(categoriesProp);
+    }
+  }, [categoriesProp]);
 
-  const handleEditCourse = (e) => {
+  const { data: res } = useSWR(refreshList ? "/api/categories" : null, fetcher);
+
+  useEffect(() => {
+    if (res?.success && res?.data) {
+      setCategories(res?.data);
+      setRefreshList(false);
+    }
+  }, [res]);
+
+  const handleAddCategory = (e) => {
     e?.preventDefault();
+    setVariant("add");
+    setOpenDialog(true);
+  };
+  const handleEditCategory = (e, n) => {
+    e?.preventDefault();
+    setVariant("edit");
+    setRow(n);
+    setOpenDialog(true);
+  };
+  const handleCloseDialog = (e) => {
+    e?.preventDefault();
+    setOpenDialog(false);
+  };
+
+  const updateCategoriesList = () => {
+    setRefreshList(true);
   };
 
   return (
     <div className={classes.root}>
-      {courses?.data?.length > 0 && (
+      <Button
+        variant="contained"
+        color="primary"
+        className={classes.addButton}
+        onClick={handleAddCategory}
+      >
+        Ongeza Kundi la Kozi
+      </Button>
+      {categories?.length && (
         <Grid container className={classes.tableRoot}>
           <Grid
             item
@@ -73,88 +112,68 @@ function Courses({
                 Name
               </Typography>
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={4}>
               <Typography className={clsx(classes.cell, classes.header)}>
-                Category
+                Slug
               </Typography>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={4}>
               <Typography className={clsx(classes.cell, classes.header)}>
-                Status
+                Action
               </Typography>
             </Grid>
-            <Grid item xs={3} />
           </Grid>
-          {courses?.data?.map((c) => (
+          {categories?.map((cat) => (
             <Grid
               item
               container
               justifyContent="flex-start"
               alignItems="center"
               className={classes.row}
-              key={c.name}
+              key={cat.slug}
             >
               <Grid item xs={4}>
-                <Typography className={classes.cell}>{c.name}</Typography>
+                <Typography className={classes.cell}>{cat.name}</Typography>
               </Grid>
-              <Grid item xs={2}>
-                <Typography className={classes.cell}>
-                  {categories?.find((ac) => ac._id === c.category)?.name}
-                </Typography>
+              <Grid item xs={4}>
+                <Typography className={classes.cell}>{cat.slug}</Typography>
               </Grid>
-              <Grid item xs={3}>
-                <Typography className={classes.cell}>{c.status}</Typography>
-              </Grid>
-              <Grid item xs={2}>
+              <Grid item xs={4}>
                 <Button
                   variant="contained"
                   color="primary"
                   className={classes.button}
-                  component={Link}
-                  underline="none"
-                  href={`/course/${c._id}`}
+                  onClick={(e) => handleEditCategory(e, cat)}
                 >
-                  Tembelea
-                </Button>
-              </Grid>
-              <Grid item xs={1}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  disabled={c.status !== "pending approval"}
-                  className={classes.button}
-                  onClick={(e) => handleEditCourse(e, c)}
-                >
-                  Approve
+                  Hariri
                 </Button>
               </Grid>
             </Grid>
           ))}
         </Grid>
       )}
+      <CategoryDialog
+        variant={variant}
+        handleCloseDialog={handleCloseDialog}
+        openDialog={openDialog}
+        updateCategoriesList={updateCategoriesList}
+        value={row}
+      />
     </div>
   );
 }
 
-Courses.propTypes = {
-  courses: PropTypes.shape({
-    data: PropTypes.arrayOf(
-      PropTypes.shape({
-        _id: PropTypes.string,
-        name: PropTypes.string,
-        category: PropTypes.string,
-        status: PropTypes.string,
-      })
-    ),
-  }),
-  categoriesData: PropTypes.shape({
-    data: PropTypes.arrayOf(PropTypes.shape({ slug: PropTypes.string })),
-  }),
+Categories.propTypes = {
+  categories: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      slug: PropTypes.string,
+    })
+  ),
 };
 
-Courses.defaultProps = {
-  courses: undefined,
-  categoriesData: undefined,
+Categories.defaultProps = {
+  categories: undefined,
 };
 
-export default Courses;
+export default Categories;

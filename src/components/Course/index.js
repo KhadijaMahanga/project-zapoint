@@ -1,5 +1,6 @@
 import { Typography, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import Image from "next/image";
 import PropTypes from "prop-types";
 import React from "react";
 
@@ -45,6 +46,11 @@ const useStyles = makeStyles(({ palette, typography, breakpoints }) => ({
   imageBtn: {
     color: palette.text.secondary,
   },
+  profileImage: {
+    width: typography.pxToRem(),
+    height: typography.pxToRem(),
+    borderRadius: typography.pxToRem(),
+  },
 }));
 
 function Index({ course, owner, category, ...props }) {
@@ -73,6 +79,9 @@ function Index({ course, owner, category, ...props }) {
               </Typography>
             </Grid>
             <Grid item xs={6}>
+              <div className={classes.profileImage}>
+                <Image src={owner?.image ?? ""} layout="fill" />
+              </div>
               <Typography className={classes.title}>{owner?.name}</Typography>
             </Grid>
             <Grid item xs={6}>

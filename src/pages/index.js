@@ -2,7 +2,9 @@ import PropTypes from "prop-types";
 import React from "react";
 
 import Hero from "@/jikopoint/components/Hero";
+import HighlightCourses from "@/jikopoint/components/HighlightCourses";
 import HighlightNews from "@/jikopoint/components/HighlightNews";
+import NewsletterSubscription from "@/jikopoint/components/NewsletterSubscription";
 import Page from "@/jikopoint/components/Page";
 import getArticles from "@/jikopoint/lib/functions/getArticles";
 
@@ -20,6 +22,12 @@ function Index({ articles }) {
         items={articles}
         title="Jiko Habari"
         subtitle="Fuatilia Machapisho yetu "
+      />
+      <NewsletterSubscription />
+      <HighlightCourses
+        items={articles}
+        title="Jiko Darasa"
+        subtitle="Tujifunze Mapishi pamoje"
       />
     </Page>
   );
