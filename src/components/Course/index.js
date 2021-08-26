@@ -6,6 +6,7 @@ import React from "react";
 
 import Player from "./Player";
 
+import DefaultProfilePic from "@/jikopoint/components/DefaultProfilePic";
 import Section from "@/jikopoint/components/Section";
 
 const useStyles = makeStyles(({ palette, typography, breakpoints }) => ({
@@ -47,9 +48,11 @@ const useStyles = makeStyles(({ palette, typography, breakpoints }) => ({
     color: palette.text.secondary,
   },
   profileImage: {
-    width: typography.pxToRem(),
-    height: typography.pxToRem(),
-    borderRadius: typography.pxToRem(),
+    width: typography.pxToRem(40),
+    height: typography.pxToRem(40),
+    borderRadius: "100%",
+    color: palette.background.light,
+    fontSize: typography.pxToRem(16),
   },
 }));
 
@@ -80,7 +83,11 @@ function Index({ course, owner, category, ...props }) {
             </Grid>
             <Grid item xs={6}>
               <div className={classes.profileImage}>
-                <Image src={owner?.image ?? ""} layout="fill" />
+                {owner?.image ? (
+                  <Image src={owner.image} layout="fill" />
+                ) : (
+                  <DefaultProfilePic letter={owner.name[0] || owner.email[0]} />
+                )}
               </div>
               <Typography className={classes.title}>{owner?.name}</Typography>
             </Grid>
@@ -104,6 +111,7 @@ Index.propTypes = {
   owner: PropTypes.shape({
     name: PropTypes.string,
     image: PropTypes.string,
+    email: PropTypes.string,
   }),
   category: PropTypes.shape({
     name: PropTypes.string,

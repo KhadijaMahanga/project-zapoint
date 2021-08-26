@@ -11,7 +11,7 @@ function DefaultProfilePic({ letter }) {
         alignmentBaseline="central"
         textAnchor="middle"
         fontFamily="sans-serif"
-        fontSize="100"
+        fontSize="inherit"
         fill="#fff"
       >
         {letter.toUpperCase()}

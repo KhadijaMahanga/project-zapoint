@@ -79,7 +79,7 @@ export default NextAuth({
   pages: {
     signIn: "/auth/jiunge", // Displays signin buttons
     // error: "/auth/ingia", // Error code passed in query string as ?error=
-    verifyRequest: "/auth/kamilisha", // Used for check email page
+    // verifyRequest: "/auth/kamilisha", // Used for check email page
     // newUser: null // If set, new users will be directed here on first sign in
   },
 

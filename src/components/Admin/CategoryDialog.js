@@ -20,7 +20,7 @@ const useStyles = makeStyles(({ palette, typography }) => ({
     fontSize: typography.pxToRem(16),
   },
   futaButton: {
-    backgroundColor: "red",
+    backgroundColor: "#CC8585",
     color: "white",
   },
   dialogActions: {
