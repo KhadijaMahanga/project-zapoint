@@ -76,7 +76,7 @@ function Login({ signIn, csrfToken }) {
       if (res.error) {
         setLoginError(res.error);
       } else {
-        router.push("/auth/profile");
+        router.push("/auth/account");
       }
     }
   };

@@ -46,7 +46,6 @@ export async function getStaticProps(context) {
   const cat = await fetcher(
     `${process.env.NEXT_PUBLIC_APP_URL}/api/categories/${course?.data?.category}`
   );
-  console.log(user);
   return {
     props: {
       course: course?.data ?? null,

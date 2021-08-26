@@ -14,14 +14,14 @@ const theme = createTheme({
     },
   },
   palette: {
-    primary: { main: "#68B78C" },
-    secondary: { main: "#68B78C" },
+    primary: { main: "#41aa54" },
+    secondary: { main: "#41aa54" },
     highlight: { main: "#a3a3a3" },
-    text: { primary: "#727475", secondary: "#fff", highlight: "#a3a3a3" },
+    text: { primary: "#414142", secondary: "#fff", highlight: "#a3a3a3" },
     background: {
       default: "#fff",
       light: "#ceb28d",
-      dark: "#444444",
+      dark: "#414142",
     },
     divider: "#b59974",
     info: {

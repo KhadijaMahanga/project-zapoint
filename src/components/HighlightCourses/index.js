@@ -45,7 +45,7 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   },
 }));
 
-function HighlightNews({ items: itemsProp, title, subtitle, ...props }) {
+function HighlightCourses({ items: itemsProp, title, subtitle, ...props }) {
   const classes = useStyles(props);
   const theme = useTheme();
   const isTablet = useMediaQuery(theme.breakpoints.only("md"));
@@ -89,16 +89,16 @@ function HighlightNews({ items: itemsProp, title, subtitle, ...props }) {
   );
 }
 
-HighlightNews.propTypes = {
+HighlightCourses.propTypes = {
   items: PropTypes.arrayOf(PropTypes.shape({ slug: PropTypes.string })),
   title: PropTypes.string,
   subtitle: PropTypes.string,
 };
 
-HighlightNews.defaultProps = {
+HighlightCourses.defaultProps = {
   items: undefined,
   title: undefined,
   subtitle: undefined,
 };
 
-export default HighlightNews;
+export default HighlightCourses;

@@ -4,7 +4,6 @@ import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
 
 import loginUser from "@/jikopoint/utils/auth/loginUser";
-import registerUser from "@/jikopoint/utils/auth/registerUser";
 
 export default NextAuth({
   // Configure one or more authentication providers
@@ -31,28 +30,13 @@ export default NextAuth({
       async authorize(credentials) {
         // logic to look up the user from the credentials supplied
         try {
-          const user = loginUser(credentials);
-          if (!user?.isActive) {
+          const user = await loginUser(credentials);
+          if (!user?.emailVerified) {
             throw new Error(
               "Akaunti yako si kamilifu. Pitia kwenye barua pepe yako kuikamilisha"
             );
           }
           return user;
-        } catch (e) {
-          throw new Error(e);
-        }
-      },
-    }),
-    Providers.Credentials({
-      id: "register",
-      name: "Register",
-      async authorize(credentials) {
-        try {
-          const user = await registerUser(credentials);
-          if (user !== null) {
-            return user;
-          }
-          throw new Error("Tafadhali jaribu tena");
         } catch (e) {
           throw new Error(e);
         }
@@ -107,15 +91,12 @@ export default NextAuth({
     // async redirect(url, baseUrl) { return baseUrl },
     // async session(session, user) { return session },
     // async jwt(token, user, account, profile, isNewUser) { return token }
-    async signIn(user, account, profile) {
-      if (account.type === "oauth" || account.type === "email") {
+    async signIn(user, account) {
+      if (account.type === "oauth") {
+        user.role = "trainer";
         console.log(user);
         // save/ update user here
       }
-      console.log("Sign in call back");
-      console.log(user);
-      console.log(account);
-      console.log(profile);
       return true;
     },
     async session(session, token) {
@@ -125,21 +106,17 @@ export default NextAuth({
       if (token?.accessToken) {
         session.accessToken = token.accessToken;
       }
-      if (token?.roles) {
-        session.user.roles = token.roles;
+      if (token?.role) {
+        session.user.role = token.role;
       }
       return session;
     },
     async jwt(token, user, account) {
-      if (typeof user !== typeof undefined) {
-        token.auth_time = Number(new Date());
-        token.user = user;
-      }
       if (account?.accessToken) {
         token.accessToken = account.accessToken;
       }
-      if (user?.roles) {
-        token.roles = user.roles;
+      if (user?.role) {
+        token.role = user.role;
       }
       return token;
     },

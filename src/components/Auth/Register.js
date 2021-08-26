@@ -36,7 +36,7 @@ const useStyles = makeStyles(({ palette, typography }) => ({
   },
 }));
 
-function Register({ signIn, csrfToken }) {
+function Register({ role, csrfToken }) {
   const classes = useStyles();
   const router = useRouter();
 
@@ -69,17 +69,15 @@ function Register({ signIn, csrfToken }) {
     e.stopPropagation();
 
     if (!emailError.length && !passwordError.length && email && password) {
-      const res = await signIn("register", {
-        email,
-        password,
-        name,
-        csrfToken,
-        redirect: false,
-      });
+      const options = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "same-origin",
+        body: JSON.stringify({ email, password, name, csrfToken, role }),
+      };
 
-      console.log(res);
-
-      if (res.error) {
+      const res = await fetch("/api/users", options);
+      if (!res.success) {
         setRegisterError(res.error);
       } else {
         router.push("/auth/kamilisha/");
@@ -177,12 +175,12 @@ function Register({ signIn, csrfToken }) {
 }
 
 Register.propTypes = {
-  signIn: PropTypes.func,
+  role: PropTypes.string,
   csrfToken: PropTypes.string,
 };
 
 Register.defaultProps = {
-  signIn: undefined,
+  role: undefined,
   csrfToken: undefined,
 };
 
