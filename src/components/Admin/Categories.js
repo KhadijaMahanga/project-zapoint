@@ -23,7 +23,7 @@ const useStyles = makeStyles(({ typography, palette }) => ({
   row: {
     height: typography.pxToRem(46),
     borderBottom: `${typography.pxToRem(1)} solid #E2E2E3`,
-    padding: `0 ${typography.pxToRem(28)} 0 ${typography.pxToRem(17)}`,
+    padding: `0 ${typography.pxToRem(15)}`,
     "& :last-of-type": {
       borderBottom: 0,
     },
@@ -42,6 +42,7 @@ const useStyles = makeStyles(({ typography, palette }) => ({
   },
   button: {
     color: palette.text.secondary,
+    fontSize: typography.pxToRem(13),
   },
 }));
 

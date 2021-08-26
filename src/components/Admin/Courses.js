@@ -14,7 +14,6 @@ const useStyles = makeStyles(({ typography, palette }) => ({
   tableRoot: {
     border: `${typography.pxToRem(1)} solid #E2E2E3`,
     borderRadius: `${typography.pxToRem(4)}`,
-    overflowX: "hidden",
     height: "100%",
     margin: `${typography.pxToRem(20)} 0`,
     "& div:nth-child(odd)": {
@@ -22,9 +21,9 @@ const useStyles = makeStyles(({ typography, palette }) => ({
     },
   },
   row: {
-    height: typography.pxToRem(46),
+    height: typography.pxToRem(50),
     borderBottom: `${typography.pxToRem(1)} solid #E2E2E3`,
-    padding: `0 ${typography.pxToRem(28)} 0 ${typography.pxToRem(17)}`,
+    padding: `0 ${typography.pxToRem(15)}`,
     "& :last-of-type": {
       borderBottom: 0,
     },
@@ -39,6 +38,8 @@ const useStyles = makeStyles(({ typography, palette }) => ({
   },
   button: {
     color: palette.text.secondary,
+    fontSize: typography.pxToRem(13),
+    padding: `${typography.pxToRem(6)} ${typography.pxToRem(10)}`,
   },
 }));
 
@@ -111,7 +112,7 @@ function Courses({ courses: coursesProp, categories, ...props }) {
                   {categories?.find((ac) => ac._id === c.category)?.name}
                 </Typography>
               </Grid>
-              <Grid item xs={3}>
+              <Grid item xs={2}>
                 <Typography className={classes.cell}>{c.status}</Typography>
               </Grid>
               <Grid item xs={2}>
@@ -126,7 +127,7 @@ function Courses({ courses: coursesProp, categories, ...props }) {
                   Tembelea
                 </Button>
               </Grid>
-              <Grid item xs={1}>
+              <Grid item xs={2}>
                 <Button
                   variant="contained"
                   color="primary"

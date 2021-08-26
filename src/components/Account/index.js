@@ -27,6 +27,7 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   section: {},
   profilepic: {
     color: palette.background.dark,
+    fontSize: 50,
     backgroundColor: palette.background.dark,
     width: "100%",
     [breakpoints.up("md")]: {
@@ -92,10 +93,10 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
     color: palette.text.secondary,
     width: "100%",
     [breakpoints.up("md")]: {
-      width: typography.pxToRem(250),
+      maxWidth: typography.pxToRem(250),
     },
     [breakpoints.up("lg")]: {
-      width: typography.pxToRem(330),
+      maxWidth: typography.pxToRem(330),
     },
   },
 }));
@@ -107,7 +108,7 @@ function Account({ user, ...props }) {
   return (
     <div className={classes.root}>
       <Section classes={{ root: classes.section }}>
-        <Grid container alignItems="center" justifyContent="flex-start">
+        <Grid container alignItems="flex-start" justifyContent="center">
           <Grid item container xs={12} md={4}>
             <Grid item xs={12}>
               <Card className={classes.cardRoot}>
