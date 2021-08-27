@@ -32,6 +32,8 @@ export async function getServerSideProps(context) {
     `${process.env.NEXT_PUBLIC_APP_URL}/api/categories`
   );
 
+  const users = await fetcher(`${process.env.NEXT_PUBLIC_APP_URL}/api/users`);
+
   let courses;
   if (user.role === "trainee") {
     // pull all enrolled courses
@@ -49,7 +51,8 @@ export async function getServerSideProps(context) {
     props: {
       courses: courses?.data ?? null,
       user,
-      categories: categories?.data,
+      categories: categories?.data ?? null,
+      users: users?.users ?? null,
     },
   };
 }

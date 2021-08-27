@@ -31,6 +31,11 @@ export default NextAuth({
         // logic to look up the user from the credentials supplied
         try {
           const user = await loginUser(credentials);
+          if (user?.isDeleted) {
+            throw new Error(
+              "Akaunti yako imefutwa, tafadhali jiandikishe tena"
+            );
+          }
           if (!user?.emailVerified) {
             throw new Error(
               "Akaunti yako si kamilifu. Pitia kwenye barua pepe yako kuikamilisha"

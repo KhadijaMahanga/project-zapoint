@@ -1,4 +1,5 @@
 /* eslint-disable consistent-return */
+import { getSession } from "next-auth/client";
 import nc from "next-connect";
 
 import { getUser, updateUser, deleteUser } from "@/jikopoint/controllers/user";
@@ -12,16 +13,12 @@ const handler = nc({ onNoMatch, onError })
     const user = await getUser(req.query.id);
     res.status(200).json({ success: true, user });
   })
-  .use((req, res, next) => {
-    // handlers after this (PUT, DELETE) all require an authenticated user
-    // This middleware to check if user is authenticated before continuing
-    if (!req.user) {
-      return res.status(401).send("unauthenticated");
-    }
-    next();
-  })
   .put(async (req, res) => {
     // make sure fields are allowed to be updated
+    const session = await getSession({ req });
+    if (!(session && session?.user)) {
+      throw new Error("Hiki kitendo hakijathibitishwa");
+    }
     if (!isValidOperation("user", req.body)) {
       // handle errors
       res.status(400).send({ message: "Invalid Updates!" });
@@ -30,6 +27,10 @@ const handler = nc({ onNoMatch, onError })
     res.status(200).json({ success: true, user });
   })
   .delete(async (req, res) => {
+    const session = await getSession({ req });
+    if (!session && session?.user?.role !== "admin") {
+      throw new Error("Hiki kitendo hakijathibitishwa");
+    }
     const user = await deleteUser(req.query.id);
     res.status(200).json({ success: true, user });
   });

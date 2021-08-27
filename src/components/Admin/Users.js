@@ -31,6 +31,11 @@ const useStyles = makeStyles(({ typography, palette }) => ({
     fontFamily: typography.fontFamily,
     fontSize: typography.pxToRem(16),
   },
+  cellName: {
+    fontFamily: typography.fontFamily,
+    fontSize: typography.pxToRem(16),
+    textTransform: "capitalize",
+  },
   header: {
     fontWeight: "bold",
     fontFamily: typography.h1.fontFamily,
@@ -45,14 +50,8 @@ const useStyles = makeStyles(({ typography, palette }) => ({
 
 function Users({ users: usersProp, ...props }) {
   const classes = useStyles(props);
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState(usersProp);
   const [refreshList, setRefreshList] = useState(false);
-
-  useEffect(() => {
-    if (usersProp?.length) {
-      setUsers(usersProp);
-    }
-  }, [usersProp]);
 
   const { data: res } = useSWR(refreshList ? "/api/users" : null, fetcher);
 
@@ -63,8 +62,17 @@ function Users({ users: usersProp, ...props }) {
     }
   }, [res]);
 
-  const handleDeleteUser = (e) => {
+  const handleDeleteUser = async (e, id) => {
     e?.preventDefault();
+    const options = {
+      method: "DELETE",
+      credentials: "same-origin",
+    };
+    const result = await fetch(`/api/users/${id}`, options);
+    if (!result.success) {
+      alert("Kumetokea tatizo la kiufundi, jaribu tena baadae");
+    }
+    setRefreshList(true);
   };
 
   return (
@@ -83,7 +91,7 @@ function Users({ users: usersProp, ...props }) {
                 Name
               </Typography>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={4}>
               <Typography className={clsx(classes.cell, classes.header)}>
                 Email
               </Typography>
@@ -98,7 +106,7 @@ function Users({ users: usersProp, ...props }) {
                 Status
               </Typography>
             </Grid>
-            <Grid item xs={2} />
+            <Grid item xs={1} />
           </Grid>
           {users?.map((c) => {
             let status = "InActive";
@@ -118,9 +126,9 @@ function Users({ users: usersProp, ...props }) {
                 key={c.name}
               >
                 <Grid item xs={3}>
-                  <Typography className={classes.cell}>{c.name}</Typography>
+                  <Typography className={classes.cellName}>{c.name}</Typography>
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={4}>
                   <Typography className={classes.cell}>{c.email}</Typography>
                 </Grid>
                 <Grid item xs={2}>
@@ -129,12 +137,12 @@ function Users({ users: usersProp, ...props }) {
                 <Grid item xs={2}>
                   <Typography className={classes.cell}>{status}</Typography>
                 </Grid>
-                <Grid item xs={2}>
+                <Grid item xs={1}>
                   <Button
                     variant="contained"
                     color="primary"
                     className={classes.button}
-                    onClick={(e) => handleDeleteUser(e, c)}
+                    onClick={(e) => handleDeleteUser(e, c._id)}
                   >
                     Futa
                   </Button>

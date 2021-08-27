@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 
 import sendVerificationRequest from "./sendVerificationRequest";
 
+import { updateUser } from "@/jikopoint/controllers/user";
 import User from "@/jikopoint/models/user";
 import dbConnect from "@/jikopoint/utils/mongoose";
 
@@ -38,19 +39,31 @@ async function registerUser(credentials) {
 
   const userExists = await User.findOne({ email }).exec();
 
-  if (userExists) {
-    throw new Error("A user with that email address already exists");
+  if (userExists && !userExists.isDeleted) {
+    throw new Error("Mtumiaji mwenye barua pepe kama hiyo ameshajiandikisha");
   }
-
-  const doc = {
-    name,
-    role: role ?? "trainee",
-    email,
-    username: email,
-    password,
-  };
-
   try {
+    if (userExists) {
+      const updated = await updateUser(userExists.id, {
+        isDeleted: "false",
+        emailVerified: null,
+      });
+      if (!updated) {
+        return Promise.resolve(false);
+      }
+      // FIXME: verification does not get generated to sent
+      const response = await sendVerificationRequest(updated.email);
+      console.log("🚀 ~ verification: ~ response status:", response);
+      return Promise.resolve(updated);
+    }
+    const doc = {
+      name,
+      role: role ?? "trainee",
+      email,
+      username: email,
+      password,
+    };
+
     const created = await new User(doc).save();
     if (!created) {
       return Promise.resolve(false);
