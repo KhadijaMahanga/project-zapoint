@@ -1,5 +1,5 @@
 const allowedFields = {
-  user: ["name", "password"],
+  user: ["name", "password", "emailVerified", "image", "isDeleted"],
   role: ["name"],
   course: ["name", "description", "category", "image", "instructor"],
   category: ["name", "slug"],
