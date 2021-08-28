@@ -36,6 +36,10 @@ const CourseSchema = new Schema(
       type: Number,
       default: 0,
     },
+    isArchived: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } }
 );
