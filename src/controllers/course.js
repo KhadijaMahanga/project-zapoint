@@ -10,8 +10,7 @@ export const createCourse = async (data) => {
 };
 
 export const getCourses = async () => {
-  return Course.find({ isArchived: false })
-    .select("-__v")
+  return Course.find({})
     .then((courses) => courses)
     .catch((e) => new Error(e));
 };
