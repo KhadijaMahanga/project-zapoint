@@ -10,7 +10,8 @@ export const createCourse = async (data) => {
 };
 
 export const getCourses = async () => {
-  return Course.find({})
+  return Course.find({ isArchived: false })
+    .select("-__v")
     .then((courses) => courses)
     .catch((e) => new Error(e));
 };
@@ -36,8 +37,8 @@ export const updateCourse = async (id, updates = {}) => {
     .catch((e) => new Error(e));
 };
 
+// we don't delete course
+// instead we archive them
 export const deleteCourse = async (id) => {
-  return Course.findByIdAndDelete(id)
-    .then((course) => course)
-    .catch((e) => new Error(e));
+  return updateCourse(id, { isArchived: true });
 };

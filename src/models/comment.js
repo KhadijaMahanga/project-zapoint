@@ -10,7 +10,6 @@ const CommentSchema = new Schema(
       type: String,
       required: true,
     },
-    replies: [{ type: Schema.Types.ObjectId, ref: "Reply" }],
   },
   { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } }
 );
