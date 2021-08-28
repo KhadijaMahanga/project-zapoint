@@ -21,7 +21,7 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
     borderRadius: "50%",
     height: typography.pxToRem(40),
     width: typography.pxToRem(40),
-    marginLeft: typography.pxToRem(3),
+    marginRight: typography.pxToRem(3),
     cursor: "pointer",
     [breakpoints.up("md")]: {
       height: typography.pxToRem(45),

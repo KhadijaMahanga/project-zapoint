@@ -23,7 +23,6 @@ const ShareBar = ({ socialLinks, title, text, ...props }) => {
   }
   const url = typeof window !== "undefined" ? window.location : null;
 
-  console.log(text);
   return (
     <div className={classes.root}>
       {text && (
