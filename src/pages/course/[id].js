@@ -13,29 +13,7 @@ function Course(props) {
   );
 }
 
-export async function getStaticPaths() {
-  const courses = await fetcher(
-    `${process.env.NEXT_PUBLIC_APP_URL}/api/courses`
-  );
-
-  console.log(courses);
-  const paths =
-    (courses?.success &&
-      courses?.data?.map(({ _id }) => {
-        return {
-          params: {
-            id: _id,
-          },
-        };
-      })) ||
-    [];
-  return {
-    paths,
-    fallback: "blocking",
-  };
-}
-
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
   const id = context?.params?.id;
   const course = await fetcher(
     `${process.env.NEXT_PUBLIC_APP_URL}/api/courses/${id}`
