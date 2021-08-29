@@ -17,6 +17,8 @@ export async function getStaticPaths() {
   const courses = await fetcher(
     `${process.env.NEXT_PUBLIC_APP_URL}/api/courses`
   );
+
+  console.log(courses);
   const paths =
     (courses?.success &&
       courses?.data?.map(({ _id }) => {
