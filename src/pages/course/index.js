@@ -7,7 +7,7 @@ function Index({ course }) {
   return <Page course={course} />;
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const course = {};
 
   return {

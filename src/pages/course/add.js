@@ -12,7 +12,7 @@ function Course(props) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const categories = await fetcher(
     `${process.env.NEXT_PUBLIC_APP_URL}/api/categories`
   );
