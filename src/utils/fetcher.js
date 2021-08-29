@@ -1,6 +1,10 @@
 const defaultOptions = {
   method: "GET",
-  headers: { "Content-Type": "application/json" },
+  headers: {
+    "Content-Type": "application/json",
+    Accept: "application/json, text/plain, */*",
+    "User-Agent": "*",
+  },
 };
 
 const fetcher = async (url, options = defaultOptions) => {
