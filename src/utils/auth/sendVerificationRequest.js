@@ -1,24 +1,38 @@
-const sendVerificationRequest = async (email, csrfToken) => {
-  try {
-    const verification = await fetch(
-      `${process.env.NEXTAUTH_URL}/api/auth/signin/email`,
-      {
-        method: "POST",
-        body: JSON.stringify({
-          csrfToken,
-          email,
-        }),
-      }
-    );
-    if (!verification) return new Error("error verifying");
-    // return Promise.reject(
-    //   "/auth/credentials-signin?error=error sending verification"
-    // );
+import cookie from "cookie";
 
-    return verification;
-  } catch (e) {
-    return e;
-  }
+const sendVerificationRequest = async (email) => {
+  let Cookie;
+  const response = await fetch(
+    `${process.env.NEXTAUTH_URL}/api/auth/csrf`
+  ).then((res) => {
+    const parsedCookie = cookie.parse(res.headers.get("set-cookie"));
+    delete parsedCookie.Path;
+    delete parsedCookie.SameSite;
+    Cookie = Object.entries(parsedCookie)
+      .map(([key, val]) => cookie.serialize(key, val))
+      .join("; ");
+    return res.json();
+  });
+  const fetchOptions = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      Cookie,
+    },
+    body: new URLSearchParams({
+      email,
+      callbakUrl: `${process.env.NEXTAUTH_URL}`,
+      redirect: "false",
+      csrfToken: response.csrfToken,
+      json: "true",
+    }),
+  };
+
+  const result = await fetch(
+    `${process.env.NEXTAUTH_URL}/api/auth/signin/email`,
+    fetchOptions
+  ).then((res) => res.json());
+  return result;
 };
 
 export default sendVerificationRequest;

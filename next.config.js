@@ -5,7 +5,7 @@ module.exports = withPWA({
   images: {
     domains: process.env.NEXT_PUBLIC_IMAGE_DOMAINS.split(", "),
   },
-  reactStrictMode: true,
+  reactStrictMode: false,
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,

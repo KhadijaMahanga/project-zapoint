@@ -1,5 +1,19 @@
 const allowedFields = {
-  user: ["firstName", "lastName", "password"],
+  user: ["name", "password", "emailVerified", "image", "isDeleted"],
+  course: [
+    "name",
+    "description",
+    "category",
+    "image",
+    "instructor",
+    "duration",
+    "isArchived",
+    "enrolment",
+  ],
+  category: ["name", "slug"],
+  activity: ["text"],
+  comment: ["text"],
+  reply: ["text"],
 };
 
 // all fields must exist for this to return true

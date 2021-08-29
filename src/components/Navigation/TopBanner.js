@@ -11,6 +11,7 @@ import { ReactComponent as TwitterIcon } from "@/jikopoint/assets/icons/icon-twi
 import { ReactComponent as IconUser } from "@/jikopoint/assets/icons/icon-user-white.svg";
 import Link from "@/jikopoint/components/Link";
 import Section from "@/jikopoint/components/Section";
+import useAuth from "@/jikopoint/hooks/useAuth";
 
 const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   root: {
@@ -27,6 +28,17 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   },
   button: {
     textTransform: "uppercase",
+    color: palette.text.secondary,
+    fontSize: typography.pxToRem(13),
+    fontFamily: typography.fontFamily,
+    display: "flex",
+    fontWeight: 400,
+    "& :hover": {
+      color: palette.text.secondary,
+    },
+  },
+  authenticated: {
+    textTransform: "lowercase",
     color: palette.text.secondary,
     fontSize: typography.pxToRem(13),
     fontFamily: typography.fontFamily,
@@ -53,6 +65,7 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
 
 function TopBanner({ social, ...props }) {
   const classes = useStyles(props);
+  const { isAuthenticated, session, signOut } = useAuth();
 
   return (
     <Toolbar className={classes.root}>
@@ -93,34 +106,70 @@ function TopBanner({ social, ...props }) {
             direction="row"
             className={classes.auth}
           >
-            <Grid item>
-              <Button
-                component={Link}
-                underline="none"
-                href="/auth/ingia"
-                startIcon={<IconUser className={classes.icon} />}
-                classes={{ text: classes.button }}
-              >
-                Ingia
-              </Button>
-            </Grid>
-            <Grid item>
-              <Divider
-                orientation="vertical"
-                flexItem
-                classes={{ root: classes.divider }}
-              />
-            </Grid>
-            <Grid item>
-              <Button
-                component={Link}
-                underline="none"
-                startIcon={<IconLogin className={classes.icon} />}
-                classes={{ text: classes.button }}
-              >
-                Jiunge
-              </Button>
-            </Grid>
+            {isAuthenticated ? (
+              <>
+                <Grid item>
+                  <Button
+                    component={Link}
+                    underline="none"
+                    href="/auth/account"
+                    startIcon={<IconUser className={classes.icon} />}
+                    classes={{ text: classes.authenticated }}
+                  >
+                    {session?.user?.name}
+                  </Button>
+                </Grid>
+                <Grid item>
+                  <Divider
+                    orientation="vertical"
+                    flexItem
+                    classes={{ root: classes.divider }}
+                  />
+                </Grid>
+                <Grid item>
+                  <Button
+                    underline="none"
+                    onClick={signOut}
+                    startIcon={<IconLogin className={classes.icon} />}
+                    classes={{ text: classes.button }}
+                  >
+                    Ondoka
+                  </Button>
+                </Grid>
+              </>
+            ) : (
+              <>
+                <Grid item>
+                  <Button
+                    component={Link}
+                    underline="none"
+                    href="/auth/ingia"
+                    startIcon={<IconUser className={classes.icon} />}
+                    classes={{ text: classes.button }}
+                  >
+                    Ingia
+                  </Button>
+                </Grid>
+                <Grid item>
+                  <Divider
+                    orientation="vertical"
+                    flexItem
+                    classes={{ root: classes.divider }}
+                  />
+                </Grid>
+                <Grid item>
+                  <Button
+                    component={Link}
+                    underline="none"
+                    href="/auth/jiunge"
+                    startIcon={<IconLogin className={classes.icon} />}
+                    classes={{ text: classes.button }}
+                  >
+                    Jiunge
+                  </Button>
+                </Grid>
+              </>
+            )}
           </Grid>
         </Grid>
       </Section>

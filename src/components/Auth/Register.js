@@ -8,6 +8,7 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useRouter } from "next/router";
+import PropTypes from "prop-types";
 import React, { useState } from "react";
 
 import Link from "@/jikopoint/components/Link";
@@ -35,12 +36,11 @@ const useStyles = makeStyles(({ palette, typography }) => ({
   },
 }));
 
-function Register() {
+function Register({ role, csrfToken }) {
   const classes = useStyles();
   const router = useRouter();
 
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [name, setName] = useState("");
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -69,23 +69,18 @@ function Register() {
     e.stopPropagation();
 
     if (!emailError.length && !passwordError.length && email && password) {
-      const credentials = {
-        email,
-        password,
-        firstName,
-        lastName,
-      };
-      const res = await fetch(`${process.env.NEXTAUTH_URL}/api/users/`, {
+      const options = {
         method: "POST",
-        "Content-Type": "application/json",
-        body: JSON.stringify(credentials),
-      });
+        headers: { "Content-Type": "application/json" },
+        credentials: "same-origin",
+        body: JSON.stringify({ email, password, name, csrfToken, role }),
+      };
 
-      if (res?.error) {
+      const res = await fetch("/api/users", options);
+      if (!res.success) {
         setRegisterError(res.error);
-      }
-      if (res.url) {
-        router.push(res.url);
+      } else {
+        router.push("/auth/kamilisha/");
       }
     }
   };
@@ -95,32 +90,20 @@ function Register() {
       {registerError.length > 0 && (
         <Typography variant="overline"> {registerError}</Typography>
       )}
+      <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
       <Grid container spacing={1}>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12}>
           <TextField
             autoComplete="fname"
-            name="firstName"
+            name="name"
             variant="outlined"
             required
             fullWidth
-            id="firstName"
-            label="Jina la kwanza"
+            id="name"
+            label="Jina"
             autoFocus
             InputLabelProps={{ classes: { root: classes.label } }}
-            onChange={(e) => setFirstName(e.target.value)}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            variant="outlined"
-            required
-            fullWidth
-            id="lastName"
-            label="Jina la mwisho"
-            name="lastName"
-            autoComplete="lname"
-            InputLabelProps={{ classes: { root: classes.label } }}
-            onChange={(e) => setLastName(e.target.value)}
+            onChange={(e) => setName(e.target.value)}
           />
         </Grid>
         <Grid item xs={12}>
@@ -190,5 +173,15 @@ function Register() {
     </form>
   );
 }
+
+Register.propTypes = {
+  role: PropTypes.string,
+  csrfToken: PropTypes.string,
+};
+
+Register.defaultProps = {
+  role: undefined,
+  csrfToken: undefined,
+};
 
 export default Register;

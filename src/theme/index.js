@@ -5,15 +5,23 @@ const FONT_FAMILY_HEADING = "'Montserrat', sans-serif";
 const FONT_FAMILY_TEXT = "'Varela Round', sans-serif";
 
 const theme = createTheme({
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 390, // mobile
+      md: 768, // tablet
+      lg: 1280, // desktop
+    },
+  },
   palette: {
-    primary: { main: "#68B78C" },
-    secondary: { main: "#68B78C" },
+    primary: { main: "#41aa54" },
+    secondary: { main: "#41aa54" },
     highlight: { main: "#a3a3a3" },
-    text: { primary: "#727475", secondary: "#fff", highlight: "#a3a3a3" },
+    text: { primary: "#414142", secondary: "#fff", highlight: "#a3a3a3" },
     background: {
       default: "#fff",
       light: "#ceb28d",
-      dark: "#444444",
+      dark: "#414142",
     },
     divider: "#b59974",
     info: {
@@ -122,8 +130,15 @@ const theme = createTheme({
   },
   widths: {
     values: {
-      md: 912, // 0, 24, 0, 24 margins
+      md: 608, // 0, 24, 0, 24 margins
       lg: 1200, // 0, 40, 0, 40 margins
+    },
+  },
+  props: {
+    MuiButtonBase: {
+      // Disable ripple effect globally
+      disableRipple: true,
+      disableTouchRipple: true,
     },
   },
 });

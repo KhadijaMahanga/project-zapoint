@@ -22,6 +22,9 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
     marginBottom: typography.pxToRem(30),
     display: "block",
     color: palette.text.primary,
+    "&:hover": {
+      color: palette.primary.main,
+    },
   },
   grid: {
     [breakpoints.up("md")]: {
