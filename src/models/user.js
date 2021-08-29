@@ -6,11 +6,7 @@ const MODEL_NAME = "User";
 
 const UserSchema = new Schema(
   {
-    firstName: {
-      type: String,
-      lowercase: true,
-    },
-    lastName: {
+    name: {
       type: String,
       lowercase: true,
     },
@@ -50,14 +46,14 @@ const UserSchema = new Schema(
         ref: "Session",
       },
     ],
-    role: {
-      type: Schema.Types.ObjectId,
-      ref: "UserRole",
-      required: true,
+    image: {
+      type: String,
+      lowercase: true,
     },
-    isActive: {
-      type: Boolean,
-      default: false,
+    role: {
+      type: String,
+      enum: ["admin", "super admin", "trainee", "trainer"],
+      default: "trainer",
     },
     isDeleted: {
       type: Boolean,
@@ -75,12 +71,10 @@ UserSchema.statics.findByEmail = async function (email) {
 
 // this pre method runs as middleware before each save
 UserSchema.pre("save", async function (next) {
-  console.log("-------runnin presave => hash pw + default image-------");
   const user = this;
   // check to see if password is being modified
   if (user.isModified("password")) {
     // hash password if modified
-    console.log("----hashing user password----");
     user.password = await user.simpleHashPassword(user.password);
   }
 
@@ -89,7 +83,6 @@ UserSchema.pre("save", async function (next) {
   //   console.log('----default user image----')
   //   user.image = `https://www.avatarapi.com/js.aspx?email=${user.email}&size=128"`;
   // }
-  console.log("pre save completed => user defaults applied");
   next();
 });
 

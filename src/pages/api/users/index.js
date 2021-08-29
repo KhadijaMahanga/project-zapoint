@@ -11,15 +11,15 @@ const handler = nextConnect({ onError, onNoMatch })
   .use(middleware)
   .get(async (req, res) => {
     const users = await getUsers();
-    res.json({ success: "ok", users });
+    res.json({ success: true, users });
   })
   .post(async (req, res) => {
-    const user = await registerUser(req.body);
+    const user = await registerUser(req?.body);
     if (!user) {
-      res.status(400).json({ error: "error creating user" });
+      res.status(400).json({ message: "error creating user", success: false });
     }
     if (user) {
-      res.json({ success: "ok", user });
+      res.json({ success: true, user });
     }
   });
 

@@ -3,11 +3,15 @@ import jwt from "jsonwebtoken";
 import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
 
-import validateCredentials from "@/jikopoint/utils/auth/validateCredentials";
+import loginUser from "@/jikopoint/utils/auth/loginUser";
 
 export default NextAuth({
   // Configure one or more authentication providers
   providers: [
+    Providers.Email({
+      server: process.env.SMTP_SERVER,
+      from: process.env.EMAIL_FROM,
+    }),
     Providers.Facebook({
       clientId: process.env.FACEBOOK_CLIENT_ID,
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
@@ -21,15 +25,23 @@ export default NextAuth({
       clientSecret: process.env.TWITTER_SECRET,
     }),
     Providers.Credentials({
-      name: "Credentials",
+      id: "login",
+      name: "Login",
       async authorize(credentials) {
         // logic to look up the user from the credentials supplied
         try {
-          const user = validateCredentials(credentials);
-          if (user !== null) {
-            return user;
+          const user = await loginUser(credentials);
+          if (user?.isDeleted) {
+            throw new Error(
+              "Akaunti yako imefutwa, tafadhali jiandikishe tena"
+            );
           }
-          return null;
+          if (!user?.emailVerified) {
+            throw new Error(
+              "Akaunti yako si kamilifu. Pitia kwenye barua pepe yako kuikamilisha"
+            );
+          }
+          return user;
         } catch (e) {
           throw new Error(e);
         }
@@ -37,7 +49,7 @@ export default NextAuth({
     }),
   ],
   // A database is optional, but required to persist accounts in a database
-  database: process.env.MONGO_URL,
+  database: process.env.MONGODB_URI,
   secret: process.env.SECRET,
   redirect: false,
   session: {
@@ -70,9 +82,9 @@ export default NextAuth({
   // pages is not specified for that route.
   // https://next-auth.js.org/configuration/pages
   pages: {
-    signIn: "/auth/ingia", // Displays signin buttons
+    signIn: "/auth/jiunge", // Displays signin buttons
     // error: "/auth/ingia", // Error code passed in query string as ?error=
-    // verifyRequest: "/auth/verify-request", // Used for check email page
+    // verifyRequest: "/auth/kamilisha", // Used for check email page
     // newUser: null // If set, new users will be directed here on first sign in
   },
 
@@ -85,11 +97,10 @@ export default NextAuth({
     // async session(session, user) { return session },
     // async jwt(token, user, account, profile, isNewUser) { return token }
     async signIn(user, account) {
-      if (account.type === "oauth" || account.type === "email") {
-        return true;
-      }
-      if (!user?.isActive) {
-        return false;
+      if (account.type === "oauth") {
+        user.role = "trainer";
+        console.log(user);
+        // save/ update user here
       }
       return true;
     },
@@ -97,14 +108,20 @@ export default NextAuth({
       if (token?.user) {
         session.user = token.user;
       }
-      session.accessToken = token.accessToken;
-
+      if (token?.accessToken) {
+        session.accessToken = token.accessToken;
+      }
+      if (token?.role) {
+        session.user.role = token.role;
+      }
       return session;
     },
-    async jwt(token, user) {
-      if (typeof user !== typeof undefined) {
-        token.auth_time = Number(new Date());
-        token.user = user;
+    async jwt(token, user, account) {
+      if (account?.accessToken) {
+        token.accessToken = account.accessToken;
+      }
+      if (user?.role) {
+        token.role = user.role;
       }
       return token;
     },

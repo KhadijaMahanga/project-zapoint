@@ -19,7 +19,7 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   },
   background: {
     position: "absolute",
-    width: "100vw",
+    width: "100%",
     overflow: "hidden",
     zIndex: -1,
     height: typography.pxToRem(450),
