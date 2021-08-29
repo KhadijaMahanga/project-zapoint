@@ -14,7 +14,7 @@ const handler = nc({ onNoMatch, onError })
   .get(async (req, res) => {
     try {
       const courses = await getCourses();
-      res.json({ success: true, data: JSON.stringify(courses) });
+      res.json({ success: true, data: courses });
     } catch (e) {
       res.status(401).send({ message: e, success: false });
     }
@@ -36,16 +36,16 @@ const handler = nc({ onNoMatch, onError })
         category: JSON.parse(req?.body?.category),
         image: cover,
       });
-      res.json({ success: true, data: JSON.stringify(course) });
+      res.json({ success: true, data: course });
     } catch (e) {
       res.status(401).send({ message: e, success: false });
     }
   });
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
+// export const config = {
+//   api: {
+//     bodyParser: false,
+//   },
+// };
 
 export default handler;
