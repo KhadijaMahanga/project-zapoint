@@ -14,7 +14,7 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
     position: "relative",
     height: typography.pxToRem(450),
     [breakpoints.up("lg")]: {
-      height: typography.pxToRem(680),
+      height: typography.pxToRem(650),
     },
   },
   background: {

@@ -1,8 +1,8 @@
 import { createTheme } from "@material-ui/core/styles";
 import { deepmerge } from "@material-ui/utils";
 
-const FONT_FAMILY_HEADING = "'Montserrat', sans-serif";
-const FONT_FAMILY_TEXT = "'Varela Round', sans-serif";
+const FONT_FAMILY_HEADING = "'Nexa Bold', sans-serif";
+const FONT_FAMILY_TEXT = "'Source Sans Pro', sans-serif";
 
 const theme = createTheme({
   breakpoints: {
@@ -20,7 +20,7 @@ const theme = createTheme({
     text: { primary: "#414142", secondary: "#fff", highlight: "#a3a3a3" },
     background: {
       default: "#fff",
-      light: "#ceb28d",
+      light: "#f6921e",
       dark: "#414142",
     },
     divider: "#b59974",

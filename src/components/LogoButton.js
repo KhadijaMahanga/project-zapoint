@@ -1,8 +1,9 @@
 import { IconButton } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import Image from "next/image";
 import React from "react";
 
-import { ReactComponent as Logo } from "@/jikopoint/assets/logos/logo-foodlab-grey.svg";
+import logo from "@/jikopoint/assets/logos/jikopoint.png";
 import Link from "@/jikopoint/components/Link";
 
 const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
@@ -12,20 +13,20 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
     backgroundSize: "200% 100%",
     backgroundPosition: "bottom right",
     transition: "background-position .3s ease-out",
-    paddingLeft: 0,
+    margin: `${typography.pxToRem(10)} 0`,
+
     "&:hover": {
       borderRadius: 0,
       backgroundPosition: "bottom left",
       color: palette.primary.main,
     },
-  },
-  image: {
     width: typography.pxToRem(150),
-    [breakpoints.up("sm")]: {
-      width: typography.pxToRem(170),
+    [breakpoints.up("lg")]: {
+      width: typography.pxToRem(100),
     },
-    height: "auto",
+    height: typography.pxToRem(90),
   },
+  image: {},
 }));
 
 function LogoButton() {
@@ -37,7 +38,7 @@ function LogoButton() {
       underline="none"
       className={classes.root}
     >
-      <Logo className={classes.image} viewBox="156 0 180 100" />
+      <Image src={logo} className={classes.image} layout="fill" />
     </IconButton>
   );
 }
