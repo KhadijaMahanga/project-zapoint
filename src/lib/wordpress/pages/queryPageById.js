@@ -12,6 +12,7 @@ export const singlePageFragment = gql`
     ${globalPostFields}
     blocksJSON
     excerpt
+    content
     ${seoPostFields}
     ${authorPostFields}
     ${featuredImagePostFields}

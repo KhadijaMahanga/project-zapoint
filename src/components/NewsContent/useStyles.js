@@ -13,7 +13,9 @@ const useStyles = makeStyles(({ palette, typography, breakpoints }) => ({
   date: {
     marginTop: typography.pxToRem(20),
     marginBottom: typography.pxToRem(20),
-    fontSize: typography.pxToRem(18),
+    fontSize: typography.pxToRem(15),
+    fontFamily: typography.h2.fontFamily,
+    textTransform: "capitalize",
   },
   image: {
     position: "relative",
@@ -35,7 +37,6 @@ const useStyles = makeStyles(({ palette, typography, breakpoints }) => ({
     },
   },
   description: {
-    fontFamily: typography.h2.fontFamily,
     marginBottom: typography.pxToRem(40),
     paddingBottom: typography.pxToRem(10),
     borderBottom: "1px solid #f1f1f1",
