@@ -15,6 +15,7 @@ export async function getStaticProps({ preview, previewData }) {
     preview,
     previewData
   );
+  console.log(props);
 
   if (notFound) {
     return {
