@@ -78,7 +78,6 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
 }));
 
 function NewsCard({
-  id,
   date,
   image,
   title,
@@ -105,12 +104,12 @@ function NewsCard({
     <Card className={classes.root}>
       <CardActionArea
         component={Component}
-        href={`/habari/${category?.slug}/${slug}-${id}`}
+        href={`/habari/${category?.slug}/${slug}`}
         classes={{ focusHighlight: classes.cardActionAreaFocusHighlight }}
         underline="none"
       >
         <div className={classes.image}>
-          <Image src={image?.url} alt={title} layout="fill" />
+          {image && <Image src={image} alt={title} layout="fill" />}
           <Button
             underline="none"
             component={Link}
@@ -137,13 +136,10 @@ function NewsCard({
 }
 
 NewsCard.propTypes = {
-  id: PropTypes.string,
   date: PropTypes.string,
   description: PropTypes.string,
   slug: PropTypes.string,
-  image: PropTypes.shape({
-    url: PropTypes.string,
-  }),
+  image: PropTypes.string,
   title: PropTypes.string,
   category: PropTypes.shape({
     slug: PropTypes.string,
@@ -152,7 +148,6 @@ NewsCard.propTypes = {
 };
 
 NewsCard.defaultProps = {
-  id: undefined,
   date: undefined,
   description: undefined,
   slug: undefined,
