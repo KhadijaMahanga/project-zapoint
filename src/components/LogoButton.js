@@ -20,11 +20,12 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
       backgroundPosition: "bottom left",
       color: palette.primary.main,
     },
-    width: typography.pxToRem(150),
+    width: typography.pxToRem(85),
+    height: typography.pxToRem(70),
     [breakpoints.up("lg")]: {
       width: typography.pxToRem(100),
+      height: typography.pxToRem(90),
     },
-    height: typography.pxToRem(90),
   },
   image: {},
 }));
