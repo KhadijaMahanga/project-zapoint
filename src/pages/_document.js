@@ -8,13 +8,13 @@ export default class MyDocument extends Document {
       <Html lang="en">
         <Head>
           {/* PWA meta */}
-          <meta name="application-name" content="Jiko Class" />
+          <meta name="application-name" content="JikoPoint" />
           <meta name="apple-mobile-web-app-capable" content="yes" />
           <meta
             name="apple-mobile-web-app-status-bar-style"
             content="default"
           />
-          <meta name="apple-mobile-web-app-title" content="Jiko Class" />
+          <meta name="apple-mobile-web-app-title" content="JikoPoint" />
           <meta name="description" content="Jiko Class and News PWA App" />
           <meta name="format-detection" content="telephone=no" />
           <meta name="mobile-web-app-capable" content="yes" />
@@ -32,17 +32,17 @@ export default class MyDocument extends Document {
             rel="icon"
             type="image/png"
             sizes="192x192"
-            href="/icons/icons/logo192.png"
+            href="/icons/android-chrome-192x192.png"
           />
           <link
             rel="icon"
             type="image/png"
             sizes="512x512"
-            href="/icons/icon-512x512.png"
+            href="/icons/android-chrome-512x512.png"
           />
           <link rel="manifest" href="/manifest.json" />
           {/* <link rel='mask-icon' href='/icons/safari-pinned-tab.svg' color='#5bbad5' /> */}
-          <link rel="shortcut icon" href="/favicon.ico" />
+          <link rel="shortcut icon" href="/icons/favicon.ico" />
           <link
             rel="preload"
             href="https://fonts.googleapis.com/css?family=Montserrat:700|Valera+Round:400,700&display=swap"

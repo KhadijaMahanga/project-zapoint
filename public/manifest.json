@@ -1,6 +1,6 @@
 {
-  "short_name": "Jiko Class",
-  "name": "Jiko PWA Class",
+  "short_name": "JikoPoint",
+  "name": "JikoPoint Habari & e-Darasa",
   "icons": [
     {
       "src": "icons/favicon.ico",
@@ -8,12 +8,12 @@
       "type": "image/x-icon"
     },
     {
-      "src": "android-chrome-192x192.png",
+      "src": "icons/android-chrome-192x192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "android-chrome-512x512.png",
+      "src": "icons/android-chrome-512x512.png",
       "type": "image/png",
       "sizes": "512x512"
     }
