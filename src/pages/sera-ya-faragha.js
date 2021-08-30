@@ -3,14 +3,14 @@ import React from "react";
 import Page from "@/jikopoint/components/Page";
 import getPostTypeStaticProps from "@/jikopoint/functions/postTypes/getPostTypeStaticProps";
 
-export default function Mkufunzi(props) {
+export default function Masharti(props) {
   return <Page {...props} />;
 }
 
 export async function getStaticProps({ preview, previewData }) {
   const postType = "page";
   const { props, revalidate, notFound } = await getPostTypeStaticProps(
-    { slug: "kuwa-mkufunzi" },
+    { slug: "sera-ya-faragha" },
     postType,
     preview,
     previewData

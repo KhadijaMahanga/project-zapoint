@@ -46,10 +46,10 @@ function NewsContent({
       )}
       <Grid container direction="column" className={classes.root}>
         <Grid item container md={8} justifyContent="space-between">
-          {author?.name && (
+          {author && (
             <Grid item>
               <Typography className={classes.date} variant="h6">
-                {`Na ${author?.name}`}
+                {`Na ${author}`}
               </Typography>
             </Grid>
           )}
@@ -69,11 +69,11 @@ function NewsContent({
           </Grid>
         )}
         <Grid item xs={12} md={8}>
-          {image?.url && (
+          {image && (
             <div className={classes.image}>
               <Image
                 alt="article"
-                src={image?.url}
+                src={image}
                 layout="fill"
                 objectFit="cover"
               />
@@ -98,12 +98,8 @@ NewsContent.propTypes = {
   description: PropTypes.string,
   date: PropTypes.string,
   content: PropTypes.string,
-  image: PropTypes.shape({
-    url: PropTypes.string,
-  }),
-  author: PropTypes.shape({
-    name: PropTypes.string,
-  }),
+  image: PropTypes.string,
+  author: PropTypes.string,
 };
 
 NewsContent.defaultProps = {
