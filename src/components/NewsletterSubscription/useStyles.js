@@ -9,9 +9,7 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
     padding: `${typography.pxToRem(56)} 0`,
     paddingLeft: typography.pxToRem(20),
     [breakpoints.up("lg")]: {
-      paddingBottom: typography.pxToRem(20),
-      paddingTop: typography.pxToRem(25),
-      paddingLeft: typography.pxToRem(40),
+      padding: typography.pxToRem(40),
     },
   },
   title: {
@@ -23,17 +21,60 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
     color: palette.background.default,
     padding: `${typography.pxToRem(8)} 0`,
   },
-  form: {
-    marginTop: "2.5rem",
-    [breakpoints.up("lg")]: {
-      marginTop: 0,
+  formControl: {
+    display: "flex",
+  },
+  inputBase: {
+    padding: typography.pxToRem(2),
+    borderRadius: typography.pxToRem(4),
+    color: palette.text.primary,
+    border: "1px solid #dededf",
+    height: typography.pxToRem(42),
+    width: typography.pxToRem(300),
+    backgroundColor: palette.background.default,
+    [breakpoints.up("md")]: {
+      width: typography.pxToRem(389),
     },
   },
-  inputLabel: {
-    fontSize: `${typography.pxToRem(12)} !important`,
+  label: {
+    color: palette.text.primary,
+    textAlign: "left",
+    fontSize: typography.pxToRem(12),
+    position: "relative",
+    marginBottom: typography.pxToRem(5),
+    fontFamily: typography.fontFamily,
+    fontWeight: "bold",
+    transform: `translate(0, ${typography.pxToRem(0)}) scale(1)`,
+    "&$focused": {
+      color: palette.background.default,
+    },
+  },
+  focused: {
+    color: palette.background.default,
+  },
+  inputBaseInput: {
+    textAlign: "left",
+    paddingLeft: typography.pxToRem(16),
+    fontSize: typography.pxToRem(12),
+    width: "100%",
+    "label[data-shrink=false] + .MuiInputBase-formControl &::placeholder": {
+      opacity: "0.5!important",
+    },
+  },
+  form: {
+    display: "flex",
+    alignItems: "center",
+    height: typography.pxToRem(60),
   },
   button: {
     minWidth: "max-content",
+    height: typography.pxToRem(41),
+    color: palette.text.secondary,
+    marginLeft: typography.pxToRem(10),
+    display: "flex",
+  },
+  helperText: {
+    height: typography.pxToRem(20),
   },
 }));
 
