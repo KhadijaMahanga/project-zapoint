@@ -71,18 +71,26 @@ function HighlightCourses({ items: itemsProp, title, subtitle, ...props }) {
           {subtitle}
         </Typography>
         <Grid container className={classes.grid}>
-          {items.map((item) => (
-            <Grid
-              xs={12}
-              md={6}
-              lg={4}
-              className={classes.cardSection}
-              key={item.slug}
-              item
-            >
-              <NewsCard {...item} />
-            </Grid>
-          ))}
+          {items.map(
+            ({ featuredImage, excerpt, categories, slug, ...item }) => (
+              <Grid
+                xs={12}
+                md={6}
+                lg={4}
+                className={classes.cardSection}
+                key={slug}
+                item
+              >
+                <NewsCard
+                  {...item}
+                  category={categories?.edges[0]?.node}
+                  description={excerpt?.replace(/<[^>]+>/g, "") ?? ""}
+                  slug={slug}
+                  image={featuredImage?.node?.sourceUrl}
+                />
+              </Grid>
+            )
+          )}
         </Grid>
       </Section>
     </div>
@@ -90,7 +98,17 @@ function HighlightCourses({ items: itemsProp, title, subtitle, ...props }) {
 }
 
 HighlightCourses.propTypes = {
-  items: PropTypes.arrayOf(PropTypes.shape({ slug: PropTypes.string })),
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      excerpt: PropTypes.string,
+      featuredImage: PropTypes.shape({
+        node: PropTypes.shape({
+          sourceUrl: PropTypes.string,
+        }),
+      }),
+      slug: PropTypes.string,
+    })
+  ),
   title: PropTypes.string,
   subtitle: PropTypes.string,
 };

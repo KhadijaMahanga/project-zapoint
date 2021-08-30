@@ -6,11 +6,12 @@ import HighlightCourses from "@/jikopoint/components/HighlightCourses";
 import HighlightNews from "@/jikopoint/components/HighlightNews";
 import NewsletterSubscription from "@/jikopoint/components/NewsletterSubscription";
 import Page from "@/jikopoint/components/Page";
-import getArticles from "@/jikopoint/lib/functions/getArticles";
+import getPostTypeArchive from "@/jikopoint/functions/postTypes/getPostTypeArchive";
+import getPostTypeStaticProps from "@/jikopoint/functions/postTypes/getPostTypeStaticProps";
 
-function Index({ articles }) {
+function Index({ articles, ...props }) {
   return (
-    <Page>
+    <Page {...props}>
       <Hero
         ctaText="Kuwa Mkufunzi"
         href="/kuwa-mkufunzi"
@@ -33,10 +34,31 @@ function Index({ articles }) {
   );
 }
 
-export async function getStaticProps() {
-  const articleProps = await getArticles();
+export async function getStaticProps({ preview, previewData }) {
+  const postType = "page";
+  const { props, revalidate, notFound } = await getPostTypeStaticProps(
+    { slug: "/" },
+    postType,
+    preview,
+    previewData
+  );
 
-  return articleProps;
+  const { posts: articles } = await getPostTypeArchive("post");
+
+  if (notFound) {
+    return {
+      notFound,
+    };
+  }
+  // enhancement
+  // const blocks = formatBlocksForSections(props?.post?.blocks?? []);
+  return {
+    props: {
+      ...props,
+      articles,
+    },
+    revalidate,
+  };
 }
 
 Index.propTypes = {
