@@ -25,6 +25,7 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
     "material-ui-dropzone": "^3.5.0",
+    "moment": "^2.29.1",
     "mongodb": "^3.6.9",
     "mongoose": "^5.13.2",
     "morgan": "^1.10.0",
