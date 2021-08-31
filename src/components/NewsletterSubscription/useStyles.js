@@ -6,9 +6,9 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
     color: palette.text.secondary,
     backgroundColor: palette.background.dark,
     borderRadius: typography.pxToRem(5),
-    padding: `${typography.pxToRem(56)} 0`,
-    paddingLeft: typography.pxToRem(20),
-    [breakpoints.up("lg")]: {
+    paddingBottom: typography.pxToRem(56),
+    paddingTop: typography.pxToRem(56),
+    [breakpoints.up("md")]: {
       padding: typography.pxToRem(40),
     },
   },
@@ -30,7 +30,6 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
     color: palette.text.primary,
     border: "1px solid #dededf",
     height: typography.pxToRem(42),
-    width: typography.pxToRem(300),
     backgroundColor: palette.background.default,
     [breakpoints.up("md")]: {
       width: typography.pxToRem(389),
@@ -64,7 +63,6 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   form: {
     display: "flex",
     alignItems: "center",
-    height: typography.pxToRem(60),
   },
   button: {
     minWidth: "max-content",
@@ -74,7 +72,8 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
     display: "flex",
   },
   helperText: {
-    height: typography.pxToRem(20),
+    height: typography.pxToRem(17),
+    margin: 0,
   },
 }));
 
