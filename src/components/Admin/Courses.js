@@ -63,8 +63,19 @@ function Courses({ courses: coursesProp, categories, ...props }) {
     }
   }, [res]);
 
-  const handleEditCourse = (e) => {
-    e?.preventDefault();
+  const handleEditCourse = async (e, id) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("status", "approved");
+
+    const options = {
+      method: "PUT",
+      body: formData,
+    };
+
+    const url = `/api/courses/${id}`;
+    const result = await fetch(url, options);
+    await result.json();
   };
 
   return (
@@ -133,7 +144,7 @@ function Courses({ courses: coursesProp, categories, ...props }) {
                   color="primary"
                   disabled={c.status !== "pending approval"}
                   className={classes.button}
-                  onClick={(e) => handleEditCourse(e, c)}
+                  onClick={(e) => handleEditCourse(e, c._id)}
                 >
                   Approve
                 </Button>

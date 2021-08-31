@@ -7,13 +7,14 @@ import React, { useEffect, useState } from "react";
 
 import Section from "@/jikopoint/components/Section";
 
-const useStyles = makeStyles(({ palette, typography }) => ({
+const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   root: {
-    height: "100vh",
+    padding: `${typography.pxToRem(20)} 0`,
+    [breakpoints.up("md")]: {
+      padding: `${typography.pxToRem(40)} 0`,
+    },
   },
-  section: {
-    paddingTop: typography.pxToRem(40),
-  },
+  section: {},
   label: {
     color: palette.text.primary,
     fontSize: typography.pxToRem(16),
@@ -27,6 +28,10 @@ const useStyles = makeStyles(({ palette, typography }) => ({
   imageBtn: {
     color: palette.text.secondary,
   },
+  caption: {
+    color: palette.text.primary,
+    fontSize: typography.pxToRem(13),
+  },
 }));
 
 function Add({ categories, variant, user, course, ...props }) {
@@ -37,7 +42,10 @@ function Add({ categories, variant, user, course, ...props }) {
   const [category, setCategory] = useState(null);
   const [error, setError] = useState("");
   const [image, setImage] = useState(null);
+  const [imageFile, setImageFile] = useState(null);
   const [openDialog, setOpenDialog] = useState(false);
+
+  const [notice, setNotice] = useState(null);
 
   useEffect(() => {
     if (course && variant === "edit") {
@@ -60,17 +68,19 @@ function Add({ categories, variant, user, course, ...props }) {
     e.stopPropagation();
     if (isUpdating) return;
     setIsUpdating(true);
+    setNotice("Tunashughulia");
 
     if (
       !error?.length &&
       name.length &&
       description.length &&
-      image &&
+      (image || imageFile) &&
       category
     ) {
       const formData = new FormData();
-      formData.append("coverPhoto", image);
+      formData.append("coverPhoto", imageFile);
       formData.append("name", name);
+      formData.append("image", image);
       formData.append("description", description);
       formData.append("instructor", user?._id);
       formData.append("category", category);
@@ -85,20 +95,25 @@ function Add({ categories, variant, user, course, ...props }) {
       const url =
         variant === "edit" ? `/api/courses/${course?._id}` : "/api/courses";
       const result = await fetch(url, options);
-      const c = await result.json();
+      const res = await result.json();
       // add notification of success
-      if (c.success) {
-        alert("Umefanikiwa kuhifadhi kozi");
+      if (res.success) {
+        setNotice("Umefanikiwa kuhifadhi");
       } else {
-        alert(c.message);
+        setNotice("Tatizo la kiufundi, jaribu tena baadae.");
       }
+      setTimeout(() => {
+        setNotice("");
+      }, 4000);
     } else {
       setError("Jaza kila kitu");
     }
   };
 
   const handeFileUpload = (files) => {
-    setImage(files[0]);
+    if (files?.length) {
+      setImageFile(files[0]);
+    }
     setOpenDialog(false);
   };
 
@@ -192,6 +207,13 @@ function Add({ categories, variant, user, course, ...props }) {
                     onClose={() => setOpenDialog(false)}
                   />
                 </Grid>
+                {notice?.length && (
+                  <Grid item xs={12}>
+                    <Typography className={classes.caption}>
+                      {notice}
+                    </Typography>
+                  </Grid>
+                )}
                 <Grid item xs={12}>
                   <Button
                     type="submit"

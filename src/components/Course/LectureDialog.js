@@ -5,6 +5,7 @@ import {
   DialogContent,
   DialogTitle,
   TextField,
+  Typography,
   Button,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -29,8 +30,11 @@ const useStyles = makeStyles(({ palette, typography }) => ({
     color: palette.text.primary,
     fontSize: typography.pxToRem(13),
   },
+  button: {
+    color: palette.text.secondary,
+  },
   divider: {
-    marginTop: typography.pxToRem(20),
+    margin: `${typography.pxToRem(20)} auto`,
     display: "flex",
     alignItems: "center",
     color: palette.text.primary,
@@ -47,6 +51,7 @@ const useStyles = makeStyles(({ palette, typography }) => ({
 function LectureDialog({
   handleCloseDialog,
   openDialog,
+  courseId,
   variant,
   value,
   updateLecturesList,
@@ -78,13 +83,14 @@ function LectureDialog({
       formData.append("videoFile", videoFile);
       formData.append("name", name);
       formData.append("video", video);
+      formData.append("course", courseId);
       formData.append("type", type);
-      formData.append("no", no);
+      formData.append("no", parseInt(no, 10));
 
       let options;
       let url;
       if (variant === "add") {
-        url = "/api/lecture";
+        url = "/api/lectures";
         options = {
           method: "POST",
           body: formData,
@@ -114,11 +120,14 @@ function LectureDialog({
   };
 
   const handeFileUpload = (files) => {
-    setVideoFile(files[0]);
+    if (files?.length) {
+      setVideoFile(files[0]);
+    }
     setOpenVideoDialog(false);
   };
 
-  const title = variant === "add" ? "Ongeza Kundi la Kozi" : "Hariri Kundi";
+  const title =
+    variant === "add" ? "Ongeza somo/kipindi" : "Hariri somo/kipindi";
   return (
     <Dialog
       open={openDialog}
@@ -130,11 +139,16 @@ function LectureDialog({
       <DialogTitle id="form-dialog-title">{title}</DialogTitle>
       <form className={classes.form} onSubmit={(e) => handleSubmit(e)}>
         <DialogContent>
+          <Typography className={classes.caption}>
+            Kielezo hupanga mtiririko wako wa vipindi (kama una zaidi ya moja).
+            Jaza 1, 2, 3..nk
+          </Typography>
           <TextField
             autoComplete="fno"
             name="no"
             variant="outlined"
             value={no}
+            margin="normal"
             required
             fullWidth
             id="no"
@@ -148,6 +162,7 @@ function LectureDialog({
             name="name"
             variant="outlined"
             value={name}
+            margin="normal"
             required
             fullWidth
             id="name"
@@ -163,6 +178,7 @@ function LectureDialog({
             value={type}
             required
             fullWidth
+            margin="normal"
             id="type"
             label="Aina ya video"
             autoFocus
@@ -170,16 +186,17 @@ function LectureDialog({
             InputLabelProps={{ classes: { root: classes.label } }}
             onChange={(e) => setType(e.target.value)}
           />
-          <TextField className={classes.caption}>
+          <Typography className={classes.caption}>
             Waweza kuweka link kutoka youtube au ukapakia video. Njia ya kwanza
-            inapendekezwa zaid
-          </TextField>
+            inapendekezwa zaidi
+          </Typography>
           <TextField
             autoComplete="fvideo"
             name="video"
             variant="outlined"
             value={video}
             required
+            margin="normal"
             fullWidth
             id="video"
             label="video"
@@ -199,7 +216,7 @@ function LectureDialog({
             className={classes.button}
             onClick={() => setOpenVideoDialog(true)}
           >
-            Pakia picha ya jalada
+            Pakia video
           </Button>
           <DropzoneDialog
             open={openVideoDialog}
@@ -229,6 +246,7 @@ function LectureDialog({
 }
 
 LectureDialog.propTypes = {
+  courseId: PropTypes.string,
   handleCloseDialog: PropTypes.func,
   openDialog: PropTypes.bool,
   variant: PropTypes.oneOf(["add", "edit"]),
@@ -248,6 +266,7 @@ LectureDialog.defaultProps = {
   updateLecturesList: undefined,
   variant: "add",
   value: undefined,
+  courseId: undefined,
 };
 
 export default LectureDialog;
