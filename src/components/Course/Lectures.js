@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { Typography, Button, Grid } from "@material-ui/core";
+import { Typography, Button, Grid, Hidden } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import PropTypes from "prop-types";
@@ -7,21 +7,24 @@ import React, { useEffect, useState } from "react";
 import useSWR from "swr";
 
 import LectureDialog from "@/jikopoint/components/Course/LectureDialog";
+import Section from "@/jikopoint/components/Section";
 import fetcher from "@/jikopoint/utils/fetcher";
 
 const useStyles = makeStyles(({ typography, palette }) => ({
-  root: {},
+  root: {
+    paddingBottom: typography.pxToRem(40),
+  },
+  section: {},
   tableRoot: {
     border: `${typography.pxToRem(1)} solid #E2E2E3`,
     borderRadius: `${typography.pxToRem(4)}`,
-    overflowX: "hidden",
     height: "100%",
     "& div:nth-child(odd)": {
       backgroundColor: "#F9FAFB",
     },
   },
   row: {
-    height: typography.pxToRem(46),
+    height: typography.pxToRem(50),
     borderBottom: `${typography.pxToRem(1)} solid #E2E2E3`,
     padding: `0 ${typography.pxToRem(15)}`,
     "& :last-of-type": {
@@ -43,10 +46,11 @@ const useStyles = makeStyles(({ typography, palette }) => ({
   button: {
     color: palette.text.secondary,
     fontSize: typography.pxToRem(13),
+    padding: `${typography.pxToRem(6)} ${typography.pxToRem(10)}`,
   },
 }));
 
-function Lectures({ lectures: lecturesProp, ...props }) {
+function Lectures({ lectures: lecturesProp, courseId, ...props }) {
   const classes = useStyles(props);
   const [lectures, setLectures] = useState([]);
   const [openDialog, setOpenDialog] = useState(false);
@@ -60,8 +64,10 @@ function Lectures({ lectures: lecturesProp, ...props }) {
     }
   }, [lecturesProp]);
 
-  const { data: res } = useSWR(refreshList ? "/api/lectures" : null, fetcher);
-
+  const { data: res } = useSWR(
+    refreshList ? `/api/lectures/course/${courseId}` : null,
+    fetcher
+  );
   useEffect(() => {
     if (res?.success && res?.data) {
       setLectures(res?.data);
@@ -91,96 +97,118 @@ function Lectures({ lectures: lecturesProp, ...props }) {
 
   return (
     <div className={classes.root}>
-      <Button
-        variant="contained"
-        color="primary"
-        className={classes.addButton}
-        onClick={handleAddLecture}
-      >
-        Ongeza Kundi la Kozi
-      </Button>
-      {lectures?.length && (
-        <Grid container className={classes.tableRoot}>
-          <Grid
-            item
-            container
-            justifyContent="flex-start"
-            alignItems="center"
-            className={classes.row}
-          >
-            <Grid item xs={1}>
-              <Typography className={clsx(classes.cell, classes.header)}>
-                Index
-              </Typography>
-            </Grid>
-            <Grid item xs={3}>
-              <Typography className={clsx(classes.cell, classes.header)}>
-                Name
-              </Typography>
-            </Grid>
-            <Grid item xs={4}>
-              <Typography className={clsx(classes.cell, classes.header)}>
-                Video
-              </Typography>
-            </Grid>
-            <Grid item xs={2}>
-              <Typography className={clsx(classes.cell, classes.header)}>
-                Video Type
-              </Typography>
-            </Grid>
-            <Grid item xs={2}>
-              <Typography className={clsx(classes.cell, classes.header)}>
-                Action
-              </Typography>
-            </Grid>
-          </Grid>
-          {lectures?.map((lec) => (
-            <Grid
-              item
-              container
-              justifyContent="flex-start"
-              alignItems="center"
-              className={classes.row}
-              key={lec.no}
+      <Section classes={{ root: classes.section }}>
+        <Grid container alignItems="center" justifyContent="center">
+          <Grid item xs={12} lg={8}>
+            <Button
+              variant="contained"
+              color="primary"
+              className={classes.addButton}
+              onClick={handleAddLecture}
             >
-              <Grid item xs={1}>
-                <Typography className={classes.cell}>{lec.no}</Typography>
-              </Grid>
-              <Grid item xs={3}>
-                <Typography className={classes.cell}>{lec.name}</Typography>
-              </Grid>
-              <Grid item xs={4}>
-                <Typography className={classes.cell}>{lec.video}</Typography>
-              </Grid>
-              <Grid item xs={2}>
-                <Typography className={classes.cell}>{lec.type}</Typography>
-              </Grid>
-              <Grid item xs={2}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  className={classes.button}
-                  onClick={(e) => handleEditLecture(e, lec)}
+              Ongeza Kundi la Kozi
+            </Button>
+            {lectures?.length ? (
+              <Grid container className={classes.tableRoot}>
+                <Grid
+                  item
+                  container
+                  justifyContent="flex-start"
+                  alignItems="center"
+                  className={classes.row}
                 >
-                  Hariri
-                </Button>
+                  <Hidden smDown>
+                    <Grid item md={1}>
+                      <Typography
+                        className={clsx(classes.cell, classes.header)}
+                      >
+                        Index
+                      </Typography>
+                    </Grid>
+                  </Hidden>
+                  <Grid item xs={8} md={4}>
+                    <Typography className={clsx(classes.cell, classes.header)}>
+                      Name
+                    </Typography>
+                  </Grid>
+                  <Hidden smDown>
+                    <Grid item md={5}>
+                      <Typography
+                        className={clsx(classes.cell, classes.header)}
+                      >
+                        Video
+                      </Typography>
+                    </Grid>
+                  </Hidden>
+                  <Grid item xs={4} md={2}>
+                    <Typography className={clsx(classes.cell, classes.header)}>
+                      Action
+                    </Typography>
+                  </Grid>
+                </Grid>
+                {lectures?.map((lec) => (
+                  <Grid
+                    item
+                    container
+                    justifyContent="flex-start"
+                    alignItems="center"
+                    className={classes.row}
+                    key={lec.no}
+                  >
+                    <Hidden smDown>
+                      <Grid item md={1}>
+                        <Typography className={classes.cell}>
+                          {lec.no}
+                        </Typography>
+                      </Grid>
+                    </Hidden>
+                    <Grid item xs={8} md={4}>
+                      <Typography className={classes.cell}>
+                        {lec.name}
+                      </Typography>
+                    </Grid>
+                    <Hidden smDown>
+                      <Grid item md={5}>
+                        <Typography className={classes.cell}>
+                          {lec.video}
+                        </Typography>
+                      </Grid>
+                    </Hidden>
+                    <Grid item xs={4} md={2}>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        className={classes.button}
+                        onClick={(e) => handleEditLecture(e, lec)}
+                      >
+                        Hariri
+                      </Button>
+                    </Grid>
+                  </Grid>
+                ))}
               </Grid>
-            </Grid>
-          ))}
+            ) : (
+              <Typography>
+                Hauna somo. Bonyeza hapo juu kutengeneza somo kwenye kozi yako
+              </Typography>
+            )}
+          </Grid>
         </Grid>
-      )}
-      <LectureDialog
-        variant={variant}
-        handleCloseDialog={handleCloseDialog}
-        openDialog={openDialog}
-        updateLecturesList={updateLecturesList}
-        value={row}
-      />
+        <LectureDialog
+          variant={variant}
+          courseId={courseId}
+          handleCloseDialog={handleCloseDialog}
+          openDialog={openDialog}
+          updateLecturesList={updateLecturesList}
+          value={row}
+        />
+      </Section>
     </div>
   );
 }
 
 Lectures.propTypes = {
+  courseId: PropTypes.string,
   lectures: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string,
@@ -190,6 +218,7 @@ Lectures.propTypes = {
 };
 
 Lectures.defaultProps = {
+  courseId: undefined,
   lectures: undefined,
 };
 
