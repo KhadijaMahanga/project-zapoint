@@ -68,7 +68,15 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   },
 }));
 
-function CourseCard({ instructor, duration, image, name, slug, ...props }) {
+function CourseCard({
+  instructor,
+  duration,
+  image,
+  name,
+  slug,
+  trainer,
+  ...props
+}) {
   const classes = useStyles(props);
   const Component = slug?.length ? Link : undefined;
 
@@ -89,31 +97,33 @@ function CourseCard({ instructor, duration, image, name, slug, ...props }) {
         <CardContent classes={{ root: classes.cardContentRoot }}>
           <Typography className={classes.title}>{name}</Typography>
         </CardContent>
-        <div className={classes.footer}>
-          <Grid container justifyContent="space-between" alignItems="center">
-            <Grid item xs={6}>
-              <Typography
-                className={classes.name}
-              >{`Na ${instructor?.name}`}</Typography>
-            </Grid>
-            <Grid
-              item
-              xs={6}
-              container
-              alignItems="center"
-              justifyContent="flex-end"
-            >
-              <Grid item>
-                <IconClock className={classes.icon} />
+        {!trainer && (
+          <div className={classes.footer}>
+            <Grid container justifyContent="space-between" alignItems="center">
+              <Grid item xs={6}>
+                <Typography
+                  className={classes.name}
+                >{`Na ${instructor?.name}`}</Typography>
               </Grid>
-              <Grid item>
-                <Typography className={classes.duration}>
-                  dakika {Math.ceil(moment.duration(duration).asMinutes())}
-                </Typography>
+              <Grid
+                item
+                xs={6}
+                container
+                alignItems="center"
+                justifyContent="flex-end"
+              >
+                <Grid item>
+                  <IconClock className={classes.icon} />
+                </Grid>
+                <Grid item>
+                  <Typography className={classes.duration}>
+                    dakika {Math.ceil(moment.duration(duration).asMinutes())}
+                  </Typography>
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
-        </div>
+          </div>
+        )}
       </CardActionArea>
     </Card>
   );
@@ -124,6 +134,7 @@ CourseCard.propTypes = {
   image: PropTypes.string,
   name: PropTypes.string,
   duration: PropTypes.number,
+  trainer: PropTypes.bool,
   instructor: PropTypes.shape({
     name: PropTypes.string,
   }),
@@ -135,6 +146,7 @@ CourseCard.defaultProps = {
   instructor: undefined,
   name: undefined,
   duration: undefined,
+  trainer: false,
 };
 
 export default CourseCard;
