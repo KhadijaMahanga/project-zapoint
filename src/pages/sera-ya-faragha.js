@@ -1,11 +1,25 @@
+import PropTypes from "prop-types";
 import React from "react";
 
 import Page from "@/jikopoint/components/Page";
+import RichContent from "@/jikopoint/components/RichContent";
 import getPostTypeStaticProps from "@/jikopoint/functions/postTypes/getPostTypeStaticProps";
 
-export default function Masharti(props) {
-  return <Page {...props} />;
+function Sera({ ...props }) {
+  return (
+    <Page {...props}>
+      <RichContent {...props?.post} />
+    </Page>
+  );
 }
+
+Sera.propTypes = {
+  post: PropTypes.shape({}),
+};
+
+Sera.defaultProps = {
+  post: undefined,
+};
 
 export async function getStaticProps({ preview, previewData }) {
   const postType = "page";
@@ -29,3 +43,5 @@ export async function getStaticProps({ preview, previewData }) {
     revalidate,
   };
 }
+
+export default Sera;

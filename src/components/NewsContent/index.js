@@ -39,12 +39,14 @@ function NewsContent({
 
   return (
     <Section classes={{ root: classes.section }}>
-      {title && (
-        <Typography color="primary" variant="h3" className={classes.title}>
-          {title}
-        </Typography>
-      )}
-      <Grid container direction="column" className={classes.root}>
+      <Grid container direction="column">
+        <Grid item container md={8}>
+          {title && (
+            <Typography color="primary" variant="h3" className={classes.title}>
+              {title}
+            </Typography>
+          )}
+        </Grid>
         <Grid item container md={8} justifyContent="space-between">
           {author && (
             <Grid item>
