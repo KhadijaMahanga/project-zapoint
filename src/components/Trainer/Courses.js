@@ -64,6 +64,21 @@ function Courses({ courses: coursesProp, categories, ...props }) {
     }
   }, [res]);
 
+  const handleSubmitApproval = async (e, id) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("status", "pending approval");
+
+    const options = {
+      method: "PUT",
+      body: formData,
+    };
+
+    const url = `/api/courses/${id}`;
+    const result = await fetch(url, options);
+    await result.json();
+  };
+
   return (
     <div className={classes.root}>
       <Button
@@ -111,6 +126,7 @@ function Courses({ courses: coursesProp, categories, ...props }) {
                     variant="contained"
                     color="inherit"
                     className={classes.editButton}
+                    onClick={(e) => handleSubmitApproval(e, c._id)}
                   >
                     Wasilisha
                   </Button>

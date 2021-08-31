@@ -10,6 +10,7 @@ const allowedFields = {
     "isArchived",
     "enrolment",
     "coverPhoto",
+    "status",
   ],
   lecture: ["name", "video", "no", "type", "videoFile"],
   category: ["name", "slug"],

@@ -28,6 +28,10 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   imageBtn: {
     color: palette.text.secondary,
   },
+  caption: {
+    color: palette.text.primary,
+    fontSize: typography.pxToRem(13),
+  },
 }));
 
 function Add({ categories, variant, user, course, ...props }) {
@@ -40,6 +44,8 @@ function Add({ categories, variant, user, course, ...props }) {
   const [image, setImage] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [openDialog, setOpenDialog] = useState(false);
+
+  const [notice, setNotice] = useState(null);
 
   useEffect(() => {
     if (course && variant === "edit") {
@@ -62,12 +68,13 @@ function Add({ categories, variant, user, course, ...props }) {
     e.stopPropagation();
     if (isUpdating) return;
     setIsUpdating(true);
+    setNotice("Tunashughulia");
 
     if (
       !error?.length &&
       name.length &&
       description.length &&
-      image &&
+      (image || imageFile) &&
       category
     ) {
       const formData = new FormData();
@@ -88,8 +95,16 @@ function Add({ categories, variant, user, course, ...props }) {
       const url =
         variant === "edit" ? `/api/courses/${course?._id}` : "/api/courses";
       const result = await fetch(url, options);
-      await result.json();
+      const res = await result.json();
       // add notification of success
+      if (res.success) {
+        setNotice("Umefanikiwa kuhifadhi");
+      } else {
+        setNotice("Tatizo la kiufundi, jaribu tena baadae.");
+      }
+      setTimeout(() => {
+        setNotice("");
+      }, 4000);
     } else {
       setError("Jaza kila kitu");
     }
@@ -192,6 +207,13 @@ function Add({ categories, variant, user, course, ...props }) {
                     onClose={() => setOpenDialog(false)}
                   />
                 </Grid>
+                {notice?.length && (
+                  <Grid item xs={12}>
+                    <Typography className={classes.caption}>
+                      {notice}
+                    </Typography>
+                  </Grid>
+                )}
                 <Grid item xs={12}>
                   <Button
                     type="submit"

@@ -92,7 +92,9 @@ function CourseCard({
         underline="none"
       >
         <div className={classes.image}>
-          {image && <Image src={image} alt={name} layout="fill" />}
+          {image && image !== "null" && (
+            <Image src={image} alt={name} layout="fill" />
+          )}
         </div>
         <CardContent classes={{ root: classes.cardContentRoot }}>
           <Typography className={classes.title}>{name}</Typography>
