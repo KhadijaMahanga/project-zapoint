@@ -19,6 +19,12 @@ export async function getServerSideProps(context) {
     `${process.env.NEXT_PUBLIC_APP_URL}/api/courses/${id}`
   );
 
+  if (!course?.success || !course?.data) {
+    return {
+      notFound: true,
+    };
+  }
+
   // const profile = await fetcher(
   //   `${process.env.NEXT_PUBLIC_APP_URL}/api/profile/${course?.data?.instructor?._id}`
   // );

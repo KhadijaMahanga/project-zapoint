@@ -18,6 +18,7 @@ import Admin from "@/jikopoint/components/Admin";
 import DefaultProfilePic from "@/jikopoint/components/DefaultProfilePic";
 import Link from "@/jikopoint/components/Link";
 import Section from "@/jikopoint/components/Section";
+import Trainer from "@/jikopoint/components/Trainer";
 import useAuth from "@/jikopoint/hooks/useAuth";
 
 const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
@@ -220,6 +221,7 @@ function Account({ user, ...props }) {
           </Grid>
           <Grid item xs={12} md={8}>
             {user?.role === "admin" && <Admin {...props} />}
+            {user?.role === "trainer" && <Trainer {...props} />}
           </Grid>
         </Grid>
       </Section>
