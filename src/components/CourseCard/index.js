@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import {
   Grid,
   Card,
@@ -7,22 +6,23 @@ import {
   Typography,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import moment from "moment";
+import * as moment from "moment";
+import "moment/locale/sw";
 import Image from "next/image";
 import PropTypes from "prop-types";
 import React from "react";
 
-import { ReactComponent as IconClock } from "@/jikopoint/assets/icons/icon-clock.svg";
+import { ReactComponent as IconClock } from "@/jikopoint/assets/icons/icon-clock-grey.svg";
 import Link from "@/jikopoint/components/Link";
 
 moment.locale("sw");
+
 const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   root: {
     borderRadius: 0,
     boxShadow: "none",
     width: "100%",
     border: "1px solid #f1f1f1",
-    height: typography.pxToRem(470),
     marginBottom: typography.pxToRem(20),
     [breakpoints.up("lg")]: {
       maxWidth: typography.pxToRem(388),
@@ -31,10 +31,10 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   },
   title: {
     color: palette.text.primary,
-    height: typography.pxToRem(70),
+    height: typography.pxToRem(50),
     overflow: "hidden",
     display: "-webkit-box",
-    WebkitLineClamp: 3,
+    WebkitLineClamp: 2,
     WebkitBoxOrient: "vertical",
     textOverflow: "ellipsis",
   },
@@ -44,17 +44,31 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
     height: typography.pxToRem(222),
   },
   cardContentRoot: {
-    padding: typography.pxToRem(20),
+    padding: typography.pxToRem(10),
   },
   cardActionAreaFocusHighlight: {
     backgroundColor: "inherit",
   },
-  footer: {},
-  name: {},
-  duration: {},
+  icon: {
+    width: typography.pxToRem(15),
+    height: typography.pxToRem(15),
+  },
+  footer: {
+    padding: typography.pxToRem(10),
+    background: "#f9f9f9",
+    color: palette.text.primary,
+  },
+  name: {
+    textTransform: "Capitalize",
+    fontSize: typography.pxToRem(14),
+  },
+  duration: {
+    fontSize: typography.pxToRem(14),
+    marginLeft: typography.pxToRem(10),
+  },
 }));
 
-function CourseCard({ owner, duration, image, name, _id: slug, ...props }) {
+function CourseCard({ instructor, duration, image, name, slug, ...props }) {
   const classes = useStyles(props);
   const Component = slug?.length ? Link : undefined;
 
@@ -73,23 +87,29 @@ function CourseCard({ owner, duration, image, name, _id: slug, ...props }) {
           {image && <Image src={image} alt={name} layout="fill" />}
         </div>
         <CardContent classes={{ root: classes.cardContentRoot }}>
-          <Typography variant="h4" className={classes.title}>
-            {name}
-          </Typography>
+          <Typography className={classes.title}>{name}</Typography>
         </CardContent>
         <div className={classes.footer}>
-          <Grid container justifyContent="space-between">
-            <Grid item>
-              <Typography className={classes.name}>{owner?.name}</Typography>
+          <Grid container justifyContent="space-between" alignItems="center">
+            <Grid item xs={6}>
+              <Typography
+                className={classes.name}
+              >{`Na ${instructor?.name}`}</Typography>
             </Grid>
-            <Grid item container>
-              <Grid item xs={3}>
+            <Grid
+              item
+              xs={6}
+              container
+              alignItems="center"
+              justifyContent="flex-end"
+            >
+              <Grid item>
                 <IconClock className={classes.icon} />
               </Grid>
-              <Grid item xs={9}>
-                <Typography className={classes.duration}>{`dakika ${
-                  moment.duration(duration).asMinutes
-                }`}</Typography>
+              <Grid item>
+                <Typography className={classes.duration}>
+                  dakika {Math.ceil(moment.duration(duration).asMinutes())}
+                </Typography>
               </Grid>
             </Grid>
           </Grid>
@@ -100,19 +120,19 @@ function CourseCard({ owner, duration, image, name, _id: slug, ...props }) {
 }
 
 CourseCard.propTypes = {
-  _id: PropTypes.string,
+  slug: PropTypes.string,
   image: PropTypes.string,
   name: PropTypes.string,
   duration: PropTypes.number,
-  owner: PropTypes.shape({
+  instructor: PropTypes.shape({
     name: PropTypes.string,
   }),
 };
 
 CourseCard.defaultProps = {
-  _id: undefined,
+  slug: undefined,
   image: undefined,
-  owner: undefined,
+  instructor: undefined,
   name: undefined,
   duration: undefined,
 };
