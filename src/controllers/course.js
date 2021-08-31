@@ -12,7 +12,7 @@ export const createCourse = async (data) => {
 };
 
 export const getCourses = async () => {
-  const res = await Course.find({})
+  const res = await Course.find({ isArchived: false })
     .then((courses) => courses)
     .catch((e) => new Error(e));
 
@@ -28,7 +28,7 @@ export const getCourses = async () => {
 };
 
 export const getInstructorCourses = async (instructor) => {
-  return Course.find({ instructor })
+  return Course.find({ instructor, isArchived: false })
     .then((courses) => courses)
     .catch((e) => new Error(e));
 };
