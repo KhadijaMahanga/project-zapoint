@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/media-has-caption */
-import { getProviders, getCsrfToken } from "next-auth/client";
+import { getProviders, getCsrfToken, signIn } from "next-auth/client";
 import PropTypes from "prop-types";
 import React, { useCallback, useEffect, useState } from "react";
 import videojs from "video.js";
@@ -7,10 +7,8 @@ import "videojs-youtube";
 import "video.js/dist/video-js.css";
 
 import LoginDialog from "@/jikopoint/components/Course/LoginDialog";
-import useAuth from "@/jikopoint/hooks/useAuth";
 
-function Player({ videoSrc, videoType, videoImg }) {
-  const { session, isAuthenticated, signIn } = useAuth();
+function Player({ videoSrc, videoType, session, videoImg }) {
   const [videoEl, setVideoEl] = useState(null);
   const [openLogin, setOpenLogin] = useState(false);
 
@@ -36,7 +34,7 @@ function Player({ videoSrc, videoType, videoImg }) {
   }, []);
 
   const handleOnPlay = (player) => {
-    if (!isAuthenticated && !session?.user) {
+    if (!session?.user) {
       player.pause();
       player.currentTime(0);
       setOpenLogin(true);
@@ -82,12 +80,16 @@ Player.propTypes = {
   videoSrc: PropTypes.string,
   videoType: PropTypes.string,
   videoImg: PropTypes.string,
+  session: PropTypes.shape({
+    user: PropTypes.shape({}),
+  }),
 };
 
 Player.defaultProps = {
   videoSrc: undefined,
   videoType: undefined,
   videoImg: undefined,
+  session: undefined,
 };
 
 export default Player;

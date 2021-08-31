@@ -9,9 +9,9 @@ import Section from "@/jikopoint/components/Section";
 
 const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   root: {
-    margin: typography.pxToRem(50, 0),
+    margin: `${typography.pxToRem(20)} 0`,
     [breakpoints.up("md")]: {
-      margin: typography.pxToRem(50, 0),
+      margin: `${typography.pxToRem(40)} 0`,
     },
   },
   section: {},

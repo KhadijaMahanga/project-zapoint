@@ -1,11 +1,16 @@
 import React from "react";
 
+import CoursesPage from "@/jikopoint/components/CoursesPage";
 import Page from "@/jikopoint/components/Page";
 import getPostTypeStaticProps from "@/jikopoint/functions/postTypes/getPostTypeStaticProps";
 import fetcher from "@/jikopoint/utils/fetcher";
 
 function Index({ ...props }) {
-  return <Page {...props} />;
+  return (
+    <Page {...props}>
+      <CoursesPage {...props} />
+    </Page>
+  );
 }
 
 export async function getServerSideProps() {

@@ -7,6 +7,7 @@ const LectureSchema = new Schema(
     no: {
       type: Number,
       unique: true,
+      default: 0,
     },
     name: {
       type: String,
