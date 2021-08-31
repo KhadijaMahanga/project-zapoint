@@ -146,46 +146,50 @@ function Lectures({ lectures: lecturesProp, courseId, ...props }) {
                     </Typography>
                   </Grid>
                 </Grid>
-                {lectures?.map((lec) => (
-                  <Grid
-                    item
-                    container
-                    justifyContent="flex-start"
-                    alignItems="center"
-                    className={classes.row}
-                    key={lec.no}
-                  >
-                    <Hidden smDown>
-                      <Grid item md={1}>
+                {lectures
+                  ?.sort((a, b) =>
+                    a.no.toString().localeCompare(b.no.toString())
+                  )
+                  ?.map((lec) => (
+                    <Grid
+                      item
+                      container
+                      justifyContent="flex-start"
+                      alignItems="center"
+                      className={classes.row}
+                      key={lec.no}
+                    >
+                      <Hidden smDown>
+                        <Grid item md={1}>
+                          <Typography className={classes.cell}>
+                            {lec.no}
+                          </Typography>
+                        </Grid>
+                      </Hidden>
+                      <Grid item xs={8} md={4}>
                         <Typography className={classes.cell}>
-                          {lec.no}
+                          {lec.name}
                         </Typography>
                       </Grid>
-                    </Hidden>
-                    <Grid item xs={8} md={4}>
-                      <Typography className={classes.cell}>
-                        {lec.name}
-                      </Typography>
-                    </Grid>
-                    <Hidden smDown>
-                      <Grid item md={5}>
-                        <Typography className={classes.cell}>
-                          {lec.video}
-                        </Typography>
+                      <Hidden smDown>
+                        <Grid item md={5}>
+                          <Typography className={classes.cell}>
+                            {lec.video}
+                          </Typography>
+                        </Grid>
+                      </Hidden>
+                      <Grid item xs={4} md={2}>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          className={classes.button}
+                          onClick={(e) => handleEditLecture(e, lec)}
+                        >
+                          Hariri
+                        </Button>
                       </Grid>
-                    </Hidden>
-                    <Grid item xs={4} md={2}>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        className={classes.button}
-                        onClick={(e) => handleEditLecture(e, lec)}
-                      >
-                        Hariri
-                      </Button>
                     </Grid>
-                  </Grid>
-                ))}
+                  ))}
               </Grid>
             ) : (
               <Typography>

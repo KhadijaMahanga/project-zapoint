@@ -1,4 +1,5 @@
 /* eslint-disable no-underscore-dangle */
+import { getSession } from "next-auth/client";
 import React from "react";
 
 import SingleCourse from "@/jikopoint/components/Course";
@@ -14,7 +15,9 @@ function Course(props) {
 }
 
 export async function getServerSideProps(context) {
-  const id = context?.params?.id;
+  const { params, req } = context;
+  const session = await getSession({ req });
+  const { id } = params;
   const course = await fetcher(
     `${process.env.NEXT_PUBLIC_APP_URL}/api/courses/${id}`
   );
@@ -24,6 +27,10 @@ export async function getServerSideProps(context) {
       notFound: true,
     };
   }
+
+  const lectures = await fetcher(
+    `${process.env.NEXT_PUBLIC_APP_URL}/api/lectures/course/${id}`
+  );
 
   // const profile = await fetcher(
   //   `${process.env.NEXT_PUBLIC_APP_URL}/api/profile/${course?.data?.instructor?._id}`
@@ -36,6 +43,8 @@ export async function getServerSideProps(context) {
     props: {
       course: course?.data ?? null,
       category: cat?.data ?? null,
+      lectures: lectures?.data ?? null,
+      session,
     },
   };
 }
