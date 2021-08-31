@@ -45,7 +45,6 @@ const useStyles = makeStyles(({ palette, typography }) => ({
   listItemLink: {
     float: "left",
     color: palette.text.primary,
-    fontFamily: typography.h1.fontFamily,
     fontSize: typography.pxToRem(16),
     fontWeight: 400,
     textTransform: "uppercase",
