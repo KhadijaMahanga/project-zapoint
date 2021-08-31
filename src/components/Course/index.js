@@ -104,7 +104,7 @@ const socialLinks = [
   { name: "telegram", alt: "telegram" },
 ];
 
-function Index({ course, owner, category, ...props }) {
+function Index({ course, category, ...props }) {
   const classes = useStyles(props);
 
   return (
@@ -132,11 +132,14 @@ function Index({ course, owner, category, ...props }) {
             <Grid item container xs={5} alignItems="center">
               <Grid item xs={2}>
                 <div className={classes.profileImage}>
-                  {owner?.image ? (
-                    <Image src={owner.image} layout="fill" />
+                  {course?.instructor?.image ? (
+                    <Image src={course?.instructor.image} layout="fill" />
                   ) : (
                     <DefaultProfilePic
-                      letter={owner.name[0] || owner.email[0]}
+                      letter={
+                        course?.instructor.name[0] ||
+                        course?.instructor.email[0]
+                      }
                     />
                   )}
                 </div>
@@ -147,7 +150,7 @@ function Index({ course, owner, category, ...props }) {
                 </Grid>
                 <Grid item xs={12}>
                   <Typography className={classes.name}>
-                    {owner?.name}
+                    {course?.instructor?.name}
                   </Typography>
                 </Grid>
               </Grid>
@@ -222,11 +225,11 @@ Index.propTypes = {
     name: PropTypes.string,
     image: PropTypes.string,
     description: PropTypes.string,
-  }),
-  owner: PropTypes.shape({
-    name: PropTypes.string,
-    image: PropTypes.string,
-    email: PropTypes.string,
+    instructor: PropTypes.shape({
+      name: PropTypes.string,
+      image: PropTypes.string,
+      email: PropTypes.string,
+    }),
   }),
   category: PropTypes.shape({
     name: PropTypes.string,
@@ -235,7 +238,6 @@ Index.propTypes = {
 
 Index.defaultProps = {
   course: undefined,
-  owner: undefined,
   category: undefined,
 };
 

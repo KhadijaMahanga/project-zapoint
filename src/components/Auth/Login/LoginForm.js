@@ -36,7 +36,7 @@ const useStyles = makeStyles(({ palette, typography }) => ({
   },
 }));
 
-function Login({ signIn, csrfToken }) {
+function LoginForm({ signIn, csrfToken }) {
   const classes = useStyles();
   const router = useRouter();
 
@@ -76,7 +76,7 @@ function Login({ signIn, csrfToken }) {
       if (res.error) {
         setLoginError(res.error);
       } else {
-        router.push("/auth/account");
+        router.push(res?.url);
       }
     }
   };
@@ -153,14 +153,14 @@ function Login({ signIn, csrfToken }) {
   );
 }
 
-Login.propTypes = {
+LoginForm.propTypes = {
   signIn: PropTypes.func,
   csrfToken: PropTypes.string,
 };
 
-Login.defaultProps = {
+LoginForm.defaultProps = {
   signIn: undefined,
   csrfToken: undefined,
 };
 
-export default Login;
+export default LoginForm;

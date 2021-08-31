@@ -10,6 +10,7 @@ const allowedFields = {
     "isArchived",
     "enrolment",
   ],
+  lecture: ["name", "video", "no", "type"],
   category: ["name", "slug"],
   activity: ["text"],
   comment: ["text"],

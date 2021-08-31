@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+import { getUser } from "@/jikopoint/controllers/user";
 import Course from "@/jikopoint/models/course";
 
 export const createCourse = async (data) => {
@@ -10,9 +12,19 @@ export const createCourse = async (data) => {
 };
 
 export const getCourses = async () => {
-  return Course.find({})
+  const res = await Course.find({})
     .then((courses) => courses)
     .catch((e) => new Error(e));
+
+  const result = await Promise.all(
+    res?.map(async (c) => {
+      const owner = await getUser(c.instructor);
+      c.instructor = owner;
+      c.duration = 3566600;
+      return c;
+    })
+  ).then((p) => p);
+  return result;
 };
 
 export const getInstructorCourses = async (instructor) => {
@@ -22,9 +34,13 @@ export const getInstructorCourses = async (instructor) => {
 };
 
 export const getCourse = async (id) => {
-  return Course.findById(id)
+  const c = await Course.findById(id)
     .then((course) => course)
     .catch((e) => new Error(e));
+
+  const instructorProfile = await getUser(c.instructor);
+  c.instructor = instructorProfile;
+  return c;
 };
 
 export const updateCourse = async (id, updates = {}) => {
