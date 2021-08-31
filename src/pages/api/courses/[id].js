@@ -1,4 +1,7 @@
 /* eslint-disable consistent-return */
+import { v2 as cloudinary } from "cloudinary";
+import multer from "multer";
+import { getSession } from "next-auth/client";
 import nextConnect from "next-connect";
 
 import {
@@ -9,6 +12,8 @@ import {
 import middleware from "@/jikopoint/middleware";
 import { onNoMatch, onError } from "@/jikopoint/utils/handlers";
 import isValidOperation from "@/jikopoint/utils/isValidOperation";
+
+const upload = multer({ dest: "public/uploads/" });
 
 const handler = nextConnect({ onNoMatch, onError })
   .use(middleware)
@@ -21,12 +26,24 @@ const handler = nextConnect({ onNoMatch, onError })
     }
     res.json({ success: true, data: course });
   })
-  .put(async (req, res) => {
+  .put(upload.single("coverPhoto"), async (req, res) => {
     if (!isValidOperation("course", req?.body)) {
       return res.status(400).send({ message: "Invalid Updates!" });
     }
     try {
-      const course = await updateCourse(req?.query?.id, req?.body);
+      const session = await getSession({ req });
+      if (!session && session?.user?.role === "trainee") {
+        throw new Error("Hiki kitendo hakijathibitishwa");
+      }
+      let cover;
+      if (req?.file) {
+        const image = await cloudinary.uploader.upload(req?.file?.path);
+        cover = image.secure_url;
+      }
+      const course = await updateCourse(req?.query?.id, {
+        ...req?.body,
+        image: cover,
+      });
       if (!course) {
         return res
           .status(400)

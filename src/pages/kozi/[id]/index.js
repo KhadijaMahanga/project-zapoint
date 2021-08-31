@@ -19,9 +19,15 @@ export async function getServerSideProps(context) {
     `${process.env.NEXT_PUBLIC_APP_URL}/api/courses/${id}`
   );
 
-  const user = await fetcher(
-    `${process.env.NEXT_PUBLIC_APP_URL}/api/users/${course?.data?.instructor}`
-  );
+  if (!course?.success || !course?.data) {
+    return {
+      notFound: true,
+    };
+  }
+
+  // const profile = await fetcher(
+  //   `${process.env.NEXT_PUBLIC_APP_URL}/api/profile/${course?.data?.instructor?._id}`
+  // );
 
   const cat = await fetcher(
     `${process.env.NEXT_PUBLIC_APP_URL}/api/categories/${course?.data?.category}`
@@ -29,7 +35,6 @@ export async function getServerSideProps(context) {
   return {
     props: {
       course: course?.data ?? null,
-      owner: user?.user ?? null,
       category: cat?.data ?? null,
     },
   };

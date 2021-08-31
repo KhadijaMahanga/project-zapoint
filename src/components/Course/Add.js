@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { TextField, Typography, Button, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { DropzoneDialog } from "material-ui-dropzone";
@@ -28,7 +29,7 @@ const useStyles = makeStyles(({ palette, typography }) => ({
   },
 }));
 
-function Add({ categories, ...props }) {
+function Add({ categories, variant, user, course, ...props }) {
   const classes = useStyles(props);
   const [isUpdating, setIsUpdating] = useState(false);
   const [name, setName] = useState("");
@@ -39,9 +40,18 @@ function Add({ categories, ...props }) {
   const [openDialog, setOpenDialog] = useState(false);
 
   useEffect(() => {
-    if (categories?.length) {
+    if (course && variant === "edit") {
+      setName(course?.name);
+      setDescription(course?.description);
+      setImage(course?.image);
+      setCategory(course?.category);
+    }
+  }, [variant, course]);
+
+  useEffect(() => {
+    if (!category && categories?.length) {
       const [firstCat] = categories;
-      setCategory(firstCat.slug);
+      setCategory(firstCat._id);
     }
   }, [categories]);
 
@@ -58,38 +68,30 @@ function Add({ categories, ...props }) {
       image &&
       category
     ) {
-      const user = {
-        accounts: [],
-        sessions: [],
-        role: "trainer",
-        isDeleted: false,
-        _id: "612214008083533d6d486cb8",
-        name: "lisa doe",
-        email: "khadija@codeforafrica.org",
-        password:
-          "$2a$08$5BefWm4gLtCx8liEhckHSuBqymvwCoRFXfWgVaZIztPRE9xaTdNU.",
-        created_at: "2021-08-22T09:08:16.974Z",
-        updated_at: "2021-08-22T09:08:16.974Z",
-        __v: 0,
-      };
-
-      const courseCategory = categories?.find((c) => c.slug === category);
       const formData = new FormData();
       formData.append("coverPhoto", image);
       formData.append("name", name);
       formData.append("description", description);
-      formData.append("instructor", JSON.stringify(user));
-      formData.append("category", JSON.stringify(courseCategory));
+      formData.append("instructor", user?._id);
+      formData.append("category", category);
       formData.append("enrolment", 1);
       formData.append("duration", 0);
 
       const options = {
-        method: "POST",
+        method: variant === "edit" ? "PUT" : "POST",
         body: formData,
       };
 
-      const result = await fetch("/api/courses", options);
-      await result.json();
+      const url =
+        variant === "edit" ? `/api/courses/${course?._id}` : "/api/courses";
+      const result = await fetch(url, options);
+      const c = await result.json();
+      // add notification of success
+      if (c.success) {
+        alert("Umefanikiwa kuhifadhi kozi");
+      } else {
+        alert(c.message);
+      }
     } else {
       setError("Jaza kila kitu");
     }
@@ -165,7 +167,7 @@ function Add({ categories, ...props }) {
                     variant="outlined"
                   >
                     {categories?.map((option) => (
-                      <option key={option.slug} value={option.slug}>
+                      <option key={option._id} value={option._id}>
                         {option.name}
                       </option>
                     ))}
@@ -212,10 +214,24 @@ function Add({ categories, ...props }) {
 
 Add.propTypes = {
   categories: PropTypes.arrayOf(PropTypes.shape({})),
+  variant: PropTypes.string,
+  course: PropTypes.shape({
+    _id: PropTypes.string,
+    name: PropTypes.string,
+    description: PropTypes.string,
+    image: PropTypes.string,
+    category: PropTypes.string,
+  }),
+  user: PropTypes.shape({
+    _id: PropTypes.string,
+  }),
 };
 
 Add.defaultProps = {
   categories: undefined,
+  course: undefined,
+  variant: "add",
+  user: undefined,
 };
 
 export default Add;

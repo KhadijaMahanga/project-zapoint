@@ -32,8 +32,6 @@ const handler = nc({ onNoMatch, onError })
       }
       const course = await createCourse({
         ...req?.body,
-        instructor: JSON.parse(req?.body?.instructor),
-        category: JSON.parse(req?.body?.category),
         image: cover,
       });
       res.json({ success: true, data: course });

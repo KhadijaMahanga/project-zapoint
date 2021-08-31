@@ -7,9 +7,16 @@ import User from "@/jikopoint/models/user";
  * @returns {object} User Object
  */
 export const getUser = async (id) => {
-  return User.findById(id)
+  let result = await User.findById(id)
     .then((user) => user)
     .catch((e) => new Error(e));
+
+  if (!result || JSON.stringify(result) === "{}") {
+    result = await User.findOne({ email: id })
+      .then((user) => user)
+      .catch((e) => new Error(e));
+  }
+  return result;
 };
 
 /**

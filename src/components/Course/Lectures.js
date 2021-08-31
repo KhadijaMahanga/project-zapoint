@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import useSWR from "swr";
 
-import Link from "@/jikopoint/components/Link";
+import LectureDialog from "@/jikopoint/components/Course/LectureDialog";
 import fetcher from "@/jikopoint/utils/fetcher";
 
 const useStyles = makeStyles(({ typography, palette }) => ({
@@ -14,14 +14,14 @@ const useStyles = makeStyles(({ typography, palette }) => ({
   tableRoot: {
     border: `${typography.pxToRem(1)} solid #E2E2E3`,
     borderRadius: `${typography.pxToRem(4)}`,
+    overflowX: "hidden",
     height: "100%",
-    margin: `${typography.pxToRem(20)} 0`,
     "& div:nth-child(odd)": {
       backgroundColor: "#F9FAFB",
     },
   },
   row: {
-    height: typography.pxToRem(50),
+    height: typography.pxToRem(46),
     borderBottom: `${typography.pxToRem(1)} solid #E2E2E3`,
     padding: `0 ${typography.pxToRem(15)}`,
     "& :last-of-type": {
@@ -36,40 +36,70 @@ const useStyles = makeStyles(({ typography, palette }) => ({
     fontWeight: "bold",
     fontFamily: typography.h1.fontFamily,
   },
+  addButton: {
+    color: palette.text.secondary,
+    margin: `${typography.pxToRem(20)} 0`,
+  },
   button: {
     color: palette.text.secondary,
     fontSize: typography.pxToRem(13),
-    padding: `${typography.pxToRem(6)} ${typography.pxToRem(10)}`,
   },
 }));
 
-function Courses({ courses: coursesProp, categories, ...props }) {
+function Lectures({ lectures: lecturesProp, ...props }) {
   const classes = useStyles(props);
-  const [courses, setCourses] = useState([]);
+  const [lectures, setLectures] = useState([]);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [variant, setVariant] = useState("add");
+  const [row, setRow] = useState(null);
   const [refreshList, setRefreshList] = useState(false);
 
   useEffect(() => {
-    if (coursesProp?.length) {
-      setCourses(coursesProp);
+    if (lecturesProp?.length) {
+      setLectures(lecturesProp);
     }
-  }, [coursesProp]);
+  }, [lecturesProp]);
 
-  const { data: res } = useSWR(refreshList ? "/api/courses" : null, fetcher);
+  const { data: res } = useSWR(refreshList ? "/api/lectures" : null, fetcher);
 
   useEffect(() => {
     if (res?.success && res?.data) {
-      setCourses(res?.data);
+      setLectures(res?.data);
       setRefreshList(false);
     }
   }, [res]);
 
-  const handleEditCourse = (e) => {
+  const handleAddLecture = (e) => {
     e?.preventDefault();
+    setVariant("add");
+    setOpenDialog(true);
+  };
+  const handleEditLecture = (e, n) => {
+    e?.preventDefault();
+    setVariant("edit");
+    setRow(n);
+    setOpenDialog(true);
+  };
+  const handleCloseDialog = (e) => {
+    e?.preventDefault();
+    setOpenDialog(false);
+  };
+
+  const updateLecturesList = () => {
+    setRefreshList(true);
   };
 
   return (
     <div className={classes.root}>
-      {courses?.length > 0 && (
+      <Button
+        variant="contained"
+        color="primary"
+        className={classes.addButton}
+        onClick={handleAddLecture}
+      >
+        Ongeza Kundi la Kozi
+      </Button>
+      {lectures?.length && (
         <Grid container className={classes.tableRoot}>
           <Grid
             item
@@ -78,89 +108,89 @@ function Courses({ courses: coursesProp, categories, ...props }) {
             alignItems="center"
             className={classes.row}
           >
-            <Grid item xs={4}>
+            <Grid item xs={1}>
               <Typography className={clsx(classes.cell, classes.header)}>
-                Name
-              </Typography>
-            </Grid>
-            <Grid item xs={2}>
-              <Typography className={clsx(classes.cell, classes.header)}>
-                Category
+                Index
               </Typography>
             </Grid>
             <Grid item xs={3}>
               <Typography className={clsx(classes.cell, classes.header)}>
-                Status
+                Name
               </Typography>
             </Grid>
-            <Grid item xs={3} />
+            <Grid item xs={4}>
+              <Typography className={clsx(classes.cell, classes.header)}>
+                Video
+              </Typography>
+            </Grid>
+            <Grid item xs={2}>
+              <Typography className={clsx(classes.cell, classes.header)}>
+                Video Type
+              </Typography>
+            </Grid>
+            <Grid item xs={2}>
+              <Typography className={clsx(classes.cell, classes.header)}>
+                Action
+              </Typography>
+            </Grid>
           </Grid>
-          {courses?.map((c) => (
+          {lectures?.map((lec) => (
             <Grid
               item
               container
               justifyContent="flex-start"
               alignItems="center"
               className={classes.row}
-              key={c.name}
+              key={lec.no}
             >
+              <Grid item xs={1}>
+                <Typography className={classes.cell}>{lec.no}</Typography>
+              </Grid>
+              <Grid item xs={3}>
+                <Typography className={classes.cell}>{lec.name}</Typography>
+              </Grid>
               <Grid item xs={4}>
-                <Typography className={classes.cell}>{c.name}</Typography>
+                <Typography className={classes.cell}>{lec.video}</Typography>
               </Grid>
               <Grid item xs={2}>
-                <Typography className={classes.cell}>
-                  {categories?.find((ac) => ac._id === c.category)?.name}
-                </Typography>
-              </Grid>
-              <Grid item xs={2}>
-                <Typography className={classes.cell}>{c.status}</Typography>
+                <Typography className={classes.cell}>{lec.type}</Typography>
               </Grid>
               <Grid item xs={2}>
                 <Button
                   variant="contained"
                   color="primary"
                   className={classes.button}
-                  component={Link}
-                  underline="none"
-                  href={`/kozi/${c._id}`}
+                  onClick={(e) => handleEditLecture(e, lec)}
                 >
-                  Tembelea
-                </Button>
-              </Grid>
-              <Grid item xs={2}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  disabled={c.status !== "pending approval"}
-                  className={classes.button}
-                  onClick={(e) => handleEditCourse(e, c)}
-                >
-                  Approve
+                  Hariri
                 </Button>
               </Grid>
             </Grid>
           ))}
         </Grid>
       )}
+      <LectureDialog
+        variant={variant}
+        handleCloseDialog={handleCloseDialog}
+        openDialog={openDialog}
+        updateLecturesList={updateLecturesList}
+        value={row}
+      />
     </div>
   );
 }
 
-Courses.propTypes = {
-  courses: PropTypes.arrayOf(
+Lectures.propTypes = {
+  lectures: PropTypes.arrayOf(
     PropTypes.shape({
-      _id: PropTypes.string,
       name: PropTypes.string,
-      category: PropTypes.string,
-      status: PropTypes.string,
+      slug: PropTypes.string,
     })
   ),
-  categories: PropTypes.arrayOf(PropTypes.shape({ slug: PropTypes.string })),
 };
 
-Courses.defaultProps = {
-  courses: undefined,
-  categories: undefined,
+Lectures.defaultProps = {
+  lectures: undefined,
 };
 
-export default Courses;
+export default Lectures;

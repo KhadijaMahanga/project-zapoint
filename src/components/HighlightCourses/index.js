@@ -1,11 +1,14 @@
+/* eslint-disable no-underscore-dangle */
 import { Typography, Grid, useMediaQuery } from "@material-ui/core";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import useSWR from "swr";
 
+import CourseCard from "@/jikopoint/components/CourseCard";
 import Link from "@/jikopoint/components/Link";
-import NewsCard from "@/jikopoint/components/NewsCard";
 import Section from "@/jikopoint/components/Section";
+import fetcher from "@/jikopoint/utils/fetcher";
 
 const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   root: {
@@ -45,16 +48,25 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   },
 }));
 
-function HighlightCourses({ items: itemsProp, title, subtitle, ...props }) {
+function HighlightCourses({ title, subtitle, ...props }) {
   const classes = useStyles(props);
   const theme = useTheme();
-  const isTablet = useMediaQuery(theme.breakpoints.only("md"));
+  const isDesktop = useMediaQuery(theme.breakpoints.up("lg"));
 
-  if (!itemsProp?.length) {
+  const [items, setItems] = useState([]);
+  const { data } = useSWR("/api/courses", fetcher);
+
+  useEffect(() => {
+    if (data?.success) {
+      setItems(data.data);
+    }
+  }, [data]);
+
+  if (!items?.length) {
     return null;
   }
-  const numberOfItemsToShow = isTablet ? 2 : 3;
-  const items = itemsProp.slice(0, numberOfItemsToShow);
+  const numberOfItemsToShow = isDesktop ? 6 : 4;
+  const itemsProp = items.slice(0, numberOfItemsToShow);
   return (
     <div className={classes.root}>
       <Section classes={{ root: classes.section }}>
@@ -71,26 +83,18 @@ function HighlightCourses({ items: itemsProp, title, subtitle, ...props }) {
           {subtitle}
         </Typography>
         <Grid container className={classes.grid}>
-          {items.map(
-            ({ featuredImage, excerpt, categories, slug, ...item }) => (
-              <Grid
-                xs={12}
-                md={6}
-                lg={4}
-                className={classes.cardSection}
-                key={slug}
-                item
-              >
-                <NewsCard
-                  {...item}
-                  category={categories?.edges[0]?.node}
-                  description={excerpt?.replace(/<[^>]+>/g, "") ?? ""}
-                  slug={slug}
-                  image={featuredImage?.node?.sourceUrl}
-                />
-              </Grid>
-            )
-          )}
+          {itemsProp.map(({ _id, ...item }) => (
+            <Grid
+              xs={12}
+              md={6}
+              lg={4}
+              className={classes.cardSection}
+              key={_id}
+              item
+            >
+              <CourseCard {...item} slug={_id} />
+            </Grid>
+          ))}
         </Grid>
       </Section>
     </div>
@@ -98,23 +102,11 @@ function HighlightCourses({ items: itemsProp, title, subtitle, ...props }) {
 }
 
 HighlightCourses.propTypes = {
-  items: PropTypes.arrayOf(
-    PropTypes.shape({
-      excerpt: PropTypes.string,
-      featuredImage: PropTypes.shape({
-        node: PropTypes.shape({
-          sourceUrl: PropTypes.string,
-        }),
-      }),
-      slug: PropTypes.string,
-    })
-  ),
   title: PropTypes.string,
   subtitle: PropTypes.string,
 };
 
 HighlightCourses.defaultProps = {
-  items: undefined,
   title: undefined,
   subtitle: undefined,
 };
