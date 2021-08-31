@@ -16,7 +16,6 @@ import { ReactComponent as InstagramIcon } from "@/jikopoint/assets/icons/icon-i
 import { ReactComponent as LinkedInIcon } from "@/jikopoint/assets/icons/icon-linkedin-white.svg";
 import { ReactComponent as TwitterIcon } from "@/jikopoint/assets/icons/icon-twitter-white.svg";
 import { ReactComponent as YoutubeIcon } from "@/jikopoint/assets/icons/icon-youtube-white.svg";
-import { ReactComponent as Logo } from "@/jikopoint/assets/logos/logo-foodlab-white.svg";
 import Link from "@/jikopoint/components/Link";
 import Section from "@/jikopoint/components/Section";
 
@@ -101,11 +100,6 @@ function Footer({ social, footerItems }) {
           direction="column"
           className={classes.logoSocial}
         >
-          <Grid item>
-            <IconButton component={Link} href="/" underline="none">
-              <Logo className={classes.logo} viewBox="156 0 180 100" />
-            </IconButton>
-          </Grid>
           <Grid item className={classes.social}>
             <IconButton
               component={Link}

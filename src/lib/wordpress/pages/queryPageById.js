@@ -1,6 +1,5 @@
 import { gql } from "@apollo/client";
 
-import acfInsightsStoriesBlockFields from "@/jikopoint/lib/wordpress/_query-partials/acfInsightsStoriesBlockFields";
 import authorPostFields from "@/jikopoint/lib/wordpress/_query-partials/authorPostFields";
 import defaultPageData from "@/jikopoint/lib/wordpress/_query-partials/defaultPageData";
 import featuredImagePostFields from "@/jikopoint/lib/wordpress/_query-partials/featuredImagePostFields";
@@ -13,12 +12,10 @@ export const singlePageFragment = gql`
     ${globalPostFields}
     blocksJSON
     excerpt
+    content
     ${seoPostFields}
     ${authorPostFields}
     ${featuredImagePostFields}
-    blocks {
-      ${acfInsightsStoriesBlockFields}
-    }
   }
 `;
 

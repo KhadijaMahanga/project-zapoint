@@ -34,9 +34,22 @@ const useStyles = makeStyles(({ palette, typography }) => ({
     width: typography.pxToRem(25),
     height: typography.pxToRem(25),
   },
+  formLabel: {
+    color: palette.text.primary,
+    fontSize: typography.pxToRem(13),
+  },
+  terms: {
+    display: "inline-flex",
+    fontSize: typography.pxToRem(12),
+    color: palette.text.primary,
+    marginLeft: typography.pxToRem(3),
+  },
+  termDiv: {
+    marginTop: typography.pxToRem(20),
+  },
 }));
 
-function Register({ role, csrfToken }) {
+function Register({ userrole, csrfToken }) {
   const classes = useStyles();
   const router = useRouter();
 
@@ -73,7 +86,13 @@ function Register({ role, csrfToken }) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "same-origin",
-        body: JSON.stringify({ email, password, name, csrfToken, role }),
+        body: JSON.stringify({
+          email,
+          password,
+          name,
+          csrfToken,
+          role: userrole,
+        }),
       };
 
       const res = await fetch("/api/users", options);
@@ -149,8 +168,8 @@ function Register({ role, csrfToken }) {
                 classes={{ root: classes.checkbox }}
               />
             }
-            classes={{ root: classes.label }}
-            label="Remember me"
+            classes={{ label: classes.formLabel }}
+            label="Nataka kujisajili kwenye jarida mbalimbali za jikopoint"
           />
         </Grid>
       </Grid>
@@ -166,8 +185,36 @@ function Register({ role, csrfToken }) {
       <Grid container justifyContent="flex-end">
         <Grid item>
           <Link href="/auth/ingia" variant="body2">
-            Already have an account? Sign in
+            Je tayari una akaunti? Ingia
           </Link>
+        </Grid>
+      </Grid>
+      <Grid container alignItems="center" className={classes.termDiv}>
+        <Grid item>
+          <Typography className={classes.terms}>
+            Kwa kujiiunga, nitakuwa nimeridhia na{" "}
+          </Typography>
+          <Link
+            underline="always"
+            href="/masharti-na-vigezo"
+            variant="body2"
+            className={classes.terms}
+          >
+            masharti na vigezo
+          </Link>
+          <Typography className={classes.terms}> pamoja na </Typography>
+          <Link
+            underline="always"
+            href="/sera-ya-faragha"
+            variant="body2"
+            className={classes.terms}
+          >
+            sera ya faragha
+          </Link>
+          <Typography className={classes.terms}>
+            {" "}
+            yalioainishwa hapa.{" "}
+          </Typography>
         </Grid>
       </Grid>
     </form>
@@ -175,12 +222,12 @@ function Register({ role, csrfToken }) {
 }
 
 Register.propTypes = {
-  role: PropTypes.string,
+  userrole: PropTypes.string,
   csrfToken: PropTypes.string,
 };
 
 Register.defaultProps = {
-  role: undefined,
+  userrole: undefined,
   csrfToken: undefined,
 };
 

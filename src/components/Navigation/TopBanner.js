@@ -16,7 +16,7 @@ import useAuth from "@/jikopoint/hooks/useAuth";
 const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   root: {
     backgroundColor: palette.background.light,
-    minHeight: typography.pxToRem(40),
+    minHeight: typography.pxToRem(33),
   },
   auth: {
     borderTop: `1px solid ${palette.divider}`,
@@ -53,6 +53,10 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
     height: typography.pxToRem(20),
     margin: `auto ${typography.pxToRem(15)}`,
   },
+  iconButton: {
+    paddingBottom: typography.pxToRem(8),
+    paddingTop: typography.pxToRem(8),
+  },
   icon: {
     width: typography.pxToRem(15),
     height: typography.pxToRem(15),
@@ -75,17 +79,24 @@ function TopBanner({ social, ...props }) {
             <IconButton
               component={Link}
               href={social.facebook}
+              className={classes.iconButton}
               underline="none"
             >
               <FacebookIcon className={classes.icon} />
             </IconButton>
-            <IconButton component={Link} href={social.twitter} underline="none">
+            <IconButton
+              component={Link}
+              href={social.twitter}
+              underline="none"
+              className={classes.iconButton}
+            >
               <TwitterIcon className={classes.icon} />
             </IconButton>
             <IconButton
               component={Link}
               href={social.linkedin}
               underline="none"
+              className={classes.iconButton}
             >
               <LinkedInIcon className={classes.icon} />
             </IconButton>
@@ -93,6 +104,7 @@ function TopBanner({ social, ...props }) {
               component={Link}
               href={social.instagram}
               underline="none"
+              className={classes.iconButton}
             >
               <InstagramIcon className={classes.icon} viewBox="0 0 500 500" />
             </IconButton>
