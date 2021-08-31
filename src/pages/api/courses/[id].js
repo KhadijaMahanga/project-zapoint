@@ -36,15 +36,23 @@ const handler = nextConnect({ onNoMatch, onError })
         throw new Error("Hiki kitendo hakijathibitishwa");
       }
       let cover;
-      if (req?.file && req?.body?.image?.length === 0) {
+      if (req?.file) {
         const image = await cloudinary.uploader.upload(req?.file?.path);
         cover = image?.secure_url ?? null;
       }
-      const course = await updateCourse(req?.query?.id, {
+
+      let update = {
         ...req?.body,
         isArchived: false,
-        image: cover || req.body.image,
-      });
+      };
+      if (cover || req.body.image) {
+        update = {
+          ...update,
+          image: cover || req.body.image,
+        };
+      }
+      console.log(update);
+      const course = await updateCourse(req?.query?.id, update);
       if (!course) {
         return res
           .status(400)

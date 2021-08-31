@@ -32,9 +32,6 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
     backgroundColor: palette.background.dark,
     width: "100%",
     [breakpoints.up("md")]: {
-      height: typography.pxToRem(200),
-    },
-    [breakpoints.up("lg")]: {
       height: typography.pxToRem(300),
     },
   },
@@ -45,9 +42,6 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
     border: "1px solid #f1f1f1",
     height: "auto",
     marginBottom: typography.pxToRem(20),
-    [breakpoints.up("md")]: {
-      width: typography.pxToRem(250),
-    },
     [breakpoints.up("lg")]: {
       width: typography.pxToRem(330),
     },
@@ -93,6 +87,7 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   button: {
     color: palette.text.secondary,
     width: "100%",
+    marginBottom: typography.pxToRem(40),
     [breakpoints.up("md")]: {
       maxWidth: typography.pxToRem(250),
     },
@@ -110,7 +105,7 @@ function Account({ user, ...props }) {
     <div className={classes.root}>
       <Section classes={{ root: classes.section }}>
         <Grid container alignItems="flex-start" justifyContent="center">
-          <Grid item container xs={12} md={4}>
+          <Grid item container xs={12} lg={4}>
             <Grid item xs={12}>
               <Card className={classes.cardRoot}>
                 <CardActionArea
@@ -219,7 +214,7 @@ function Account({ user, ...props }) {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={12} lg={8}>
             {user?.role === "admin" && <Admin {...props} />}
             {user?.role === "trainer" && <Trainer {...props} />}
           </Grid>

@@ -23,14 +23,21 @@ const handler = nextConnect({ onNoMatch, onError })
         throw new Error("Hiki kitendo hakijathibitishwa");
       }
       let lecVideo;
-      if (req?.file && req?.body?.video?.length === 0) {
+      if (req?.file) {
         const vd = await cloudinary.uploader.upload(req?.file?.path);
-        lecVideo = vd?.secure_url;
+        lecVideo = vd?.secure_url ?? null;
       }
-      const lecture = await updateLecture(req?.query?.id, {
+
+      let update = {
         ...req?.body,
-        video: lecVideo || req.body.video,
-      });
+      };
+      if (lecVideo || req.body.video) {
+        update = {
+          ...update,
+          video: lecVideo || req.body.video,
+        };
+      }
+      const lecture = await updateLecture(req?.query?.id, update);
       if (!lecture) {
         return res
           .status(400)
