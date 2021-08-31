@@ -42,7 +42,7 @@ function CustomForm({ status, onValidated, ...props }) {
   return (
     <div className={classes.root}>
       <Section classes={{ root: classes.section }}>
-        <Grid container alignItems="center">
+        <Grid container alignItems="center" justifyContent="space-between">
           <Grid item xs={12} md={12} lg={4}>
             <Typography variant="h4" className={classes.title}>
               Jiunge kwa jarida
@@ -52,7 +52,7 @@ function CustomForm({ status, onValidated, ...props }) {
               za kupikia
             </Typography>
           </Grid>
-          <Grid item xs={12} lg={8} container justifyContent="flex-end">
+          <Grid item xs={12} lg={8} container>
             <form
               onSubmit={(e) => handleSubmit(e)}
               noValidate
