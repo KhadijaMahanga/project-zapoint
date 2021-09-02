@@ -1,10 +1,10 @@
 /* eslint-disable no-underscore-dangle */
-import { Typography, Grid, ButtonBase } from "@material-ui/core";
+import { Typography, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import PropTypes from "prop-types";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import { ReactComponent as IconCategory } from "@/jikopoint/assets/icons/icon-category-grey.svg";
 import DefaultProfilePic from "@/jikopoint/components/DefaultProfilePic";
@@ -15,25 +15,8 @@ import Tabs from "@/jikopoint/components/Tabs";
 
 const Player = dynamic(() => import("./Player"), { ssr: false });
 
-const useStyles = makeStyles(({ palette, typography, breakpoints }) => ({
+const useStyles = makeStyles(({ palette, typography }) => ({
   root: {},
-  video: {
-    position: "relative",
-    height: typography.pxToRem(250),
-    "& .video-js": {
-      width: "100%",
-      height: "100%",
-    },
-    "& .vjs-poster": {
-      backgroundSize: "cover",
-    },
-    [breakpoints.up("md")]: {
-      height: typography.pxToRem(320),
-    },
-    [breakpoints.up("lg")]: {
-      height: typography.pxToRem(400),
-    },
-  },
   section: {
     paddingTop: typography.pxToRem(40),
     paddingBottom: typography.pxToRem(10),
@@ -96,19 +79,6 @@ const useStyles = makeStyles(({ palette, typography, breakpoints }) => ({
   shareIcon: {
     marginRight: typography.pxToRem(15),
   },
-  lectureItem: {
-    border: 0,
-    background: "unset",
-    marginTop: typography.pxToRem(10),
-    color: palette.text.primary,
-    fontSize: typography.pxToRem(16),
-  },
-  lectures: {
-    paddingTop: typography.pxToRem(20),
-    [breakpoints.up("lg")]: {
-      padding: `0 ${typography.pxToRem(20)}`,
-    },
-  },
 }));
 
 const socialLinks = [
@@ -119,51 +89,14 @@ const socialLinks = [
   { name: "telegram", alt: "telegram" },
 ];
 
-function Index({ course, category, lectures, ...props }) {
+function Index({ course, category, ...props }) {
   const classes = useStyles(props);
-  const [activeLecture, setActiveLecture] = useState();
-
-  useEffect(() => {
-    if (lectures?.length) {
-      setActiveLecture(lectures[0]);
-    }
-  }, [lectures]);
-
-  const upDatePlayer = (e, id) => {
-    e.preventDefault();
-    const newLec = lectures?.find(({ _id }) => _id === id);
-    setActiveLecture(newLec);
-  };
 
   return (
     <div className={classes.root}>
       <Section className={classes.section}>
         <Grid container>
-          <Grid item xs={12} container justifyContent="space-between">
-            <Grid item xs={12} lg={8}>
-              <div className={classes.video}>
-                <Player
-                  videoSrc={activeLecture?.video}
-                  videoType={activeLecture?.type}
-                  videoImg={course?.image}
-                  {...props}
-                />
-              </div>
-            </Grid>
-            <Grid item xs={12} lg={4} className={classes.lectures}>
-              <Typography variant="h4" color="primary">
-                Somo/Vipindi
-              </Typography>
-              {lectures
-                ?.sort((a, b) => a.no.toString().localeCompare(b.no.toString()))
-                ?.map((lec, index) => (
-                  <ButtonBase
-                    className={classes.lectureItem}
-                    onClick={(e) => upDatePlayer(e, lec._id)}
-                  >{`${index + 1}: ${lec.name}`}</ButtonBase>
-                ))}
-            </Grid>
-          </Grid>
+          <Player {...props} videoImg={course?.image} />
           <Grid item xs={12} md={8} container alignItems="center">
             <Grid item xs={12} className={classes.section}>
               <Typography variant="h3" className={classes.title}>
@@ -272,14 +205,6 @@ Index.propTypes = {
       email: PropTypes.string,
     }),
   }),
-  lectures: PropTypes.arrayOf(
-    PropTypes.shape({
-      video: PropTypes.string,
-      type: PropTypes.string,
-      no: PropTypes.number,
-      name: PropTypes.string,
-    })
-  ),
   category: PropTypes.shape({
     name: PropTypes.string,
   }),
@@ -288,7 +213,6 @@ Index.propTypes = {
 Index.defaultProps = {
   course: undefined,
   category: undefined,
-  lectures: undefined,
 };
 
 export default Index;
