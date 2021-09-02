@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/media-has-caption */
-import { getProviders, getCsrfToken, signIn } from "next-auth/client";
+import { signIn } from "next-auth/client";
 import PropTypes from "prop-types";
 import React, { useCallback, useEffect, useState } from "react";
 import videojs from "video.js";
@@ -8,26 +8,13 @@ import "video.js/dist/video-js.css";
 
 import LoginDialog from "@/jikopoint/components/Course/LoginDialog";
 
-function Player({ videoSrc, videoType, session, videoImg }) {
+function Player({ videoSrc, videoType, session, videoImg, ...props }) {
   const [videoEl, setVideoEl] = useState(null);
   const [openLogin, setOpenLogin] = useState(false);
 
   const handleCloseDialog = () => {
     setOpenLogin(false);
   };
-
-  const [providers, setProviders] = useState(null);
-  const [csrfToken, setCsrfToken] = useState(null);
-  useEffect(() => {
-    async function getValues() {
-      const p = await getProviders();
-      setProviders(p);
-
-      const c = await getCsrfToken();
-      setCsrfToken(c);
-    }
-    getValues();
-  }, []);
 
   const onVideo = useCallback((el) => {
     setVideoEl(el);
@@ -66,10 +53,9 @@ function Player({ videoSrc, videoType, session, videoImg }) {
         </video>
       </div>
       <LoginDialog
+        {...props}
         openDialog={openLogin}
         handleCloseDialog={handleCloseDialog}
-        providers={providers}
-        csrfToken={csrfToken}
         signIn={signIn}
       />
     </>

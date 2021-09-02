@@ -21,14 +21,14 @@ function Index({ articles, ...props }) {
       />
       <HighlightNews
         items={articles}
-        title="Jiko Habari"
+        title="Jiko News"
         subtitle="Fuatilia Machapisho yetu "
       />
       <NewsletterSubscription />
       <HighlightCourses
         items={articles}
-        title="Jiko Darasa"
-        subtitle="Tujifunze Mapishi pamoje"
+        title="Jiko Class"
+        subtitle="Tujifunze Mapishi pamoja"
       />
     </Page>
   );

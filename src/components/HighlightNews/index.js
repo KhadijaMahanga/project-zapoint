@@ -11,7 +11,7 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   root: {
     margin: `${typography.pxToRem(20)} 0`,
     [breakpoints.up("md")]: {
-      margin: `${typography.pxToRem(40)} 0`,
+      margin: `${typography.pxToRem(60)} 0 ${typography.pxToRem(40)}`,
     },
   },
   section: {},
