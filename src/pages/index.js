@@ -6,6 +6,7 @@ import HighlightCourses from "@/jikopoint/components/HighlightCourses";
 import HighlightNews from "@/jikopoint/components/HighlightNews";
 import NewsletterSubscription from "@/jikopoint/components/NewsletterSubscription";
 import Page from "@/jikopoint/components/Page";
+import Partners from "@/jikopoint/components/Partners";
 import getPostTypeArchive from "@/jikopoint/functions/postTypes/getPostTypeArchive";
 import getPostTypeStaticProps from "@/jikopoint/functions/postTypes/getPostTypeStaticProps";
 
@@ -30,6 +31,7 @@ function Index({ articles, ...props }) {
         title="Jiko Class"
         subtitle="Tujifunze Mapishi pamoja"
       />
+      <Partners />
     </Page>
   );
 }
