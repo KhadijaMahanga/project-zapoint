@@ -63,6 +63,7 @@ function LectureDialog({
   const [video, setVideo] = useState("");
   const [videoFile, setVideoFile] = useState("");
   const [type, setType] = useState("");
+  const [duration, setDuration] = useState("");
   const [openVideoDialog, setOpenVideoDialog] = useState(false);
 
   useEffect(() => {
@@ -71,6 +72,7 @@ function LectureDialog({
       setNo(value?.no);
       setVideo(value?.video);
       setType(value?.type);
+      setDuration(value?.duration);
     }
   }, [value]);
 
@@ -86,6 +88,7 @@ function LectureDialog({
       formData.append("course", courseId);
       formData.append("type", type);
       formData.append("no", parseInt(no, 10));
+      formData.append("duration", parseInt(duration, 10));
 
       let options;
       let url;
@@ -172,6 +175,20 @@ function LectureDialog({
             onChange={(e) => setName(e.target.value)}
           />
           <TextField
+            autoComplete="fduration"
+            name="duration"
+            variant="outlined"
+            value={duration}
+            required
+            fullWidth
+            margin="normal"
+            id="duration"
+            label="Muda wa video (dakika)"
+            autoFocus
+            InputLabelProps={{ classes: { root: classes.label } }}
+            onChange={(e) => setDuration(e.target.value)}
+          />
+          <TextField
             autoComplete="ftype"
             name="type"
             variant="outlined"
@@ -253,6 +270,7 @@ LectureDialog.propTypes = {
   updateLecturesList: PropTypes.func,
   value: PropTypes.shape({
     name: PropTypes.string,
+    duration: PropTypes.string,
     no: PropTypes.string,
     video: PropTypes.string,
     type: PropTypes.string,

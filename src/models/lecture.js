@@ -13,6 +13,10 @@ const LectureSchema = new Schema(
       type: String,
       required: true,
     },
+    duration: {
+      type: Number,
+      default: 0,
+    },
     course: { type: Schema.Types.ObjectId, ref: "Course" },
     video: {
       type: String,

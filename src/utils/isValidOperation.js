@@ -12,7 +12,7 @@ const allowedFields = {
     "coverPhoto",
     "status",
   ],
-  lecture: ["name", "video", "no", "type", "videoFile"],
+  lecture: ["name", "video", "no", "type", "duration", "videoFile"],
   category: ["name", "slug"],
   activity: ["text"],
   comment: ["text"],
