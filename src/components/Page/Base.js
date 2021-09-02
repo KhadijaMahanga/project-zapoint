@@ -14,8 +14,9 @@ const footerItems = [
 ];
 
 const menuItems = [
-  { label: "Darasa", href: "/darasa" },
-  { label: "Habari", href: "/habari" },
+  { label: "Jiko Sokoni", href: "https://jikosokoni.co.tz" },
+  { label: "Jiko Class", href: "/darasa" },
+  { label: "Jiko News", href: "/habari" },
   { label: "Kuhusu Sisi", href: "/kuhusu-sisi" },
 ];
 

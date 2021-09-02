@@ -118,7 +118,7 @@ SwitchCase.defaultProps = {
   signIn: undefined,
 };
 
-function Ingia({ csrfToken, signIn, providers, title, isDialog }) {
+function Ingia({ csrfToken, signIn, providers, title, isDialog, ...props }) {
   const classes = useStyles();
 
   return (
@@ -137,7 +137,7 @@ function Ingia({ csrfToken, signIn, providers, title, isDialog }) {
         <Typography variant="h4">{title}</Typography>
       </Grid>
       <Grid item xs={12} md={isDialog ? 7 : 5}>
-        <LoginForm signIn={signIn} csrfToken={csrfToken} />
+        <LoginForm signIn={signIn} csrfToken={csrfToken} {...props} />
         <div className={classes.divider}>
           <div className={classes.dividerBorder} />
           <span className={classes.dividerSpan}>au</span>

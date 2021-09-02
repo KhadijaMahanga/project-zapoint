@@ -14,7 +14,12 @@ function LoginDialog({ handleCloseDialog, openDialog, ...props }) {
       maxWidth="md"
     >
       <DialogContent>
-        <Login {...props} title="Tafadhali, Ingia kwanza" isDialog />
+        <Login
+          {...props}
+          title="Tafadhali, Ingia kwanza"
+          isDialog
+          onSuccess={handleCloseDialog}
+        />
       </DialogContent>
     </Dialog>
   );
