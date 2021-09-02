@@ -1,11 +1,10 @@
 /* eslint-disable no-underscore-dangle */
 import { Typography, Grid, ButtonBase } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
-
-import Player from "./Player";
 
 import { ReactComponent as IconCategory } from "@/jikopoint/assets/icons/icon-category-grey.svg";
 import DefaultProfilePic from "@/jikopoint/components/DefaultProfilePic";
@@ -13,6 +12,8 @@ import RichTypography from "@/jikopoint/components/RichTypography";
 import Section from "@/jikopoint/components/Section";
 import ShareBar from "@/jikopoint/components/ShareBar";
 import Tabs from "@/jikopoint/components/Tabs";
+
+const Player = dynamic(() => import("./Player"), { ssr: false });
 
 const useStyles = makeStyles(({ palette, typography, breakpoints }) => ({
   root: {},
@@ -103,8 +104,9 @@ const useStyles = makeStyles(({ palette, typography, breakpoints }) => ({
     fontSize: typography.pxToRem(16),
   },
   lectures: {
+    paddingTop: typography.pxToRem(20),
     [breakpoints.up("lg")]: {
-      padding: typography.pxToRem(20),
+      padding: `0 ${typography.pxToRem(20)}`,
     },
   },
 }));
@@ -169,7 +171,7 @@ function Index({ course, category, lectures, ...props }) {
               </Typography>
             </Grid>
             <Grid item container xs={5} alignItems="center">
-              <Grid item xs={2}>
+              <Grid item xs={4} md={2}>
                 <div className={classes.profileImage}>
                   {course?.instructor?.image ? (
                     <Image src={course?.instructor.image} layout="fill" />
@@ -183,7 +185,7 @@ function Index({ course, category, lectures, ...props }) {
                   )}
                 </div>
               </Grid>
-              <Grid item container xs={10}>
+              <Grid item container xs={8} md={10}>
                 <Grid item xs={12}>
                   <Typography className={classes.header}>Mkufunzi</Typography>
                 </Grid>
@@ -195,10 +197,10 @@ function Index({ course, category, lectures, ...props }) {
               </Grid>
             </Grid>
             <Grid item container xs={4} alignItems="center">
-              <Grid item xs={2}>
+              <Grid item xs={4} md={2}>
                 <IconCategory className={classes.icon} />
               </Grid>
-              <Grid item container xs={10}>
+              <Grid item container xs={8} md={10}>
                 <Grid item xs={12}>
                   <Typography className={classes.header}>
                     Kundi la kozi

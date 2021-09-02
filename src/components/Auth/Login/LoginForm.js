@@ -36,7 +36,7 @@ const useStyles = makeStyles(({ palette, typography }) => ({
   },
 }));
 
-function LoginForm({ signIn, csrfToken }) {
+function LoginForm({ signIn, csrfToken, onSuccess }) {
   const classes = useStyles();
   const router = useRouter();
 
@@ -76,6 +76,9 @@ function LoginForm({ signIn, csrfToken }) {
       if (res.error) {
         setLoginError(res.error);
       } else {
+        if (onSuccess) {
+          onSuccess();
+        }
         router.push(res?.url);
       }
     }
@@ -156,11 +159,13 @@ function LoginForm({ signIn, csrfToken }) {
 LoginForm.propTypes = {
   signIn: PropTypes.func,
   csrfToken: PropTypes.string,
+  onSuccess: PropTypes.func,
 };
 
 LoginForm.defaultProps = {
   signIn: undefined,
   csrfToken: undefined,
+  onSuccess: undefined,
 };
 
 export default LoginForm;

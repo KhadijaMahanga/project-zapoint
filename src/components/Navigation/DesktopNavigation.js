@@ -46,8 +46,11 @@ const useStyles = makeStyles(({ palette, typography }) => ({
     float: "left",
     color: palette.text.primary,
     fontSize: typography.pxToRem(16),
-    fontWeight: 400,
+    fontWeight: 500,
     textTransform: "uppercase",
+    "&:hover": {
+      opacity: 0.6,
+    },
   },
   flexDisplay: {
     display: "flex",
