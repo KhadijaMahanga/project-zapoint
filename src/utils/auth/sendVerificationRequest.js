@@ -1,6 +1,6 @@
 import cookie from "cookie";
 
-const sendVerificationRequest = async (email) => {
+const sendVerificationRequest = async (email, status) => {
   let Cookie;
   const response = await fetch(
     `${process.env.NEXTAUTH_URL}/api/auth/csrf`
@@ -13,6 +13,11 @@ const sendVerificationRequest = async (email) => {
       .join("; ");
     return res.json();
   });
+
+  const callbackUrl =
+    status === "register"
+      ? `${process.env.NEXTAUTH_URL}/auth/thibitishwa`
+      : `${process.env.NEXTAUTH_URL}/auth/nywila/mpya?email=${email}`;
   const fetchOptions = {
     method: "POST",
     headers: {
@@ -21,8 +26,9 @@ const sendVerificationRequest = async (email) => {
     },
     body: new URLSearchParams({
       email,
-      callbakUrl: `${process.env.NEXTAUTH_URL}`,
+      callbackUrl,
       redirect: "false",
+      status,
       csrfToken: response.csrfToken,
       json: "true",
     }),
@@ -31,7 +37,11 @@ const sendVerificationRequest = async (email) => {
   const result = await fetch(
     `${process.env.NEXTAUTH_URL}/api/auth/signin/email`,
     fetchOptions
-  ).then((res) => res.json());
+  )
+    .then((res) => res.json())
+    .catch((e) => {
+      throw e;
+    });
   return result;
 };
 

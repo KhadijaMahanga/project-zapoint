@@ -51,9 +51,7 @@ async function registerUser(credentials) {
       if (!updated) {
         return Promise.resolve(false);
       }
-      // FIXME: verification does not get generated to sent
-      const response = await sendVerificationRequest(updated.email);
-      console.log("🚀 ~ verification: ~ response status:", response);
+      await sendVerificationRequest(updated.email, "register");
       return Promise.resolve(updated);
     }
     const doc = {
@@ -68,9 +66,8 @@ async function registerUser(credentials) {
     if (!created) {
       return Promise.resolve(false);
     }
-    // FIXME: verification does not get generated to sent
-    const response = await sendVerificationRequest(created.email);
-    console.log("🚀 ~ verification: ~ response status:", response);
+
+    await sendVerificationRequest(created.email);
     return Promise.resolve(created);
   } catch (e) {
     throw new Error(e);
