@@ -27,6 +27,7 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   },
   section: {},
   profilepic: {
+    position: "relative",
     color: palette.background.dark,
     fontSize: 50,
     backgroundColor: palette.background.dark,
@@ -118,7 +119,11 @@ function Account({ user, ...props }) {
                 >
                   <div className={classes.profilepic}>
                     {user?.image ? (
-                      <Image src={user?.image} layout="fill" />
+                      <Image
+                        src={user?.image}
+                        layout="fill"
+                        objectFit="contain"
+                      />
                     ) : (
                       <DefaultProfilePic
                         letter={user?.name[0] || user?.email[0]}
@@ -196,6 +201,7 @@ function Account({ user, ...props }) {
                   href="/profile/settings"
                   fullWidth
                   color="inherit"
+                  underline="none"
                   className={classes.editButton}
                 >
                   Hariri

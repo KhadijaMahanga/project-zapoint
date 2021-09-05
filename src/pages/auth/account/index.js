@@ -52,7 +52,7 @@ export async function getServerSideProps(context) {
   return {
     props: {
       courses: courses?.data ?? null,
-      user: session?.user,
+      user: currentUser?.user,
       categories: categories?.data ?? null,
       users: users?.users ?? null,
     },

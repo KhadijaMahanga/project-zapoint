@@ -140,6 +140,11 @@ const theme = createTheme({
       disableRipple: true,
       disableTouchRipple: true,
     },
+    MuiButton: {
+      // Disable ripple effect globally
+      disableRipple: true,
+      disableTouchRipple: true,
+    },
   },
 });
 
@@ -250,5 +255,4 @@ deepmerge(
   },
   { clone: false }
 );
-
 export default theme;

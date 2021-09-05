@@ -120,7 +120,6 @@ function Register({ userrole, csrfToken }) {
             fullWidth
             id="name"
             label="Jina"
-            autoFocus
             InputLabelProps={{ classes: { root: classes.label } }}
             onChange={(e) => setName(e.target.value)}
           />
@@ -136,7 +135,6 @@ function Register({ userrole, csrfToken }) {
             name="email"
             autoComplete="email"
             InputLabelProps={{ classes: { root: classes.label } }}
-            autoFocus
             error={emailError.length > 0}
             helperText={emailError.length > 0 ? emailError : null}
             onChange={(e) => setEmail(e.target.value)}

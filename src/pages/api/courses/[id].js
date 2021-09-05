@@ -51,7 +51,6 @@ const handler = nextConnect({ onNoMatch, onError })
           image: cover || req.body.image,
         };
       }
-      console.log(update);
       const course = await updateCourse(req?.query?.id, update);
       if (!course) {
         return res

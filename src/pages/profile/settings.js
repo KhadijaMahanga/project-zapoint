@@ -26,33 +26,18 @@ export async function getServerSideProps(context) {
     return null;
   }
 
-  const { user } = session;
-
-  const categories = await fetcher(
-    `${process.env.NEXT_PUBLIC_APP_URL}/api/profile`
+  const currentUser = await fetcher(
+    `${process.env.NEXT_PUBLIC_APP_URL}/api/users/${session?.user?.email}`
   );
 
-  const users = await fetcher(`${process.env.NEXT_PUBLIC_APP_URL}/api/users`);
-
-  let courses;
-  if (user.role === "trainee") {
-    // pull all enrolled courses
-  } else if (user.role === "trainer") {
-    // get my courses
-    courses = await fetcher(
-      `${process.env.NEXT_PUBLIC_APP_URL}/api/courses/instructor/${user.id}`
-    );
-  } else {
-    // get all courses, as you're an admin
-    courses = await fetcher(`${process.env.NEXT_PUBLIC_APP_URL}/api/courses`);
-  }
+  const userProfile = await fetcher(
+    `${process.env.NEXT_PUBLIC_APP_URL}/api/profile/${currentUser?.user?._id}`
+  );
 
   return {
     props: {
-      courses: courses?.data ?? null,
-      user,
-      categories: categories?.data ?? null,
-      users: users?.users ?? null,
+      user: currentUser?.user ?? null,
+      profile: userProfile?.data ?? null,
     },
   };
 }

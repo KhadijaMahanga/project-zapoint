@@ -50,6 +50,10 @@ const handler = nextConnect({ onNoMatch, onError })
   })
   .delete(async (req, res) => {
     try {
+      const session = await getSession({ req });
+      if (!session && session?.user?.role === "trainee") {
+        throw new Error("Hiki kitendo hakijathibitishwa");
+      }
       const deletedLecture = await deleteLecture(req?.query?.id);
       if (!deletedLecture) {
         return res

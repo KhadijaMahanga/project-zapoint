@@ -85,6 +85,7 @@ function Courses({ courses: coursesProp, categories, ...props }) {
         variant="contained"
         color="primary"
         component={Link}
+        underline="none"
         href="/kozi/mpya"
         className={classes.addButton}
       >
@@ -125,6 +126,7 @@ function Courses({ courses: coursesProp, categories, ...props }) {
                     fullWidth
                     variant="contained"
                     color="inherit"
+                    disabled={c?.status !== "not submitted for approval"}
                     className={classes.editButton}
                     onClick={(e) => handleSubmitApproval(e, c._id)}
                   >

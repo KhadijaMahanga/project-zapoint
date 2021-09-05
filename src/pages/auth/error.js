@@ -28,7 +28,7 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   },
 }));
 
-function Kamilisha() {
+function Error() {
   const classes = useStyles();
   return (
     <Page>
@@ -37,8 +37,7 @@ function Kamilisha() {
           <Grid container justifyContent="center">
             <Grid item xs={12} md={6}>
               <Typography variant="subtitle1" color="primary">
-                Ahsante kwa kujiandikisha, umetumiwa ujumbe wa kukamilisha.
-                Nenda kwenye kisanduku pokezi na ufuate maelekezo.
+                Linki imeshatumitaka au muda wake umeisha.
               </Typography>
             </Grid>
           </Grid>
@@ -53,4 +52,4 @@ export async function getServerSideProps() {
   };
 }
 
-export default Kamilisha;
+export default Error;
