@@ -32,14 +32,14 @@ export default function MyApp(props) {
           // e.g.
           // * 0  - Disabled (always use cache value)
           // * 60 - Sync session state with server if it's older than 60 seconds
-          clientMaxAge: 0,
+          clientMaxAge: 60,
           // Keep Alive tells windows / tabs that are signed in to keep sending
           // a keep alive request (which extends the current session expiry) to
           // prevent sessions in open windows from expiring. Value in seconds.
           //
           // Note: If a session has expired when keep alive is triggered, all open
           // windows / tabs will be updated to reflect the user is signed out.
-          keepAlive: 0,
+          keepAlive: 5 * 60,
         }}
         session={pageProps.session}
       >

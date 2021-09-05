@@ -4,6 +4,7 @@ import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
 
 import loginUser from "@/jikopoint/utils/auth/loginUser";
+import sendVerificationRequest from "@/jikopoint/utils/next-auth/customEmailSendVerification";
 
 export default NextAuth({
   // Configure one or more authentication providers
@@ -11,6 +12,7 @@ export default NextAuth({
     Providers.Email({
       server: process.env.SMTP_SERVER,
       from: process.env.EMAIL_FROM,
+      sendVerificationRequest,
     }),
     Providers.Facebook({
       clientId: process.env.FACEBOOK_CLIENT_ID,
@@ -32,13 +34,11 @@ export default NextAuth({
         try {
           const user = await loginUser(credentials);
           if (user?.isDeleted) {
-            throw new Error(
-              "Akaunti yako imefutwa, tafadhali jiandikishe tena"
-            );
+            throw new Error("Akaunti hii imefutwa, tafadhali jiandikishe tena");
           }
           if (!user?.emailVerified) {
             throw new Error(
-              "Akaunti yako si kamilifu. Pitia kwenye barua pepe yako kuikamilisha"
+              "Akaunti hii si kamilifu. Pitia kwenye barua pepe yako kuikamilisha"
             );
           }
           return user;
@@ -83,7 +83,7 @@ export default NextAuth({
   // https://next-auth.js.org/configuration/pages
   pages: {
     signIn: "/auth/jiunge", // Displays signin buttons
-    // error: "/auth/ingia", // Error code passed in query string as ?error=
+    error: "/auth/error", // Error code passed in query string as ?error=
     // verifyRequest: "/auth/kamilisha", // Used for check email page
     // newUser: null // If set, new users will be directed here on first sign in
   },
@@ -96,18 +96,13 @@ export default NextAuth({
     // async redirect(url, baseUrl) { return baseUrl },
     // async session(session, user) { return session },
     // async jwt(token, user, account, profile, isNewUser) { return token }
-    async signIn(user, account) {
-      if (account.type === "oauth") {
-        user.role = "trainer";
-        console.log(user);
-        // save/ update user here
+    async signIn(user) {
+      if (user?.isDeleted) {
+        return false;
       }
       return true;
     },
     async session(session, token) {
-      if (token?.user) {
-        session.user = token.user;
-      }
       if (token?.accessToken) {
         session.accessToken = token.accessToken;
       }

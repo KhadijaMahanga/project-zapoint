@@ -14,6 +14,7 @@ const useStyles = makeStyles(({ palette, typography, transitions }) => ({
   },
   tab: {
     color: palette.text.primary,
+    fontFamily: typography.body1.fontFamily,
     border: 0,
     borderRadius: 0,
     backgroundColor: palette.background.default,

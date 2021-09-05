@@ -1,7 +1,9 @@
-import { Typography, Grid } from "@material-ui/core";
+import { Typography, Button, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { signOut } from "next-auth/client";
 import React from "react";
 
+import Link from "@/jikopoint/components/Link";
 import Page from "@/jikopoint/components/Page";
 import Section from "@/jikopoint/components/Section";
 
@@ -13,14 +15,6 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
     },
   },
   section: {},
-  label: {
-    color: palette.text.primary,
-    fontSize: typography.pxToRem(16),
-  },
-  notification: {
-    color: palette.text.primary,
-    fontSize: typography.pxToRem(13),
-  },
   button: {
     color: palette.text.secondary,
     background: palette.primary.main,
@@ -28,7 +22,7 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   },
 }));
 
-function Kamilisha() {
+function Thibitishwa() {
   const classes = useStyles();
   return (
     <Page>
@@ -37,9 +31,20 @@ function Kamilisha() {
           <Grid container justifyContent="center">
             <Grid item xs={12} md={6}>
               <Typography variant="subtitle1" color="primary">
-                Ahsante kwa kujiandikisha, umetumiwa ujumbe wa kukamilisha.
-                Nenda kwenye kisanduku pokezi na ufuate maelekezo.
+                Umefanikiwa kuthibitisha akaunti yako. Ahsante kwa kujiunga na
+                JikoPoint.
               </Typography>
+
+              <Button
+                component={Link}
+                href="/auth/ingia"
+                underline="none"
+                color="primary"
+                variant="contained"
+                className={classes.button}
+              >
+                Endelea
+              </Button>
             </Grid>
           </Grid>
         </Section>
@@ -47,10 +52,11 @@ function Kamilisha() {
     </Page>
   );
 }
+
 export async function getServerSideProps() {
-  return {
-    props: {},
-  };
+  signOut({ redirect: false });
+
+  return { props: { page: "thibitishwa" } };
 }
 
-export default Kamilisha;
+export default Thibitishwa;

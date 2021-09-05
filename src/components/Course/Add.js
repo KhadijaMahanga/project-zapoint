@@ -161,7 +161,6 @@ function Add({ categories, variant, user, course, ...props }) {
                     fullWidth
                     id="description"
                     label="Maelezo ya Kozi"
-                    autoFocus
                     InputLabelProps={{ classes: { root: classes.label } }}
                     onChange={(e) => setDescription(e.target.value)}
                   />
