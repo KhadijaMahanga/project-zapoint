@@ -38,6 +38,7 @@ const useStyles = makeStyles(({ palette, typography }) => ({
   profileImage: {
     width: typography.pxToRem(40),
     height: typography.pxToRem(40),
+    position: "relative",
     borderRadius: "100%",
     color: palette.background.light,
     fontSize: typography.pxToRem(16),
@@ -79,6 +80,9 @@ const useStyles = makeStyles(({ palette, typography }) => ({
   shareIcon: {
     marginRight: typography.pxToRem(15),
   },
+  image: {
+    borderRadius: "100%",
+  },
 }));
 
 const socialLinks = [
@@ -107,7 +111,11 @@ function Index({ course, category, ...props }) {
               <Grid item xs={4} md={2}>
                 <div className={classes.profileImage}>
                   {course?.instructor?.image ? (
-                    <Image src={course?.instructor.image} layout="fill" />
+                    <Image
+                      src={course?.instructor.image}
+                      layout="fill"
+                      className={classes.image}
+                    />
                   ) : (
                     <DefaultProfilePic
                       letter={
