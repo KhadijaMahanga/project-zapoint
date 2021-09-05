@@ -9555,7 +9555,7 @@ node-releases@^1.1.75:
   resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-1.1.75.tgz#6dd8c876b9897a1b8e5a02de26afa79bb54ebbfe"
   integrity sha512-Qe5OUajvqrqDSy6wrWFmMwfJ0jVgwiw4T3KqmbTcZ62qW0gQkheXYhcFM1+lOVcGUoRxcEcfyvFMAnDgaF1VWw==
 
-nodemailer@^6.4.16:
+nodemailer@^6.4.16, nodemailer@^6.6.3:
   version "6.6.3"
   resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-6.6.3.tgz#31fb53dd4d8ae16fc088a65cb9ffa8d928a69b48"
   integrity sha512-faZFufgTMrphYoDjvyVpbpJcYzwyFnbAMmQtj1lVBYAUSm3SOy2fIdd9+Mr4UxPosBa0JRw9bJoIwQn+nswiew==
@@ -11225,6 +11225,11 @@ react-app-polyfill@^2.0.0:
     raf "^3.4.1"
     regenerator-runtime "^0.13.7"
     whatwg-fetch "^3.4.1"
+
+react-cloudinary-upload-widget@^1.4.3:
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/react-cloudinary-upload-widget/-/react-cloudinary-upload-widget-1.4.3.tgz#e4ec38e1f968a470634f7283a8e5dbf2beaf9bbe"
+  integrity sha512-Vgw9R2rkQWFnfMWoXTGFfZItOcOHd8xbFG/OFN9BdkelmVlQyE+TKDrTQ2RCWpcImUO0a/poET+qSNJsn2pJ8Q==
 
 react-dev-utils@^11.0.3:
   version "11.0.4"

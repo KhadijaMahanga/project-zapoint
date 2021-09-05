@@ -142,7 +142,7 @@ function LoginForm({ signIn, csrfToken, onSuccess }) {
       </Button>
       <Grid container>
         <Grid item xs={12} md={6}>
-          <Link href="/auth/sahau-nywila" variant="body2">
+          <Link href="/auth/nywila/sahau" variant="body2">
             Je, umesahau nywila?
           </Link>
         </Grid>

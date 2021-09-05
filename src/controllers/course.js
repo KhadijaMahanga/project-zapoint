@@ -12,7 +12,7 @@ export const createCourse = async (data) => {
 };
 
 export const getCourses = async () => {
-  const res = await Course.find({ isArchived: false })
+  const res = await Course.find({ isArchived: false, status: "approved" })
     .then((courses) => courses)
     .catch((e) => new Error(e));
 

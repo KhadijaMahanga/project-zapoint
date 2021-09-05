@@ -128,7 +128,7 @@ function TopBanner({ social, ...props }) {
                     startIcon={<IconUser className={classes.icon} />}
                     classes={{ text: classes.authenticated }}
                   >
-                    {session?.user?.name}
+                    {session?.user?.email}
                   </Button>
                 </Grid>
                 <Grid item>

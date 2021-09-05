@@ -9,13 +9,13 @@ export const createReply = async (data) => {
   return created;
 };
 
-export const getReplysPerUser = async (responder) => {
+export const getRepliesPerUser = async (responder) => {
   return Reply.find({ responder })
     .then((replies) => replies)
     .catch((e) => new Error(e));
 };
 
-export const getReplysPerComment = async (comment) => {
+export const getRepliesPerComment = async (comment) => {
   return Reply.find({ comment })
     .then((replies) => replies)
     .catch((e) => new Error(e));
