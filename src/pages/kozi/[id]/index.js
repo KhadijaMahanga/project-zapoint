@@ -34,9 +34,9 @@ export async function getServerSideProps(context) {
     `${process.env.NEXT_PUBLIC_APP_URL}/api/lectures/course/${id}`
   );
 
-  // const profile = await fetcher(
-  //   `${process.env.NEXT_PUBLIC_APP_URL}/api/profile/${course?.data?.instructor?._id}`
-  // );
+  const profile = await fetcher(
+    `${process.env.NEXT_PUBLIC_APP_URL}/api/profile/${course?.data?.instructor?._id}`
+  );
 
   const cat = await fetcher(
     `${process.env.NEXT_PUBLIC_APP_URL}/api/categories/${course?.data?.category}`
@@ -46,6 +46,7 @@ export async function getServerSideProps(context) {
       course: course?.data ?? null,
       category: cat?.data ?? null,
       lectures: lectures?.data ?? null,
+      profile: profile?.data ?? null,
       session,
       providers,
       csrfToken,
