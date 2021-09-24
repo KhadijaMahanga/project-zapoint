@@ -1,7 +1,8 @@
 import { Typography, Button, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { signOut } from "next-auth/client";
-import React from "react";
+import PropTypes from "prop-types";
+import React, { useEffect } from "react";
 
 import Link from "@/jikopoint/components/Link";
 import Page from "@/jikopoint/components/Page";
@@ -22,8 +23,11 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   },
 }));
 
-function Thibitishwa() {
+function Thibitishwa({ page }) {
   const classes = useStyles();
+  useEffect(() => {
+    signOut({ redirect: false });
+  }, [page]);
   return (
     <Page>
       <div className={classes.root}>
@@ -54,9 +58,10 @@ function Thibitishwa() {
 }
 
 export async function getServerSideProps() {
-  signOut({ redirect: false });
-
   return { props: { page: "thibitishwa" } };
 }
 
+Thibitishwa.propTypes = {
+  page: PropTypes.string.isRequired,
+};
 export default Thibitishwa;
