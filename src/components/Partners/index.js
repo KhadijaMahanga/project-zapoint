@@ -85,14 +85,14 @@ function Partners({ ...props }) {
         <Typography variant="h3" className={classes.title}>
           Wadau Wetu
         </Typography>
-        <Grid container justifyContent="center" alignItems="center">
+        <Grid container justifyContent="space-around" alignItems="center">
           {partners.map(({ alt, link, logo }) => (
-            <Grid item xs={12} md={6} lg={4} key={alt}>
+            <Grid item xs={6} md={4} lg={2} key={alt}>
               <Link href={link} className={classes.partner}>
                 <Image
                   objectFit="contain"
-                  width={310}
-                  height={224}
+                  width={180}
+                  height={120}
                   src={logo}
                   alt={alt}
                   className={classes.logo}
