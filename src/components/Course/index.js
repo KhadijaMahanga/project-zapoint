@@ -1,13 +1,21 @@
 /* eslint-disable no-underscore-dangle */
-import { Typography, Grid } from "@material-ui/core";
+import { Typography, Grid, IconButton } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import PropTypes from "prop-types";
 import React from "react";
+import {
+  TwitterIcon,
+  FacebookIcon,
+  LinkedinIcon,
+  WhatsappIcon,
+  TelegramIcon,
+} from "react-share";
 
 import { ReactComponent as IconCategory } from "@/jikopoint/assets/icons/icon-category-grey.svg";
 import DefaultProfilePic from "@/jikopoint/components/DefaultProfilePic";
+import Link from "@/jikopoint/components/Link";
 import RichTypography from "@/jikopoint/components/RichTypography";
 import Section from "@/jikopoint/components/Section";
 import ShareBar from "@/jikopoint/components/ShareBar";
@@ -83,6 +91,23 @@ const useStyles = makeStyles(({ palette, typography }) => ({
   image: {
     borderRadius: "100%",
   },
+  profileIconButton: {
+    padding: 0,
+    marginLeft: typography.pxToRem(8),
+  },
+  profileIcon: {
+    borderRadius: "50%",
+    height: typography.pxToRem(30),
+    width: typography.pxToRem(30),
+    marginRight: typography.pxToRem(3),
+    cursor: "pointer",
+  },
+  profileSocial: {
+    display: "inline-flex",
+  },
+  profileSocialTitle: {
+    fontSize: typography.pxToRem(12),
+  },
 }));
 
 const socialLinks = [
@@ -93,7 +118,7 @@ const socialLinks = [
   { name: "telegram", alt: "telegram" },
 ];
 
-function Index({ course, category, ...props }) {
+function Index({ course, category, profile, ...props }) {
   const classes = useStyles(props);
 
   return (
@@ -185,6 +210,88 @@ function Index({ course, category, ...props }) {
                         <Typography className={classes.subtitle}>
                           Wasifu wa Mkufunzi
                         </Typography>{" "}
+                        <RichTypography className={classes.description}>
+                          {profile?.bio}
+                        </RichTypography>
+                        <div className={classes.profileSocial}>
+                          <Typography
+                            variant="caption"
+                            className={classes.profileSocialTItle}
+                          >
+                            Akaunti za social media:
+                          </Typography>
+                          {Object.keys(profile?.social).map((s) => {
+                            switch (s) {
+                              case "facebook":
+                                return (
+                                  <IconButton
+                                    key={s}
+                                    component={Link}
+                                    className={classes.profileIconButton}
+                                    href={`https://facebook.com/${profile?.social[s]}`}
+                                  >
+                                    <FacebookIcon
+                                      className={classes.profileIcon}
+                                    />
+                                  </IconButton>
+                                );
+                              case "twitter":
+                                return (
+                                  <IconButton
+                                    key={s}
+                                    component={Link}
+                                    className={classes.profileIconButton}
+                                    href={`https://twitter.com/${profile?.social[s]}`}
+                                  >
+                                    <TwitterIcon
+                                      className={classes.profileIcon}
+                                    />
+                                  </IconButton>
+                                );
+                              case "linkedin":
+                                return (
+                                  <IconButton
+                                    key={s}
+                                    className={classes.profileIconButton}
+                                    href={`https://linkedin.com/in/${profile?.social[s]}`}
+                                    component={Link}
+                                  >
+                                    <LinkedinIcon
+                                      className={classes.profileIcon}
+                                    />
+                                  </IconButton>
+                                );
+                              case "whatsApp":
+                                return (
+                                  <IconButton
+                                    key={s}
+                                    component={Link}
+                                    className={classes.profileIconButton}
+                                    href={`https://api.whatsapp.com/send?phone=${profile?.social[s]}&text=From%20JikoPoint.`}
+                                  >
+                                    <WhatsappIcon
+                                      className={classes.profileIcon}
+                                    />
+                                  </IconButton>
+                                );
+                              case "telegram":
+                                return (
+                                  <IconButton
+                                    key={s}
+                                    component={Link}
+                                    className={classes.profileIconButton}
+                                    href={`https://telegram.me/${profile?.social[s]}`}
+                                  >
+                                    <TelegramIcon
+                                      className={classes.profileIcon}
+                                    />
+                                  </IconButton>
+                                );
+                              default:
+                                return null;
+                            }
+                          })}
+                        </div>
                       </div>
                     ),
                   },
@@ -216,11 +323,19 @@ Index.propTypes = {
   category: PropTypes.shape({
     name: PropTypes.string,
   }),
+  profile: PropTypes.shape({
+    social: PropTypes.shape({
+      twitter: PropTypes.string,
+      facebook: PropTypes.string,
+    }),
+    bio: PropTypes.string,
+  }),
 };
 
 Index.defaultProps = {
   course: undefined,
   category: undefined,
+  profile: undefined,
 };
 
 export default Index;
