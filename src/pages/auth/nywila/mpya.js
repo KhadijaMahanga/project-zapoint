@@ -1,9 +1,9 @@
 import { TextField, Typography, Button, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import bcrypt from "bcryptjs";
-import { getSession, getCsrfToken, signOut } from "next-auth/client";
+import { getCsrfToken, signOut } from "next-auth/client";
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Page from "@/jikopoint/components/Page";
 import Section from "@/jikopoint/components/Section";
@@ -37,6 +37,10 @@ function NywilaMpya({ user, ...props }) {
   const [newPassword, setNewPassword] = useState(null);
   const [reTypePassword, setReTypePassword] = useState(null);
   const [notification, setNotification] = useState("");
+
+  useEffect(() => {
+    signOut({ redirect: false });
+  }, [user]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -127,13 +131,10 @@ function NywilaMpya({ user, ...props }) {
 }
 
 export async function getServerSideProps(context) {
-  const session = await getSession(context);
-
+  const email = context?.query?.email;
   const currentUser = await fetcher(
-    `${process.env.NEXT_PUBLIC_APP_URL}/api/users/${session?.user?.email}`
+    `${process.env.NEXT_PUBLIC_APP_URL}/api/users/${email}`
   );
-  signOut({ redirect: false });
-
   return { props: { user: currentUser?.user } };
 }
 
