@@ -11,6 +11,14 @@ export const createCourse = async (data) => {
   return created;
 };
 
+export const getAllCourses = async () => {
+  const res = await Course.find({})
+    .then((courses) => courses)
+    .catch((e) => new Error(e));
+
+  return res;
+};
+
 export const getCourses = async () => {
   const res = await Course.find({ isArchived: false, status: "approved" })
     .then((courses) => courses)
@@ -20,7 +28,6 @@ export const getCourses = async () => {
     res?.map(async (c) => {
       const owner = await getUser(c.instructor);
       c.instructor = owner;
-      c.duration = 3566600;
       return c;
     })
   ).then((p) => p);

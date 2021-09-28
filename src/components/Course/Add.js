@@ -5,6 +5,7 @@ import { DropzoneDialog } from "material-ui-dropzone";
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 
+import Link from "@/jikopoint/components/Link";
 import Section from "@/jikopoint/components/Section";
 
 const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
@@ -34,7 +35,7 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   },
 }));
 
-function Add({ categories, variant, user, course, ...props }) {
+function Add({ categories, variant, user, course: courseProp, ...props }) {
   const classes = useStyles(props);
   const [isUpdating, setIsUpdating] = useState(false);
   const [name, setName] = useState("");
@@ -44,6 +45,8 @@ function Add({ categories, variant, user, course, ...props }) {
   const [image, setImage] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [openDialog, setOpenDialog] = useState(false);
+
+  const [course, setCourse] = useState(courseProp);
 
   const [notice, setNotice] = useState(null);
 
@@ -98,13 +101,14 @@ function Add({ categories, variant, user, course, ...props }) {
       const res = await result.json();
       // add notification of success
       if (res.success) {
+        setCourse(res?.data);
         setNotice("Umefanikiwa kuhifadhi");
       } else {
         setNotice("Tatizo la kiufundi, jaribu tena baadae.");
       }
       setTimeout(() => {
         setNotice("");
-      }, 4000);
+      }, 5000);
     } else {
       setError("Jaza kila kitu");
     }
@@ -206,7 +210,7 @@ function Add({ categories, variant, user, course, ...props }) {
                     onClose={() => setOpenDialog(false)}
                   />
                 </Grid>
-                {notice?.length && (
+                {notice?.length > 0 && (
                   <Grid item xs={12}>
                     <Typography className={classes.caption}>
                       {notice}
@@ -224,6 +228,20 @@ function Add({ categories, variant, user, course, ...props }) {
                     Hifadhi
                   </Button>
                 </Grid>
+                {course && variant !== "edit" && (
+                  <Grid item xs={12}>
+                    <Button
+                      component={Link}
+                      href={`/kozi/${course?._id}/edit`}
+                      fullWidth
+                      variant="contained"
+                      color="primary"
+                      className={classes.button}
+                    >
+                      Endelea
+                    </Button>
+                  </Grid>
+                )}
               </Grid>
             </form>
           </Grid>

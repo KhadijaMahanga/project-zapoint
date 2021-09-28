@@ -22,12 +22,14 @@ export const getLecturesPerCourse = async (course) => {
 };
 
 export const updateLecture = async (id, updates = {}) => {
-  return Lecture.findByIdAndUpdate(id, updates, {
+  const v = await Lecture.findByIdAndUpdate(id, updates, {
     new: true, // returns newly updated user rather than the original db instance
     runValidators: true, // runs validation on the updated data
   })
     .then((lecture) => lecture)
     .catch((e) => new Error(e));
+
+  return v;
 };
 
 export const deleteLecture = async (id) => {

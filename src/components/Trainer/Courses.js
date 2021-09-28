@@ -42,9 +42,14 @@ const useStyles = makeStyles(({ typography, palette }) => ({
     color: palette.text.secondary,
     margin: `${typography.pxToRem(20)} 0`,
   },
+  courseImage: {
+    width: "100%",
+    position: "relative",
+    height: typography.pxToRem(180),
+  },
 }));
 
-function Courses({ courses: coursesProp, categories, ...props }) {
+function Courses({ courses: coursesProp, user, categories, ...props }) {
   const classes = useStyles(props);
   const [courses, setCourses] = useState([]);
   const [refreshList, setRefreshList] = useState(false);
@@ -55,7 +60,10 @@ function Courses({ courses: coursesProp, categories, ...props }) {
     }
   }, [coursesProp]);
 
-  const { data: res } = useSWR(refreshList ? "/api/courses" : null, fetcher);
+  const { data: res } = useSWR(
+    refreshList ? `/api/courses/instructor/${user?._id}` : null,
+    fetcher
+  );
 
   useEffect(() => {
     if (res?.success && res?.data) {
@@ -77,6 +85,7 @@ function Courses({ courses: coursesProp, categories, ...props }) {
     const url = `/api/courses/${id}`;
     const result = await fetch(url, options);
     await result.json();
+    setRefreshList(true);
   };
 
   return (
@@ -95,7 +104,12 @@ function Courses({ courses: coursesProp, categories, ...props }) {
         <Grid container className={classes.tableRoot}>
           {courses?.map((c) => (
             <Grid item xs={12} md={6} lg={4} key={c._id}>
-              <CourseCard {...c} slug={c._id} trainer />
+              <CourseCard
+                {...c}
+                slug={c._id}
+                trainer
+                classes={{ image: classes.courseImage }}
+              />
               <Grid
                 item
                 xs={12}
@@ -149,11 +163,15 @@ Courses.propTypes = {
     })
   ),
   categories: PropTypes.arrayOf(PropTypes.shape({ slug: PropTypes.string })),
+  user: PropTypes.shape({
+    _id: PropTypes.string,
+  }),
 };
 
 Courses.defaultProps = {
   courses: undefined,
   categories: undefined,
+  user: undefined,
 };
 
 export default Courses;

@@ -46,7 +46,9 @@ export async function getServerSideProps(context) {
   } else {
     // get all courses, as you're an admin
     users = await fetcher(`${process.env.NEXT_PUBLIC_APP_URL}/api/users`);
-    courses = await fetcher(`${process.env.NEXT_PUBLIC_APP_URL}/api/courses`);
+    courses = await fetcher(
+      `${process.env.NEXT_PUBLIC_APP_URL}/api/courses/admin`
+    );
   }
 
   return {

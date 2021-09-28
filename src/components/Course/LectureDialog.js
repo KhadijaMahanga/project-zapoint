@@ -80,19 +80,19 @@ function LectureDialog({
     e.preventDefault();
     e.stopPropagation();
 
-    if (name?.length && no && video?.length && type?.length) {
+    if (name?.length && no) {
       const formData = new FormData();
       formData.append("videoFile", videoFile);
       formData.append("name", name);
       formData.append("video", video);
-      formData.append("course", courseId);
       formData.append("type", type);
-      formData.append("no", parseInt(no, 10));
-      formData.append("duration", parseInt(duration, 10));
+      formData.append("no", no);
+      formData.append("duration", duration);
 
       let options;
       let url;
       if (variant === "add") {
+        formData.append("course", courseId);
         url = "/api/lectures";
         options = {
           method: "POST",
@@ -101,11 +101,12 @@ function LectureDialog({
       } else {
         url = `/api/lectures/${value?._id}`;
         options = {
-          method: "POST",
+          method: "PUT",
           body: formData,
         };
       }
       const lecture = await fetch(url, options);
+      console.log(lecture);
       updateLecturesList(lecture?.success && lecture?.data);
     }
     handleCloseDialog();

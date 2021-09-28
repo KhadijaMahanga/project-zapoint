@@ -68,6 +68,7 @@ function Lectures({ lectures: lecturesProp, courseId, ...props }) {
     refreshList ? `/api/lectures/course/${courseId}` : null,
     fetcher
   );
+
   useEffect(() => {
     if (res?.success && res?.data) {
       setLectures(res?.data);
@@ -106,7 +107,7 @@ function Lectures({ lectures: lecturesProp, courseId, ...props }) {
               className={classes.addButton}
               onClick={handleAddLecture}
             >
-              Ongeza Kundi la Kozi
+              Ongeza Somo
             </Button>
             {lectures?.length ? (
               <Grid container className={classes.tableRoot}>
