@@ -31,7 +31,7 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   },
   title: {
     color: palette.text.primary,
-    height: typography.pxToRem(50),
+    height: typography.pxToRem(60),
     overflow: "hidden",
     display: "-webkit-box",
     WebkitLineClamp: 2,
@@ -41,7 +41,7 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   image: {
     width: "100%",
     position: "relative",
-    height: typography.pxToRem(222),
+    height: typography.pxToRem(220),
   },
   cardContentRoot: {
     padding: typography.pxToRem(10),

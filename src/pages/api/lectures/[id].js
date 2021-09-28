@@ -19,7 +19,7 @@ const handler = nextConnect({ onNoMatch, onError })
     }
     try {
       const session = await getSession({ req });
-      if (!session && session?.user?.role === "trainee") {
+      if (!session && session?.user?.role !== "trainer") {
         throw new Error("Hiki kitendo hakijathibitishwa");
       }
       let lecVideo;

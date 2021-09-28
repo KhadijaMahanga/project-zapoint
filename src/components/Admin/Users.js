@@ -161,7 +161,7 @@ Users.propTypes = {
     PropTypes.shape({
       email: PropTypes.string,
       name: PropTypes.string,
-      isDeleted: PropTypes.string,
+      isDeleted: PropTypes.bool,
       emailVerified: PropTypes.string,
       role: PropTypes.string,
     })

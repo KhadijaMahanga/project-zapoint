@@ -30,9 +30,12 @@ const handler = nc({ onNoMatch, onError })
         const vd = await cloudinary.uploader.upload(req?.file?.path);
         lecVideo = vd?.secure_url;
       }
+
       const lecture = await createLecture({
         ...req?.body,
         video: lecVideo || req.body.video,
+        no: parseInt(req?.body?.no ?? 0, 10),
+        duration: parseInt(req?.body?.duration ?? 0, 10),
       });
       res.json({ success: true, data: lecture });
     } catch (e) {

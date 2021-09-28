@@ -26,7 +26,7 @@ const handler = nc({ onNoMatch, onError })
         throw new Error("Hiki kitendo hakijathibitishwa");
       }
       let cover;
-      if (req?.file && req?.body?.image?.length === 0) {
+      if (req?.file) {
         const image = await cloudinary.uploader.upload(req?.file?.path);
         cover = image?.secure_url ?? null;
       }

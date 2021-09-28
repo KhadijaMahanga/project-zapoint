@@ -145,7 +145,11 @@ function Ingia({ csrfToken, signIn, providers, title, isDialog, ...props }) {
         </div>
         {providers &&
           Object.values(providers).map((provider) => (
-            <SwitchCase provider={provider} signIn={signIn} />
+            <SwitchCase
+              provider={provider}
+              signIn={signIn}
+              key={provider.name}
+            />
           ))}
       </Grid>
     </Grid>
