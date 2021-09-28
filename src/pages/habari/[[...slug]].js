@@ -34,6 +34,10 @@ function Index({ posts, post, categories, archive, activeCategory, ...props }) {
     authorName = post?.author?.node?.nickname ?? post?.author?.node?.slug;
   }
 
+  if (authorName?.toLowerCase() === "jikopoint") {
+    authorName = "Mwandishi Wetu";
+  }
+
   return (
     <Page categories={categories} active={activeCategory} {...props}>
       <NewsNavigation categories={categories} active={activeCategory} />
