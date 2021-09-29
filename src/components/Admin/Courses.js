@@ -134,7 +134,7 @@ function Courses({ courses: coursesProp, categories, ...props }) {
                   className={classes.button}
                   component={Link}
                   underline="none"
-                  href={`/kozi/${c._id}`}
+                  href={`/jiko-class/kozi/${c._id}`}
                 >
                   Tembelea
                 </Button>

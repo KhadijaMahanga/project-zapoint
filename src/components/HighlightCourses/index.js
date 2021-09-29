@@ -77,7 +77,7 @@ function HighlightCourses({ title, subtitle, ...props }) {
           underline="none"
           variant="h6"
           component={Link}
-          href="/habari"
+          href="/jiko-news"
           className={classes.subtitle}
         >
           {subtitle}
