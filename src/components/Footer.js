@@ -39,11 +39,11 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
     marginRight: typography.pxToRem(15),
   },
   icon: {
-    width: typography.pxToRem(20),
-    height: typography.pxToRem(20),
+    width: typography.pxToRem(13),
+    height: typography.pxToRem(13),
     [breakpoints.up("md")]: {
-      width: typography.pxToRem(25),
-      height: typography.pxToRem(25),
+      width: typography.pxToRem(18),
+      height: typography.pxToRem(18),
     },
   },
   logo: {
