@@ -171,16 +171,16 @@ deepmerge(
       },
     },
     h3: {
-      fontSize: pxToRem(35),
-      lineHeight: 40 / 35,
+      fontSize: pxToRem(25),
+      lineHeight: 30 / 25,
       [breakpoints.up("lg")]: {
-        fontSize: pxToRem(40),
-        lineHeight: 45 / 40,
+        fontSize: pxToRem(30),
+        lineHeight: 35 / 30,
       },
     },
     h4: {
-      fontSize: pxToRem(25),
-      lineHeight: 35 / 25,
+      fontSize: pxToRem(20),
+      lineHeight: 28 / 20,
     },
     h5: {
       fontSize: pxToRem(15),

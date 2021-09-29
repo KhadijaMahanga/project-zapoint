@@ -27,8 +27,8 @@ module.exports = withPWA({
   async redirects() {
     return [
       {
-        source: "/darasa",
-        destination: "/kozi",
+        source: "/jiko-class",
+        destination: "/jiko-class/kozi",
         permanent: true,
       },
     ];

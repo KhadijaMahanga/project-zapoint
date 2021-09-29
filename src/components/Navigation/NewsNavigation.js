@@ -94,7 +94,7 @@ function NewsNavigation({ categories, active, ...props }) {
             <Button
               underline="none"
               component={Link}
-              href="/habari"
+              href="/jiko-news"
               className={classes.news}
             >
               Jiko News
@@ -105,7 +105,7 @@ function NewsNavigation({ categories, active, ...props }) {
               <List component="nav" className={classes.list}>
                 {categories.map(({ slug, name }, index) => (
                   <Fragment key={slug}>
-                    <ListItemLink underline="none" href={`/habari/${slug}`}>
+                    <ListItemLink underline="none" href={`/jiko-news/${slug}`}>
                       <ListItemText
                         disableTypography
                         className={clsx(classes.listItemText, {

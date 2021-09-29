@@ -15,16 +15,16 @@ const footerItems = [
 
 const menuItems = [
   { label: "Jiko Sokoni", href: "https://jikosokoni.co.tz" },
-  { label: "Jiko Class", href: "/darasa" },
-  { label: "Jiko News", href: "/habari" },
+  { label: "Jiko Class", href: "/jiko-class/kozi" },
+  { label: "Jiko News", href: "/jiko-news" },
   { label: "Kuhusu Sisi", href: "/kuhusu-sisi" },
 ];
 
 const social = {
-  facebook: "https://www.facebook.com",
-  instagram: "https://www.instagram.com",
-  linkedin: "https://www.linkedin.com",
-  twitter: "https://www.twitter.com",
+  facebook: "https://www.facebook.com/JikoPoint",
+  instagram: "https://www.instagram.com/JikoPoint",
+  linkedin: "https://www.linkedin.com/company/jiko-point",
+  twitter: "https://www.twitter.com/jiko_point",
   youtube: "https://www.youtube.com",
 };
 
@@ -40,14 +40,13 @@ function BasePage({ children, post, ...props }) {
       <NextSeo
         title={post?.seo?.title ?? "JikoPoint"}
         description={
-          post?.seo?.metaDesc ??
-          "JikoPoint gives you jiko habari and jiko darasa"
+          post?.seo?.metaDesc ?? "JikoPoint gives you jiko news and jiko class"
         }
         openGraph={{
           title: post?.seo?.title ?? "JikoPoint",
           description:
             post?.seo?.metaDesc ??
-            "JikoPoint gives you jiko habari and jiko darasa",
+            "JikoPoint gives you jiko news and jiko class",
           images: [{ url: post?.seo?.opengraphImage?.sourceUrl ?? logo.src }],
           url: post?.seo?.canonical ?? process.env.NEXT_PUBLIC_APP_URL,
           type: post?.seo?.opengraphType ?? "Web Page",
