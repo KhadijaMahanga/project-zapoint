@@ -95,7 +95,7 @@ function Courses({ courses: coursesProp, user, categories, ...props }) {
         color="primary"
         component={Link}
         underline="none"
-        href="/kozi/mpya"
+        href="/jiko-class/kozi/mpya"
         className={classes.addButton}
       >
         Ongeza Kozi
@@ -127,7 +127,7 @@ function Courses({ courses: coursesProp, user, categories, ...props }) {
                     variant="contained"
                     underline="none"
                     component={Link}
-                    href={`/kozi/${c._id}/edit`}
+                    href={`/jiko-class/kozi/${c._id}/edit`}
                     fullWidth
                     color="inherit"
                     className={classes.editButton}

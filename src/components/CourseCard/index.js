@@ -87,7 +87,7 @@ function CourseCard({
     <Card className={classes.root}>
       <CardActionArea
         component={Component}
-        href={`/kozi/${slug}`}
+        href={`/jiko-class/kozi/${slug}`}
         classes={{ focusHighlight: classes.cardActionAreaFocusHighlight }}
         underline="none"
       >

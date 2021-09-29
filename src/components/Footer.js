@@ -151,7 +151,7 @@ function Footer({ social, footerItems }) {
         >
           <Grid item>
             <Typography variant="caption">
-              © Copyright 2021 JikoPoint
+              © Copyright 2021 JikoPoint by Nukta Africa
             </Typography>
           </Grid>
           <Hidden smDown implementation="css">

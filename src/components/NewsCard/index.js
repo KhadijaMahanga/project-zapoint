@@ -104,7 +104,7 @@ function NewsCard({
     <Card className={classes.root}>
       <CardActionArea
         component={Component}
-        href={`/habari/${category?.slug}/${slug}`}
+        href={`/jiko-news/${category?.slug}/${slug}`}
         classes={{ focusHighlight: classes.cardActionAreaFocusHighlight }}
         underline="none"
       >
@@ -113,7 +113,7 @@ function NewsCard({
           <Button
             underline="none"
             component={Link}
-            href={`/habari/${category?.slug}`}
+            href={`/jiko-news/${category?.slug}`}
             className={classes.category}
           >
             {category?.name}
