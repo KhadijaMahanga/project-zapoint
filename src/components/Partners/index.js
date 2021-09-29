@@ -83,7 +83,7 @@ function Partners({ ...props }) {
     <div className={classes.root}>
       <Section classes={{ root: classes.section }}>
         <Typography variant="h3" className={classes.title}>
-          Wadau Wetu
+          Wateja & Washirika Wetu
         </Typography>
         <Grid container justifyContent="space-around" alignItems="center">
           {partners.map(({ alt, link, logo }) => (
