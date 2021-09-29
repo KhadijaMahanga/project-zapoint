@@ -168,9 +168,8 @@ function MobileNavigation({ ...props }) {
           <DialogContent>
             <Grid container justifyContent="center" alignItems="center">
               <List component="nav" className={classes.list}>
-                {menuItems
-                  .filter((a) => a.label.toLowerCase() !== "habari")
-                  .map(({ href, label }) => (
+                {menuItems.map(({ href, label }) => (
+                  <>
                     <ListItemLink key={href} underline="none" href={href}>
                       <ListItemText
                         disableTypography
@@ -179,36 +178,30 @@ function MobileNavigation({ ...props }) {
                         {label}
                       </ListItemText>
                     </ListItemLink>
-                  ))}
-                <ListItemLink underline="none" href="/habari">
-                  <ListItemText
-                    disableTypography
-                    className={classes.listItemText}
-                  >
-                    Habari
-                  </ListItemText>
-                </ListItemLink>
-                {categories &&
-                  categories?.map(({ slug, name }) => (
-                    <ListItemLink
-                      underline="none"
-                      key={slug}
-                      href={`/habari/${slug}`}
-                    >
-                      <ListItemText
-                        disableTypography
-                        className={clsx(
-                          classes.listItemText,
-                          classes.category,
-                          {
-                            [classes.active]: slug === active,
-                          }
-                        )}
-                      >
-                        {name}
-                      </ListItemText>
-                    </ListItemLink>
-                  ))}
+                    {label.toLowerCase() === "jiko news" &&
+                      categories &&
+                      categories?.map(({ slug, name }) => (
+                        <ListItemLink
+                          underline="none"
+                          key={slug}
+                          href={`/jiko-news/${slug}`}
+                        >
+                          <ListItemText
+                            disableTypography
+                            className={clsx(
+                              classes.listItemText,
+                              classes.category,
+                              {
+                                [classes.active]: slug === active,
+                              }
+                            )}
+                          >
+                            {name}
+                          </ListItemText>
+                        </ListItemLink>
+                      ))}
+                  </>
+                ))}
                 <Hidden smUp implementation="css">
                   <Divider classes={{ root: classes.divider }} />
                   {footerItems.map(({ href, label }) => (

@@ -232,7 +232,7 @@ function Add({ categories, variant, user, course: courseProp, ...props }) {
                   <Grid item xs={12}>
                     <Button
                       component={Link}
-                      href={`/kozi/${course?._id}/edit`}
+                      href={`/jiko-class/kozi/${course?._id}/edit`}
                       fullWidth
                       variant="contained"
                       color="primary"

@@ -39,11 +39,11 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
     marginRight: typography.pxToRem(15),
   },
   icon: {
-    width: typography.pxToRem(20),
-    height: typography.pxToRem(20),
+    width: typography.pxToRem(13),
+    height: typography.pxToRem(13),
     [breakpoints.up("md")]: {
-      width: typography.pxToRem(25),
-      height: typography.pxToRem(25),
+      width: typography.pxToRem(18),
+      height: typography.pxToRem(18),
     },
   },
   logo: {
@@ -151,7 +151,7 @@ function Footer({ social, footerItems }) {
         >
           <Grid item>
             <Typography variant="caption">
-              © Copyright 2021 JikoPoint
+              © Copyright 2021 JikoPoint by Nukta Africa
             </Typography>
           </Grid>
           <Hidden smDown implementation="css">
