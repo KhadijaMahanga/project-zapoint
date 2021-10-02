@@ -22,7 +22,7 @@ export default async function getPostTypeStaticProps(
   previewData = null
 ) {
   // Set revalidate length (seconds).
-  const revalidate = 60 * 5;
+  const revalidate = 5;
 
   /* -- Handle Frontend-only routes. -- */
   if (Object.keys(frontendPageSeo).includes(postType)) {
