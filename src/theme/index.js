@@ -249,8 +249,12 @@ deepmerge(
       },
     },
     caption: {
-      fontSize: pxToRem(14),
-      lineHeight: 20 / 14,
+      fontSize: pxToRem(11),
+      lineHeight: 15 / 11,
+      [breakpoints.up("md")]: {
+        fontSize: pxToRem(14),
+        lineHeight: 20 / 14,
+      },
     },
   },
   { clone: false }
