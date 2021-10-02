@@ -1,7 +1,11 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(({ palette, typography, breakpoints }) => ({
-  root: {},
+  root: {
+    "& figure": {
+      margin: 0,
+    },
+  },
   section: {
     marginTop: typography.pxToRem(20),
     marginBottom: typography.pxToRem(40),
@@ -34,6 +38,19 @@ const useStyles = makeStyles(({ palette, typography, breakpoints }) => ({
     lineHeight: 1.8,
     "& > iframe": {
       width: "100%",
+    },
+    "& img": {
+      width: "100%",
+      maxHeight: typography.pxToRem(222),
+      [breakpoints.up("md")]: {
+        maxHeight: typography.pxToRem(320),
+      },
+      [breakpoints.up("lg")]: {
+        maxHeight: typography.pxToRem(526),
+      },
+    },
+    "& figure": {
+      margin: `${typography.pxToRem(12)} 0`,
     },
   },
   description: {
