@@ -14,6 +14,7 @@ const relatedCategoryPostsFields = `
     edges {
       node {
         name
+        slug
         posts {
           nodes {
             title
