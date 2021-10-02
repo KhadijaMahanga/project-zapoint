@@ -20,7 +20,7 @@ const useStyles = makeStyles(({ palette, typography, transitions }) => ({
     backgroundColor: palette.background.default,
     opacity: 1.0,
     minHeight: typography.pxToRem(40),
-    padding: `${typography.pxToRem(10)} ${typography.pxToRem(24)}`,
+    padding: `${typography.pxToRem(10)} ${typography.pxToRem(12)}`,
     transition: transitions.create(["background-color", "border"], {
       duration: transitions.duration.standard,
       easing: transitions.easing.easeOut,
