@@ -141,7 +141,7 @@ export default async (req, res) =>
         }
 
         if (!token?.role) {
-          token.role = "trainer";
+          token.role = "trainee";
         }
         return token;
       },
