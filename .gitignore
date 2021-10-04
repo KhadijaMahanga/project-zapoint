@@ -228,3 +228,5 @@ tags
 **/public/fallback-*.js
 # include wordpress tags function
 !src/lib/wordpress/tags
+#cloudinary uploads
+public/uploads

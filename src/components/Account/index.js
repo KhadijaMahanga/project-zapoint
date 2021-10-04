@@ -102,6 +102,9 @@ function Account({ user, ...props }) {
   const classes = useStyles(props);
   const { signOut } = useAuth();
 
+  const imageDomains = process.env.NEXT_PUBLIC_IMAGE_DOMAINS.split(", ");
+  const xImg = imageDomains.find((d) => user?.image?.includes(d));
+
   return (
     <div className={classes.root}>
       <Section classes={{ root: classes.section }}>
@@ -118,7 +121,7 @@ function Account({ user, ...props }) {
                   underline="none"
                 >
                   <div className={classes.profilepic}>
-                    {user?.image ? (
+                    {user?.image && xImg ? (
                       <Image
                         src={user?.image}
                         layout="fill"

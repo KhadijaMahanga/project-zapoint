@@ -121,6 +121,9 @@ const socialLinks = [
 function Index({ course, category, profile, ...props }) {
   const classes = useStyles(props);
 
+  const imageDomains = process.env.NEXT_PUBLIC_IMAGE_DOMAINS.split(", ");
+  const xImg = imageDomains.find((d) => course?.instructor?.image?.includes(d));
+
   return (
     <div className={classes.root}>
       <Section className={classes.section}>
@@ -135,7 +138,7 @@ function Index({ course, category, profile, ...props }) {
             <Grid item container xs={5} alignItems="center">
               <Grid item xs={4} md={2}>
                 <div className={classes.profileImage}>
-                  {course?.instructor?.image ? (
+                  {course?.instructor?.image && xImg ? (
                     <Image
                       src={course?.instructor.image}
                       layout="fill"
