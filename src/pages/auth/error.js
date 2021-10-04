@@ -1,5 +1,6 @@
 import { Typography, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import PropTypes from "prop-types";
 import React from "react";
 
 import Page from "@/jikopoint/components/Page";
@@ -28,8 +29,24 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   },
 }));
 
-function Error() {
+const errors = {
+  Signin: "Try signing with a different account.",
+  OAuthSignin: "Try signing with a different account.",
+  OAuthCallback: "Try signing with a different account.",
+  OAuthCreateAccount: "Try signing with a different account.",
+  EmailCreateAccount: "Try signing with a different account.",
+  Callback: "Try signing with a different account.",
+  OAuthAccountNotLinked:
+    "To confirm your identity, sign in with the same account you used originally.",
+  EmailSignin: "Check your email address.",
+  CredentialsSignin:
+    "Sign in failed. Check the details you provided are correct.",
+  default: "Unable to sign in.",
+};
+
+function Error({ error }) {
   const classes = useStyles();
+  const errorMessage = error && (errors[error] ?? errors.default);
   return (
     <Page>
       <div className={classes.root}>
@@ -37,7 +54,7 @@ function Error() {
           <Grid container justifyContent="center">
             <Grid item xs={12} md={6}>
               <Typography variant="subtitle1" color="primary">
-                Linki imeshatumitaka au muda wake umeisha.
+                {errorMessage}
               </Typography>
             </Grid>
           </Grid>
@@ -46,10 +63,21 @@ function Error() {
     </Page>
   );
 }
-export async function getServerSideProps() {
+export async function getServerSideProps(context) {
+  const { error } = context.query;
   return {
-    props: {},
+    props: {
+      error,
+    },
   };
 }
+
+Error.defaultProps = {
+  error: undefined,
+};
+
+Error.propTypes = {
+  error: PropTypes.string,
+};
 
 export default Error;

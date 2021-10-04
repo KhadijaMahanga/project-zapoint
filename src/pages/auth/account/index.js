@@ -33,7 +33,6 @@ export async function getServerSideProps(context) {
   const currentUser = await fetcher(
     `${process.env.NEXT_PUBLIC_APP_URL}/api/users/${session?.user?.email}`
   );
-
   let users;
   let courses;
   if (session.user.role === "trainee") {
