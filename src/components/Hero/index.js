@@ -1,13 +1,32 @@
-import { Button, Grid, Hidden, Typography } from "@material-ui/core";
+import { Button, Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Image from "next/image";
 import PropTypes from "prop-types";
-import React from "react";
-import Typewriter from "typewriter-effect";
+import React, { useState } from "react";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 
 import heroImg from "@/jikopoint/assets/images/megan-thomas-xMh_ww8HN_Q-unsplash.jpg";
 import Link from "@/jikopoint/components/Link";
 import Section from "@/jikopoint/components/Section";
+
+const responsive = {
+  desktop: {
+    breakpoint: {
+      max: 3000,
+      min: 1280,
+    },
+    items: 1,
+  },
+  tablet: {
+    breakpoint: { max: 1279, min: 768 },
+    items: 1,
+  },
+  mobile: {
+    breakpoint: { max: 767, min: 0 },
+    items: 1,
+  },
+};
 
 const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   root: {
@@ -42,36 +61,46 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   starter: {
     color: palette.text.secondary,
     marginRight: typography.pxToRem(5),
+    height: typography.pxToRem(60),
+    overflow: "hidden",
+    display: "-webkit-box",
+    WebkitLineClamp: 3,
+    WebkitBoxOrient: "vertical",
+    textOverflow: "ellipsis",
+    [breakpoints.up("lg")]: {
+      WebkitLineClamp: 2,
+      height: typography.pxToRem(60),
+    },
   },
   text: {
     color: palette.text.secondary,
     margin: `${typography.pxToRem(20)} 0`,
+    height: typography.pxToRem(60),
+    overflow: "hidden",
+    display: "-webkit-box",
+    WebkitLineClamp: 2,
+    WebkitBoxOrient: "vertical",
+    textOverflow: "ellipsis",
   },
-  textH3: {
-    fontSize: typography.h3.fontSize,
-    fontFamily: typography.h3.fontFamily,
-    color: palette.text.secondary,
-    borderBottom: `5px solid ${palette.background.light}`,
-    fontWeight: "bold",
-  },
-  typewriter: {
-    display: "inline",
+  title: {
+    marginBottom: typography.pxToRem(20),
+    [breakpoints.up("lg")]: {
+      marginBottom: typography.pxToRem(30),
+    },
   },
   outlined: {
     padding: `${typography.pxToRem(10)} ${typography.pxToRem(20)}`,
+    margin: typography.pxToRem(2),
   },
 }));
 
-function Hero({
-  ctaText,
-  href,
-  tagline,
-  title,
-  starterText,
-  subtitle,
-  ...props
-}) {
+function Hero({ title: bigTitle, items, buttonText, ...props }) {
   const classes = useStyles(props);
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const handleAfterChange = (slide) => {
+    setCurrentSlide(slide);
+  };
   return (
     <div className={classes.root}>
       <div className={classes.background}>
@@ -86,38 +115,45 @@ function Hero({
         <Section classes={{ root: classes.section }}>
           <Grid container alignItems="center" justifyContent="flex-start">
             <Grid item xs={10} lg={8}>
-              <Typography variant="h1" className={classes.text}>
-                {title}
+              <Typography variant="h2" className={classes.title}>
+                {bigTitle}
               </Typography>
-              <Hidden mdDown implementation="css">
-                <Grid item container>
-                  <Typography variant="h3" className={classes.starter}>
-                    {starterText}{" "}
-                  </Typography>
-                  <Typewriter
-                    options={{
-                      strings: subtitle,
-                      autoStart: true,
-                      loop: true,
-                      cursorClassName: classes.textH3,
-                      wrapperClassName: classes.textH3,
-                    }}
-                  />
-                </Grid>
-              </Hidden>
-              <Typography variant="body1" className={classes.text}>
-                {tagline}
-              </Typography>
-              {href && ctaText && (
+              <Carousel
+                infinite
+                ssr
+                swipeable
+                autoPlay
+                autoPlaySpeed={4000}
+                customTransition="transform 600ms ease-in-out"
+                transitionDuration={500}
+                arrows={false}
+                beforeChange={handleAfterChange}
+                responsive={responsive}
+              >
+                {items?.map(({ title, description }) => (
+                  <div>
+                    <Typography variant="h3" className={classes.starter}>
+                      {title}
+                    </Typography>
+                    <Typography variant="body1" className={classes.text}>
+                      {description}
+                    </Typography>
+                  </div>
+                ))}
+              </Carousel>
+              {buttonText && (
                 <Button
                   classes={{ outlined: classes.outlined }}
                   color="inherit"
                   component={Link}
-                  href={href}
+                  href={items[currentSlide]?.link?.replace(
+                    "https://jikopoint.co.tz",
+                    ""
+                  )}
                   underline="none"
                   variant="outlined"
                 >
-                  {ctaText}
+                  {buttonText}
                 </Button>
               )}
             </Grid>
@@ -129,20 +165,33 @@ function Hero({
 }
 
 Hero.propTypes = {
-  ctaText: PropTypes.string,
-  href: PropTypes.string,
+  buttonText: PropTypes.string,
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string,
+      description: PropTypes.string,
+      link: PropTypes.string,
+    })
+  ),
   title: PropTypes.string,
-  tagline: PropTypes.string,
-  starterText: PropTypes.string,
-  subtitle: PropTypes.arrayOf(PropTypes.string),
 };
 
 Hero.defaultProps = {
-  ctaText: undefined,
-  href: undefined,
-  title: undefined,
-  tagline: undefined,
-  starterText: "Jifunze jinsi ya ",
-  subtitle: undefined,
+  buttonText: "Soma zaidi",
+  items: [
+    {
+      title: "Ujue mtambo wa biogesi bana matumizi Tanzania",
+      description:
+        "Ukiununua mtambo huo kazi yako ni kuulisha taka zinazooza hadi kilo 15 ambazo zitakuwezesha kupika hadi Saa 4.",
+      link: "https://jikopoint.co.tz/jiko-news/biashara/jikopoint-co-tz",
+    },
+    {
+      title: "Jifunze kupika mchuzi wa papa wa nazi",
+      description:
+        "Ndani ya dakika 10 utajifunza kuandaa na kupika papa kwa njia rahisi",
+      link: "https://jikopoint.co.tz/jiko-class/kozi/6152c8a01dc09116c39ba80f",
+    },
+  ],
+  title: "Mapya",
 };
 export default Hero;
