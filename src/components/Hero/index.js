@@ -94,7 +94,7 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   },
 }));
 
-function Hero({ title: bigTitle, items, buttonText, ...props }) {
+function Hero({ heading, items, buttonText, ...props }) {
   const classes = useStyles(props);
   const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -116,7 +116,7 @@ function Hero({ title: bigTitle, items, buttonText, ...props }) {
           <Grid container alignItems="center" justifyContent="flex-start">
             <Grid item xs={10} lg={8}>
               <Typography variant="h2" className={classes.title}>
-                {bigTitle}
+                {heading}
               </Typography>
               <Carousel
                 infinite
@@ -173,7 +173,7 @@ Hero.propTypes = {
       link: PropTypes.string,
     })
   ),
-  title: PropTypes.string,
+  heading: PropTypes.string,
 };
 
 Hero.defaultProps = {
@@ -192,6 +192,6 @@ Hero.defaultProps = {
       link: "https://jikopoint.co.tz/jiko-class/kozi/6152c8a01dc09116c39ba80f",
     },
   ],
-  title: "Mapya",
+  heading: "Mapya",
 };
 export default Hero;
