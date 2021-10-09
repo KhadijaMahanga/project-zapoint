@@ -7,13 +7,14 @@ import HighlightNews from "@/jikopoint/components/HighlightNews";
 import NewsletterSubscription from "@/jikopoint/components/NewsletterSubscription";
 import Page from "@/jikopoint/components/Page";
 import Partners from "@/jikopoint/components/Partners";
+import formatBlocksForSections from "@/jikopoint/functions/formatBlocksForSections";
 import getPostTypeArchive from "@/jikopoint/functions/postTypes/getPostTypeArchive";
 import getPostTypeStaticProps from "@/jikopoint/functions/postTypes/getPostTypeStaticProps";
 
-function Index({ articles, ...props }) {
+function Index({ articles, blocks, ...props }) {
   return (
     <Page {...props}>
-      <Hero />
+      <Hero {...blocks?.hero} />
       <HighlightNews
         items={articles}
         title="Jiko News"
@@ -46,11 +47,11 @@ export async function getStaticProps({ preview, previewData }) {
       notFound,
     };
   }
-  // enhancement
-  // const blocks = formatBlocksForSections(props?.post?.blocks?? []);
+  const blocks = formatBlocksForSections(props?.post?.blocks ?? []);
   return {
     props: {
       ...props,
+      blocks,
       articles,
     },
     revalidate,
@@ -59,10 +60,14 @@ export async function getStaticProps({ preview, previewData }) {
 
 Index.propTypes = {
   articles: PropTypes.arrayOf(PropTypes.shape({})),
+  blocks: PropTypes.shape({
+    hero: PropTypes.shape({}),
+  }),
 };
 
 Index.defaultProps = {
   articles: undefined,
+  blocks: undefined,
 };
 
 export default Index;
