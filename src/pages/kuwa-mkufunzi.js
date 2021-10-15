@@ -1,14 +1,13 @@
 import { Typography, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import PropTypes from "prop-types";
 import React from "react";
 
-import launchCourse from "@/jikopoint/assets/images/launch-your-course-v3.jpg";
-import planCurriculum from "@/jikopoint/assets/images/plan-your-curriculum-v3.jpg";
-import recordVideo from "@/jikopoint/assets/images/record-your-video-v3.jpg";
 import Register from "@/jikopoint/components/Auth/Register";
 import Metrics from "@/jikopoint/components/Metrics";
 import Page from "@/jikopoint/components/Page";
 import Section from "@/jikopoint/components/Section";
+import formatBlocksForSections from "@/jikopoint/functions/formatBlocksForSections";
 import getPostTypeStaticProps from "@/jikopoint/functions/postTypes/getPostTypeStaticProps";
 
 const useStyles = makeStyles(({ typography, breakpoints }) => ({
@@ -21,7 +20,7 @@ const useStyles = makeStyles(({ typography, breakpoints }) => ({
   section: {},
 }));
 
-export default function Mkufunzi(props) {
+export default function Mkufunzi({ blocks, ...props }) {
   const classes = useStyles();
   return (
     <Page {...props}>
@@ -29,29 +28,7 @@ export default function Mkufunzi(props) {
         <Section classes={{ root: classes.section }}>
           <Grid container justifyContent="space-between">
             <Grid item xs={12} lg={7}>
-              <Metrics
-                title="Jinsi ya kuanza"
-                items={[
-                  {
-                    title: "Andaa somo",
-                    image: planCurriculum,
-                    description:
-                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean egestas magna at porttitor vehicula. Nullam augue augue, dignissim id bibendum id, consequat et leo. Curabitur viverra tincidunt nulla nec tempor nullam augue augue.",
-                  },
-                  {
-                    title: "Rekodi somo",
-                    image: recordVideo,
-                    description:
-                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean egestas magna at porttitor vehicula. Nullam augue augue, dignissim id bibendum id, consequat et leo. Curabitur viverra tincidunt nulla nec tempor nullam augue augue.",
-                  },
-                  {
-                    title: "Zindua somo lako",
-                    image: launchCourse,
-                    description:
-                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean egestas magna at porttitor vehicula. Nullam augue augue, dignissim id bibendum id, consequat et leo. Curabitur viverra tincidunt nulla nec tempor nullam augue augue.",
-                  },
-                ]}
-              />
+              <Metrics {...blocks?.kuwaMkufunzi} />
             </Grid>
             <Grid item lg={1} />
             <Grid item xs={12} lg={4}>
@@ -65,9 +42,19 @@ export default function Mkufunzi(props) {
   );
 }
 
+Mkufunzi.propTypes = {
+  blocks: PropTypes.shape({
+    kuwaMkufunzi: PropTypes.shape({}),
+  }),
+};
+
+Mkufunzi.defaultProps = {
+  blocks: undefined,
+};
+
 export async function getStaticProps({ preview, previewData }) {
   const postType = "page";
-  const { props, revalidate, notFound } = await getPostTypeStaticProps(
+  const { props, notFound } = await getPostTypeStaticProps(
     { slug: "kuwa-mkufunzi" },
     postType,
     preview,
@@ -79,11 +66,13 @@ export async function getStaticProps({ preview, previewData }) {
       notFound,
     };
   }
+  const blocks = formatBlocksForSections(props?.post?.blocks ?? []);
 
   return {
     props: {
       ...props,
+      blocks,
     },
-    revalidate,
+    revalidate: 60 * 5,
   };
 }
