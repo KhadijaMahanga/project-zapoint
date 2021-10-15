@@ -7,7 +7,7 @@ import useStyles from "./useStyles";
 
 import RichTypography from "@/jikopoint/components/RichTypography";
 
-function Metrics({ items, title, ...props }) {
+function Metrics({ items, heading, ...props }) {
   const classes = useStyles(props);
   if (!items?.length) {
     return null;
@@ -15,7 +15,7 @@ function Metrics({ items, title, ...props }) {
   return (
     <>
       <RichTypography variant="h2" className={classes.title}>
-        {title}
+        {heading}
       </RichTypography>
       {items?.map((item, index) => (
         <Grid
@@ -55,7 +55,7 @@ function Metrics({ items, title, ...props }) {
 }
 
 Metrics.propTypes = {
-  title: PropTypes.string,
+  heading: PropTypes.string,
   items: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string,
@@ -66,7 +66,7 @@ Metrics.propTypes = {
 };
 
 Metrics.defaultProps = {
-  title: undefined,
+  heading: undefined,
   items: undefined,
 };
 
