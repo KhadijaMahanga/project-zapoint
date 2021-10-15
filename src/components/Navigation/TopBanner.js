@@ -1,7 +1,15 @@
-import { Button, Divider, Grid, IconButton, Toolbar } from "@material-ui/core";
+import {
+  Button,
+  Divider,
+  Grid,
+  IconButton,
+  Toolbar,
+  Menu,
+  MenuItem,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useState } from "react";
 
 import { ReactComponent as FacebookIcon } from "@/jikopoint/assets/icons/icon-facebook-white.svg";
 import { ReactComponent as InstagramIcon } from "@/jikopoint/assets/icons/icon-instagram-white.svg";
@@ -65,11 +73,31 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
     justifyContent: "center",
     display: "flex",
   },
+  menuItem: {
+    fontSize: typography.pxToRem(13),
+    color: palette.text.secondary,
+  },
+  paper: {
+    marginTop: typography.pxToRem(15),
+    backgroundColor: palette.background.light,
+    "& .MuiMenu-list": {
+      padding: "4px 0",
+    },
+  },
 }));
 
 function TopBanner({ social, ...props }) {
   const classes = useStyles(props);
   const { isAuthenticated, session, signOut } = useAuth();
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <Toolbar className={classes.root}>
@@ -171,14 +199,48 @@ function TopBanner({ social, ...props }) {
                 </Grid>
                 <Grid item>
                   <Button
-                    component={Link}
-                    underline="none"
-                    href="/auth/jiunge"
+                    onClick={handleClick}
                     startIcon={<IconLogin className={classes.icon} />}
                     classes={{ text: classes.button }}
                   >
                     Jiunge
                   </Button>
+                  <Menu
+                    elevation={0}
+                    anchorOrigin={{
+                      vertical: "bottom",
+                      horizontal: "left",
+                    }}
+                    transformOrigin={{
+                      vertical: "bottom",
+                      horizontal: "left",
+                    }}
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleClose}
+                    classes={{
+                      paper: classes.paper,
+                    }}
+                  >
+                    <MenuItem
+                      underline="none"
+                      className={classes.menuItem}
+                      component={Link}
+                      href="/kuwa-mkufunzi"
+                      disableRipple
+                    >
+                      Jiunge kama mkufunzi
+                    </MenuItem>
+                    <MenuItem
+                      underline="none"
+                      component={Link}
+                      className={classes.menuItem}
+                      href="/auth/jiunge"
+                      disableRipple
+                    >
+                      Jiunge kama mwanafunzi
+                    </MenuItem>
+                  </Menu>
                 </Grid>
               </>
             )}
