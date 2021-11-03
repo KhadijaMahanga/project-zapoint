@@ -27,12 +27,16 @@ const handler = nc({ onNoMatch, onError })
     res.status(200).json({ success: true, user });
   })
   .delete(async (req, res) => {
-    const session = await getSession({ req });
-    if (!session && session?.user?.role !== "admin") {
-      throw new Error("Hiki kitendo hakijathibitishwa");
+    try {
+      const session = await getSession({ req });
+      if (!session && session?.user?.role !== "admin") {
+        throw new Error("Hiki kitendo hakijathibitishwa");
+      }
+      const user = await deleteUser(req.query.id);
+      res.status(200).json({ success: true, user });
+    } catch (e) {
+      res.status(401).json({ message: e.message, success: false });
     }
-    const user = await deleteUser(req.query.id);
-    res.status(200).json({ success: true, user });
   });
 
 export default handler;
