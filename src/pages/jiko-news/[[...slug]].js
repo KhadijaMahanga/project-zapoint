@@ -39,7 +39,12 @@ function Index({ posts, post, categories, archive, activeCategory, ...props }) {
   }
 
   return (
-    <Page categories={categories} active={activeCategory} {...props}>
+    <Page
+      categories={categories}
+      active={activeCategory}
+      {...props}
+      post={post}
+    >
       <NewsNavigation categories={categories} active={activeCategory} />
       {archive ? (
         <NewsList news={posts} pageLimit={pageLimit} {...props} />
