@@ -74,8 +74,7 @@ function Courses({ courses: coursesProp, categories, ...props }) {
     };
 
     const url = `/api/courses/${id}`;
-    const result = await fetch(url, options);
-    await result.json();
+    await fetcher(url, options);
     setRefreshList(true);
   };
 
