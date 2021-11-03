@@ -106,7 +106,7 @@ function Register({ userrole, csrfToken }) {
 
   return (
     <form className={classes.form} onSubmit={(e) => handleSubmit(e)}>
-      {registerError.length > 0 && (
+      {registerError?.length > 0 && (
         <Typography variant="overline"> {registerError}</Typography>
       )}
       <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
@@ -135,8 +135,8 @@ function Register({ userrole, csrfToken }) {
             name="email"
             autoComplete="email"
             InputLabelProps={{ classes: { root: classes.label } }}
-            error={emailError.length > 0}
-            helperText={emailError.length > 0 ? emailError : null}
+            error={emailError?.length > 0}
+            helperText={emailError?.length > 0 ? emailError : null}
             onChange={(e) => setEmail(e.target.value)}
             onBlur={() => validate(email, "email")}
           />

@@ -53,7 +53,6 @@ const UserSchema = new Schema(
     role: {
       type: String,
       enum: ["admin", "super admin", "trainee", "trainer"],
-      default: "trainee",
     },
     isDeleted: {
       type: Boolean,
