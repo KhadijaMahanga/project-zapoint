@@ -40,7 +40,6 @@ function CreateCourse({ categories, csrfToken }) {
 
   const handeFileUpload = (files) => {
     setImage(files[0]);
-    console.log(files);
     setOpenDialog(false);
   };
 

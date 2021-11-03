@@ -106,7 +106,6 @@ function LectureDialog({
         };
       }
       const lecture = await fetch(url, options);
-      console.log(lecture);
       updateLecturesList(lecture?.success && lecture?.data);
     }
     handleCloseDialog();
