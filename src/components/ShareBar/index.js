@@ -38,7 +38,7 @@ const ShareBar = ({ socialLinks, title, text, ...props }) => {
                 key={social.name}
                 title={title}
                 url={url}
-                hashtag="jikoni"
+                hashtag="jikopoint"
               >
                 <FacebookIcon className={classes.icon} alt={social.alt} />
               </FacebookShareButton>
@@ -49,7 +49,7 @@ const ShareBar = ({ socialLinks, title, text, ...props }) => {
                 key={social.name}
                 title={title}
                 url={url}
-                hashtags={["#jikoni"]}
+                hashtags={["jikopoint"]}
                 alt={social.alt}
               >
                 <TwitterIcon className={classes.icon} />

@@ -40,13 +40,14 @@ function BasePage({ children, post, ...props }) {
       <NextSeo
         title={post?.seo?.title ?? "JikoPoint"}
         description={
-          post?.seo?.metaDesc ?? "JikoPoint gives you jiko news and jiko class"
+          post?.seo?.metaDesc ??
+          "Jiko Point ni jukwaa maalum na la kipekee la mtandaoni linalomilikiwa na kampuni ya Nukta Africa na kuwezeshwa na Shirika la Hivos na washirika wake kwa lengo la kuchochea matumizi ya nishati safi Tanzania"
         }
         openGraph={{
           title: post?.seo?.title ?? "JikoPoint",
           description:
             post?.seo?.metaDesc ??
-            "JikoPoint gives you jiko news and jiko class",
+            "Jiko Point ni jukwaa maalum na la kipekee la mtandaoni linalomilikiwa na kampuni ya Nukta Africa na kuwezeshwa na Shirika la Hivos na washirika wake kwa lengo la kuchochea matumizi ya nishati safi Tanzania",
           images: [{ url: post?.seo?.opengraphImage?.sourceUrl ?? logo.src }],
           url: post?.seo?.canonical ?? process.env.NEXT_PUBLIC_APP_URL,
           type: post?.seo?.opengraphType ?? "Web Page",
