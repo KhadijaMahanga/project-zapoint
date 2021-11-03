@@ -67,7 +67,7 @@ async function registerUser(credentials) {
       return Promise.resolve(false);
     }
 
-    await sendVerificationRequest(created.email);
+    await sendVerificationRequest(created.email, "register");
     return Promise.resolve(created);
   } catch (e) {
     throw new Error(e);
