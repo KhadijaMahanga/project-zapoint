@@ -7,6 +7,7 @@ import React, { useEffect, useState } from "react";
 
 import Link from "@/jikopoint/components/Link";
 import Section from "@/jikopoint/components/Section";
+import fetcher from "@/jikopoint/utils/fetcher";
 
 const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   root: {
@@ -64,7 +65,7 @@ function Add({ categories, variant, user, course: courseProp, ...props }) {
       const [firstCat] = categories;
       setCategory(firstCat._id);
     }
-  }, [categories]);
+  }, [categories, category]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -97,8 +98,7 @@ function Add({ categories, variant, user, course: courseProp, ...props }) {
 
       const url =
         variant === "edit" ? `/api/courses/${course?._id}` : "/api/courses";
-      const result = await fetch(url, options);
-      const res = await result.json();
+      const res = await fetcher(url, options);
       // add notification of success
       if (res.success) {
         setCourse(res?.data);

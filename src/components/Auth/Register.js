@@ -12,6 +12,7 @@ import PropTypes from "prop-types";
 import React, { useState } from "react";
 
 import Link from "@/jikopoint/components/Link";
+import fetcher from "@/jikopoint/utils/fetcher";
 
 const useStyles = makeStyles(({ palette, typography }) => ({
   form: {
@@ -95,9 +96,9 @@ function Register({ userrole, csrfToken }) {
         }),
       };
 
-      const res = await fetch("/api/users", options);
+      const res = await fetcher("/api/users", options);
       if (!res.success) {
-        setRegisterError(res.error);
+        setRegisterError(res.message);
       } else {
         router.push("/auth/kamilisha/");
       }
