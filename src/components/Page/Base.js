@@ -38,6 +38,7 @@ function BasePage({ children, post, ...props }) {
         <script type="application/ld+json">{post?.seo?.schema?.raw}</script>
       </Head>
       <NextSeo
+        {...post?.seo}
         title={post?.seo?.title ?? "JikoPoint"}
         description={
           post?.seo?.metaDesc ??
