@@ -1,5 +1,11 @@
 /* eslint-disable no-underscore-dangle */
-import { TextField, Typography, Button, Grid } from "@material-ui/core";
+import {
+  TextField,
+  Typography,
+  Button,
+  Grid,
+  LinearProgress,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { DropzoneDialog } from "material-ui-dropzone";
 import PropTypes from "prop-types";
@@ -31,7 +37,7 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
     color: palette.text.secondary,
   },
   caption: {
-    color: palette.text.primary,
+    color: palette.primary.main,
     fontSize: typography.pxToRem(13),
   },
 }));
@@ -72,7 +78,7 @@ function Add({ categories, variant, user, course: courseProp, ...props }) {
     e.stopPropagation();
     if (isUpdating) return;
     setIsUpdating(true);
-    setNotice("Tunashughulia");
+    setNotice("Tunashughulikia...");
 
     if (
       !error?.length &&
@@ -215,6 +221,7 @@ function Add({ categories, variant, user, course: courseProp, ...props }) {
                     <Typography className={classes.caption}>
                       {notice}
                     </Typography>
+                    <LinearProgress />
                   </Grid>
                 )}
                 <Grid item xs={12}>

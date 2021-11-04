@@ -1,4 +1,10 @@
-import { TextField, Typography, Button, Grid } from "@material-ui/core";
+import {
+  TextField,
+  Typography,
+  Button,
+  Grid,
+  LinearProgress,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import bcrypt from "bcryptjs";
 import { getCsrfToken, signOut } from "next-auth/client";
@@ -46,7 +52,7 @@ function NywilaMpya({ user, ...props }) {
     e.preventDefault();
     e.stopPropagation();
 
-    setNotification("Tunashugulikia....");
+    setNotification("Tunashughulikia....");
 
     if (!newPassword?.length < 7 && !reTypePassword?.length < 7) {
       setNotification("Nywila inatakiwa iwe na herufi zaidi ya 6 ");
@@ -109,9 +115,14 @@ function NywilaMpya({ user, ...props }) {
                   onChange={(e) => setReTypePassword(e.target.value)}
                 />
                 {notification?.length > 0 && (
-                  <Typography className={classes.notification}>
-                    {notification}
-                  </Typography>
+                  <>
+                    <Typography className={classes.notification}>
+                      {notification}
+                    </Typography>
+                    {notification.includes("Tunashughulikia") ? (
+                      <LinearProgress />
+                    ) : null}
+                  </>
                 )}
                 <Button
                   type="submit"
