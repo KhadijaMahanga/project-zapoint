@@ -1,5 +1,10 @@
 /* eslint-disable no-underscore-dangle */
-import { TextField, Typography, Button } from "@material-ui/core";
+import {
+  TextField,
+  Typography,
+  Button,
+  LinearProgress,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
@@ -49,7 +54,7 @@ function Basic({ user, profile, ...props }) {
     e.preventDefault();
     e.stopPropagation();
 
-    setNotification("Tunashugulikia....");
+    setNotification("Tunashughulikia....");
 
     const newName = name !== user?.name ? name : null;
 
@@ -188,7 +193,10 @@ function Basic({ user, profile, ...props }) {
         onChange={(e) => setSocial({ ...social, youtube: e.target.value })}
       />
       {notification?.length > 0 && (
-        <Typography className={classes.caption}>{notification}</Typography>
+        <>
+          <Typography className={classes.caption}>{notification}</Typography>
+          {notification.includes("Tunashughulikia") ? <LinearProgress /> : null}
+        </>
       )}
       <Button
         type="submit"

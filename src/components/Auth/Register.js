@@ -5,6 +5,7 @@ import {
   Checkbox,
   Grid,
   Typography,
+  LinearProgress,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useRouter } from "next/router";
@@ -12,6 +13,7 @@ import PropTypes from "prop-types";
 import React, { useState } from "react";
 
 import Link from "@/jikopoint/components/Link";
+import fetcher from "@/jikopoint/utils/fetcher";
 
 const useStyles = makeStyles(({ palette, typography }) => ({
   form: {
@@ -47,6 +49,10 @@ const useStyles = makeStyles(({ palette, typography }) => ({
   termDiv: {
     marginTop: typography.pxToRem(20),
   },
+  caption: {
+    color: palette.primary.main,
+    fontSize: typography.pxToRem(13),
+  },
 }));
 
 function Register({ userrole, csrfToken }) {
@@ -54,14 +60,12 @@ function Register({ userrole, csrfToken }) {
   const router = useRouter();
 
   const [name, setName] = useState("");
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-
   const [registerError, setRegisterError] = useState("");
+  const [notice, setNotice] = useState(null);
 
   const validate = (value, fieldName) => {
     setEmailError("");
@@ -81,6 +85,8 @@ function Register({ userrole, csrfToken }) {
     e.preventDefault();
     e.stopPropagation();
 
+    setNotice("Tafadhali subiri, tunashughulikia...");
+
     if (!emailError.length && !passwordError.length && email && password) {
       const options = {
         method: "POST",
@@ -95,9 +101,10 @@ function Register({ userrole, csrfToken }) {
         }),
       };
 
-      const res = await fetch("/api/users", options);
+      const res = await fetcher("/api/users", options);
       if (!res.success) {
-        setRegisterError(res.error);
+        setRegisterError(res.message);
+        setNotice(null);
       } else {
         router.push("/auth/kamilisha/");
       }
@@ -187,6 +194,12 @@ function Register({ userrole, csrfToken }) {
           </Link>
         </Grid>
       </Grid>
+      {notice?.length > 0 && (
+        <>
+          <Typography className={classes.caption}>{notice}</Typography>
+          <LinearProgress />
+        </>
+      )}
       <Grid container alignItems="center" className={classes.termDiv}>
         <Grid item>
           <Typography className={classes.terms}>

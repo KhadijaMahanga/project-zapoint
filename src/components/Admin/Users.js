@@ -68,7 +68,7 @@ function Users({ users: usersProp, ...props }) {
       method: "DELETE",
       credentials: "same-origin",
     };
-    const result = await fetch(`/api/users/${id}`, options);
+    const result = await fetcher(`/api/users/${id}`, options);
     if (!result.success) {
       alert("Kumetokea tatizo la kiufundi, jaribu tena baadae");
     }
