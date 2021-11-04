@@ -1,10 +1,9 @@
 import { Typography, Button, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { signOut } from "next-auth/client";
-import PropTypes from "prop-types";
+import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 
-import Link from "@/jikopoint/components/Link";
 import Page from "@/jikopoint/components/Page";
 import Section from "@/jikopoint/components/Section";
 
@@ -23,11 +22,19 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   },
 }));
 
-function Thibitishwa({ page }) {
+function Thibitishwa() {
   const classes = useStyles();
+  const router = useRouter();
+
   useEffect(() => {
     signOut({ redirect: false });
-  }, [page]);
+  }, []);
+
+  const endelea = () => {
+    signOut({ redirect: false });
+    router.push("/auth/ingia");
+  };
+
   return (
     <Page>
       <div className={classes.root}>
@@ -40,9 +47,7 @@ function Thibitishwa({ page }) {
               </Typography>
 
               <Button
-                component={Link}
-                href="/auth/ingia"
-                underline="none"
+                onClick={endelea}
                 color="primary"
                 variant="contained"
                 className={classes.button}
@@ -57,11 +62,4 @@ function Thibitishwa({ page }) {
   );
 }
 
-export async function getServerSideProps() {
-  return { props: { page: "thibitishwa" } };
-}
-
-Thibitishwa.propTypes = {
-  page: PropTypes.string.isRequired,
-};
 export default Thibitishwa;

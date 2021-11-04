@@ -1,4 +1,10 @@
-import { TextField, Typography, Button, Grid } from "@material-ui/core";
+import {
+  TextField,
+  Typography,
+  Button,
+  Grid,
+  LinearProgress,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { getSession } from "next-auth/client";
 import React, { useState } from "react";
@@ -65,9 +71,14 @@ function SahauNywila() {
               </Typography>
               <form className={classes.form} onSubmit={(e) => handleSubmit(e)}>
                 {notification?.length > 0 && (
-                  <Typography className={classes.notification}>
-                    {notification}
-                  </Typography>
+                  <>
+                    <Typography className={classes.notification}>
+                      {notification}
+                    </Typography>
+                    {notification.includes("Tunashughulikia") ? (
+                      <LinearProgress />
+                    ) : null}
+                  </>
                 )}
                 <TextField
                   autoComplete="fname"

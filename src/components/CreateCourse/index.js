@@ -107,7 +107,9 @@ function CreateCourse({ categories, csrfToken }) {
                     <em>None</em>
                   </MenuItem>
                   {categories.map((cat) => (
-                    <MenuItem value={cat.id}>{cat.name}</MenuItem>
+                    <MenuItem value={cat.id} key={cat.id}>
+                      {cat.name}
+                    </MenuItem>
                   ))}
                 </>
               </TextField>
