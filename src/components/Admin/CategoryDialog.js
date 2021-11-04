@@ -11,6 +11,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 
+import fetcher from "@/jikopoint/utils/fetcher";
 import slugify from "@/jikopoint/utils/slugify";
 
 const useStyles = makeStyles(({ palette, typography }) => ({
@@ -57,7 +58,7 @@ function CategoryDialog({
         credentials: "same-origin",
         body: JSON.stringify({ name, slug }),
       };
-      const category = await fetch("/api/categories", options);
+      const category = await fetcher("/api/categories", options);
       updateCategoriesList(category?.success && category?.data);
     }
     if (name?.length && variant === "edit") {
@@ -67,7 +68,7 @@ function CategoryDialog({
         credentials: "same-origin",
         body: JSON.stringify({ name, slug }),
       };
-      const category = await fetch(`/api/categories/${value?._id}`, options);
+      const category = await fetcher(`/api/categories/${value?._id}`, options);
       updateCategoriesList(category?.success && category?.data);
     }
     handleCloseDialog();
@@ -79,7 +80,7 @@ function CategoryDialog({
       headers: { "Content-Type": "application/json" },
       credentials: "same-origin",
     };
-    const category = await fetch(`/api/categories/${value?._id}`, options);
+    const category = await fetcher(`/api/categories/${value?._id}`, options);
     updateCategoriesList(category?.success && category?.data);
     handleCloseDialog();
   };

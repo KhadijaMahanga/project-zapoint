@@ -1,5 +1,11 @@
 /* eslint-disable no-underscore-dangle */
-import { TextField, Typography, Button, Grid } from "@material-ui/core";
+import {
+  TextField,
+  Typography,
+  Button,
+  Grid,
+  LinearProgress,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { DropzoneDialog } from "material-ui-dropzone";
 import PropTypes from "prop-types";
@@ -7,6 +13,7 @@ import React, { useEffect, useState } from "react";
 
 import Link from "@/jikopoint/components/Link";
 import Section from "@/jikopoint/components/Section";
+import fetcher from "@/jikopoint/utils/fetcher";
 
 const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   root: {
@@ -30,7 +37,7 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
     color: palette.text.secondary,
   },
   caption: {
-    color: palette.text.primary,
+    color: palette.primary.main,
     fontSize: typography.pxToRem(13),
   },
 }));
@@ -64,14 +71,14 @@ function Add({ categories, variant, user, course: courseProp, ...props }) {
       const [firstCat] = categories;
       setCategory(firstCat._id);
     }
-  }, [categories]);
+  }, [categories, category]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     e.stopPropagation();
     if (isUpdating) return;
     setIsUpdating(true);
-    setNotice("Tunashughulia");
+    setNotice("Tunashughulikia...");
 
     if (
       !error?.length &&
@@ -97,8 +104,7 @@ function Add({ categories, variant, user, course: courseProp, ...props }) {
 
       const url =
         variant === "edit" ? `/api/courses/${course?._id}` : "/api/courses";
-      const result = await fetch(url, options);
-      const res = await result.json();
+      const res = await fetcher(url, options);
       // add notification of success
       if (res.success) {
         setCourse(res?.data);
@@ -215,6 +221,7 @@ function Add({ categories, variant, user, course: courseProp, ...props }) {
                     <Typography className={classes.caption}>
                       {notice}
                     </Typography>
+                    <LinearProgress />
                   </Grid>
                 )}
                 <Grid item xs={12}>

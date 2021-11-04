@@ -24,7 +24,7 @@ const handler = nextConnect({ onError, onNoMatch })
         res.json({ success: true, user });
       }
     } catch (e) {
-      res.status(401).send({ message: e, success: false });
+      res.status(401).json({ message: e.message, success: false });
     }
   });
 

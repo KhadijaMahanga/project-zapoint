@@ -13,6 +13,8 @@ import { DropzoneDialog } from "material-ui-dropzone";
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 
+import fetcher from "@/jikopoint/utils/fetcher";
+
 const useStyles = makeStyles(({ palette, typography }) => ({
   root: {},
   label: {
@@ -105,7 +107,7 @@ function LectureDialog({
           body: formData,
         };
       }
-      const lecture = await fetch(url, options);
+      const lecture = await fetcher(url, options);
       updateLecturesList(lecture?.success && lecture?.data);
     }
     handleCloseDialog();
@@ -117,7 +119,7 @@ function LectureDialog({
       headers: { "Content-Type": "application/json" },
       credentials: "same-origin",
     };
-    const lecture = await fetch(`/api/lectures/${value?._id}`, options);
+    const lecture = await fetcher(`/api/lectures/${value?._id}`, options);
     updateLecturesList(lecture?.success && lecture?.data);
     handleCloseDialog();
   };
