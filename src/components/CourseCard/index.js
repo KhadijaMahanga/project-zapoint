@@ -4,18 +4,16 @@ import {
   CardActionArea,
   CardContent,
   Typography,
+  IconButton,
+  Tooltip,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import * as moment from "moment";
-import "moment/locale/sw";
 import Image from "next/image";
 import PropTypes from "prop-types";
 import React from "react";
 
-import { ReactComponent as IconClock } from "@/jikopoint/assets/icons/icon-clock-grey.svg";
+import { ReactComponent as RegisterIcon } from "@/jikopoint/assets/icons/icon-register.svg";
 import Link from "@/jikopoint/components/Link";
-
-moment.locale("sw");
 
 const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   root: {
@@ -50,8 +48,8 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
     backgroundColor: "inherit",
   },
   icon: {
-    width: typography.pxToRem(15),
-    height: typography.pxToRem(15),
+    width: typography.pxToRem(25),
+    height: typography.pxToRem(25),
   },
   footer: {
     padding: typography.pxToRem(10),
@@ -115,12 +113,16 @@ function CourseCard({
                 justifyContent="flex-end"
               >
                 <Grid item>
-                  <IconClock className={classes.icon} />
-                </Grid>
-                <Grid item>
-                  <Typography className={classes.duration}>
-                    dakika {Math.ceil(moment.duration(duration).asMinutes())}
-                  </Typography>
+                  <Tooltip title="Jiandikishe">
+                    <IconButton
+                      aria-label="Open drawer"
+                      edge="start"
+                      // onClick={handleOpenMenu}
+                      className={classes.menuButton}
+                    >
+                      <RegisterIcon className={classes.icon} />
+                    </IconButton>
+                  </Tooltip>
                 </Grid>
               </Grid>
             </Grid>
