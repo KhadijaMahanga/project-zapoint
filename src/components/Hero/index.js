@@ -131,7 +131,7 @@ function Hero({ heading, items, buttonText, ...props }) {
                 responsive={responsive}
               >
                 {items?.map(({ title, description }) => (
-                  <div>
+                  <div key={title}>
                     <Typography variant="h3" className={classes.starter}>
                       {title}
                     </Typography>

@@ -6,6 +6,7 @@ import {
   InputLabel,
   FormHelperText,
   Button,
+  LinearProgress,
 } from "@material-ui/core";
 import PropTypes from "prop-types";
 import React, { useState, useEffect } from "react";
@@ -87,6 +88,7 @@ function CustomForm({ status, onValidated, ...props }) {
                 <FormHelperText id="helper-text" className={classes.helperText}>
                   {helperText}
                 </FormHelperText>
+                {status === "sending" ? <LinearProgress /> : null}
               </FormControl>
               <Button
                 className={classes.button}
