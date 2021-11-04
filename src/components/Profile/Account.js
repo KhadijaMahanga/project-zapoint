@@ -7,6 +7,7 @@ import {
   Typography,
   Button,
   Divider,
+  LinearProgress,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import bcrypt from "bcryptjs";
@@ -84,7 +85,7 @@ function Account({ user, ...props }) {
     e.preventDefault();
     e.stopPropagation();
 
-    setNotification("Tunashugulikia....");
+    setNotification("Tunashughulikia....");
 
     if (
       !password?.length &&
@@ -170,9 +171,14 @@ function Account({ user, ...props }) {
           onChange={(e) => setReTypePassword(e.target.value)}
         />
         {notification?.length > 0 && (
-          <Typography className={classes.notification}>
-            {notification}
-          </Typography>
+          <>
+            <Typography className={classes.notification}>
+              {notification}
+            </Typography>
+            {notification.includes("Tunashughulikia") ? (
+              <LinearProgress />
+            ) : null}
+          </>
         )}
         <Button
           type="submit"
