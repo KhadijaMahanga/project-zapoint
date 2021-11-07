@@ -33,12 +33,12 @@ export async function getServerSideProps(context) {
   const post = {
     seo: {
       title: course?.data?.name ?? null,
-      description: course?.data?.description ?? null,
+      metaDesc: course?.data?.description ?? null,
       openGraph: {
         title: course?.data?.name ?? null,
-        description: course?.data?.description ?? null,
+        metaDesc: course?.data?.description ?? null,
         images: [course?.data?.image ?? null],
-        url: `${process.env.NEXT_PUBLIC_APP_URL}/jiko-class/${id}`,
+        url: `${process.env.NEXT_PUBLIC_APP_URL}/jiko-class/kozi/${id}`,
       },
       opengraphImage: {
         sourceUrl: course?.data?.image ?? null,
