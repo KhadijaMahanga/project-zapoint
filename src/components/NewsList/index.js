@@ -39,7 +39,7 @@ function NewsList({ news, pageLimit, category, pagination }) {
   const classes = useStyles();
 
   // Track all news, including initial news and additionally loaded pages.
-  const [allNews, setAllNews] = useState(news);
+  const [allNews, setAllNews] = useState([]);
   const [startIndex, setStartIndex] = useState(0);
   const [paginator, setPaginator] = useState(pagination);
 
@@ -65,6 +65,10 @@ function NewsList({ news, pageLimit, category, pagination }) {
   const handlePrevious = () => {
     setStartIndex(startIndex - pageLimit);
   };
+
+  useEffect(() => {
+    setAllNews(news);
+  }, [news]);
 
   useEffect(() => {
     window.scrollTo({
