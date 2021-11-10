@@ -224,7 +224,8 @@ function Account({ user, ...props }) {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={12} lg={8}>
+          <Grid item lg={1} />
+          <Grid item xs={12} lg={7}>
             {user?.role === "admin" && <Admin {...props} />}
             {user?.role === "trainer" && <Trainer {...props} user={user} />}
             {user?.role === "trainee" && <Trainee {...props} user={user} />}

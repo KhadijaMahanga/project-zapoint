@@ -42,7 +42,7 @@ const useStyles = makeStyles(({ typography, palette }) => ({
   courseImage: {
     width: "100%",
     position: "relative",
-    height: typography.pxToRem(180),
+    height: typography.pxToRem(220),
   },
 }));
 
@@ -59,7 +59,7 @@ function Courses({ courses: coursesProp, user, categories, ...props }) {
       {courses?.length > 0 && (
         <Grid container className={classes.tableRoot}>
           {courses?.map((c) => (
-            <Grid item xs={12} md={6} lg={4} key={c._id}>
+            <Grid item xs={12} md={6} key={c._id}>
               <CourseCard
                 {...c}
                 slug={c._id}
