@@ -42,6 +42,7 @@ const sendVerificationRequest = async (email, status) => {
     .catch((e) => {
       throw e;
     });
+
   return result;
 };
 

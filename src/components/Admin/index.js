@@ -13,10 +13,6 @@ function Admin({ ...props }) {
       name="admin-page"
       items={[
         {
-          label: "Muhtasari",
-          panel: <div />,
-        },
-        {
           label: "Aina ya Kozi",
           panel: <Categories {...props} />,
         },
