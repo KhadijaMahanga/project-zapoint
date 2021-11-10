@@ -44,7 +44,7 @@ const queryPostsArchive = gql`
     $before: String
     $orderBy: PostObjectsConnectionOrderbyEnum = DATE
     $order: OrderEnum = DESC
-    $imageSize: MediaItemSizeEnum = MEDIUM
+    $imageSize: MediaItemSizeEnum = MEDIUM_LARGE
   ) {
     ${defaultPageData}
     homepageSettings {
