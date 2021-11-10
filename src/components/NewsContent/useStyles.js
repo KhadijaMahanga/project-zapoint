@@ -38,6 +38,7 @@ const useStyles = makeStyles(({ palette, typography, breakpoints }) => ({
     lineHeight: 1.8,
     "& > iframe": {
       width: "100%",
+      height: typography.pxToRem(450),
     },
     "& img": {
       width: "100%",
@@ -51,6 +52,10 @@ const useStyles = makeStyles(({ palette, typography, breakpoints }) => ({
     },
     "& figure": {
       margin: `${typography.pxToRem(12)} 0`,
+    },
+    "& figcaption": {
+      fontSize: typography.pxToRem(14),
+      textAlign: "center",
     },
   },
   description: {
