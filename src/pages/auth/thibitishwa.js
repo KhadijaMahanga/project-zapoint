@@ -2,7 +2,7 @@ import { Typography, Button, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { signOut } from "next-auth/client";
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import React from "react";
 
 import Page from "@/jikopoint/components/Page";
 import Section from "@/jikopoint/components/Section";
@@ -25,10 +25,6 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
 function Thibitishwa() {
   const classes = useStyles();
   const router = useRouter();
-
-  useEffect(() => {
-    signOut({ redirect: false });
-  }, []);
 
   const endelea = () => {
     signOut({ redirect: false });
