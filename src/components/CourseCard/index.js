@@ -73,6 +73,7 @@ function CourseCard({
   name,
   slug,
   trainer,
+  trainee,
   ...props
 }) {
   const classes = useStyles(props);
@@ -105,26 +106,28 @@ function CourseCard({
                   className={classes.name}
                 >{`Na ${instructor?.name}`}</Typography>
               </Grid>
-              <Grid
-                item
-                xs={6}
-                container
-                alignItems="center"
-                justifyContent="flex-end"
-              >
-                <Grid item>
-                  <Tooltip title="Jiandikishe">
-                    <IconButton
-                      aria-label="Open drawer"
-                      edge="start"
-                      // onClick={handleOpenMenu}
-                      className={classes.menuButton}
-                    >
-                      <RegisterIcon className={classes.icon} />
-                    </IconButton>
-                  </Tooltip>
+              {!trainee && (
+                <Grid
+                  item
+                  xs={6}
+                  container
+                  alignItems="center"
+                  justifyContent="flex-end"
+                >
+                  <Grid item>
+                    <Tooltip title="Jiandikishe">
+                      <IconButton
+                        aria-label="Open drawer"
+                        edge="start"
+                        // onClick={handleOpenMenu}
+                        className={classes.menuButton}
+                      >
+                        <RegisterIcon className={classes.icon} />
+                      </IconButton>
+                    </Tooltip>
+                  </Grid>
                 </Grid>
-              </Grid>
+              )}
             </Grid>
           </div>
         )}
@@ -139,6 +142,7 @@ CourseCard.propTypes = {
   name: PropTypes.string,
   duration: PropTypes.number,
   trainer: PropTypes.bool,
+  trainee: PropTypes.bool,
   instructor: PropTypes.shape({
     name: PropTypes.string,
   }),
@@ -151,6 +155,7 @@ CourseCard.defaultProps = {
   name: undefined,
   duration: undefined,
   trainer: false,
+  trainee: false,
 };
 
 export default CourseCard;
