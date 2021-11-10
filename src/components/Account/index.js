@@ -18,6 +18,7 @@ import Admin from "@/jikopoint/components/Admin";
 import DefaultProfilePic from "@/jikopoint/components/DefaultProfilePic";
 import Link from "@/jikopoint/components/Link";
 import Section from "@/jikopoint/components/Section";
+import Trainee from "@/jikopoint/components/Trainee";
 import Trainer from "@/jikopoint/components/Trainer";
 import useAuth from "@/jikopoint/hooks/useAuth";
 
@@ -226,6 +227,7 @@ function Account({ user, ...props }) {
           <Grid item xs={12} lg={8}>
             {user?.role === "admin" && <Admin {...props} />}
             {user?.role === "trainer" && <Trainer {...props} user={user} />}
+            {user?.role === "trainee" && <Trainee {...props} user={user} />}
           </Grid>
         </Grid>
       </Section>
