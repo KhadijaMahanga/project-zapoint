@@ -16,7 +16,7 @@ function Index({ ...props }) {
 export async function getServerSideProps() {
   const postType = "page";
   const { props } = await getPostTypeStaticProps(
-    { slug: "kuwa-mkufunzi" },
+    { slug: "jiko-class" },
     postType
   );
 
