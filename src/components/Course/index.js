@@ -223,77 +223,78 @@ function Index({ course, category, profile, ...props }) {
                           >
                             Akaunti za social media:
                           </Typography>
-                          {Object.keys(profile?.social).map((s) => {
-                            switch (s) {
-                              case "facebook":
-                                return (
-                                  <IconButton
-                                    key={s}
-                                    component={Link}
-                                    className={classes.profileIconButton}
-                                    href={`https://facebook.com/${profile?.social[s]}`}
-                                  >
-                                    <FacebookIcon
-                                      className={classes.profileIcon}
-                                    />
-                                  </IconButton>
-                                );
-                              case "twitter":
-                                return (
-                                  <IconButton
-                                    key={s}
-                                    component={Link}
-                                    className={classes.profileIconButton}
-                                    href={`https://twitter.com/${profile?.social[s]}`}
-                                  >
-                                    <TwitterIcon
-                                      className={classes.profileIcon}
-                                    />
-                                  </IconButton>
-                                );
-                              case "linkedin":
-                                return (
-                                  <IconButton
-                                    key={s}
-                                    className={classes.profileIconButton}
-                                    href={`https://linkedin.com/in/${profile?.social[s]}`}
-                                    component={Link}
-                                  >
-                                    <LinkedinIcon
-                                      className={classes.profileIcon}
-                                    />
-                                  </IconButton>
-                                );
-                              case "whatsApp":
-                                return (
-                                  <IconButton
-                                    key={s}
-                                    component={Link}
-                                    className={classes.profileIconButton}
-                                    href={`https://api.whatsapp.com/send?phone=${profile?.social[s]}&text=From%20JikoPoint.`}
-                                  >
-                                    <WhatsappIcon
-                                      className={classes.profileIcon}
-                                    />
-                                  </IconButton>
-                                );
-                              case "telegram":
-                                return (
-                                  <IconButton
-                                    key={s}
-                                    component={Link}
-                                    className={classes.profileIconButton}
-                                    href={`https://telegram.me/${profile?.social[s]}`}
-                                  >
-                                    <TelegramIcon
-                                      className={classes.profileIcon}
-                                    />
-                                  </IconButton>
-                                );
-                              default:
-                                return null;
-                            }
-                          })}
+                          {profile?.social &&
+                            Object.keys(profile?.social).map((s) => {
+                              switch (s) {
+                                case "facebook":
+                                  return (
+                                    <IconButton
+                                      key={s}
+                                      component={Link}
+                                      className={classes.profileIconButton}
+                                      href={`https://facebook.com/${profile?.social[s]}`}
+                                    >
+                                      <FacebookIcon
+                                        className={classes.profileIcon}
+                                      />
+                                    </IconButton>
+                                  );
+                                case "twitter":
+                                  return (
+                                    <IconButton
+                                      key={s}
+                                      component={Link}
+                                      className={classes.profileIconButton}
+                                      href={`https://twitter.com/${profile?.social[s]}`}
+                                    >
+                                      <TwitterIcon
+                                        className={classes.profileIcon}
+                                      />
+                                    </IconButton>
+                                  );
+                                case "linkedin":
+                                  return (
+                                    <IconButton
+                                      key={s}
+                                      className={classes.profileIconButton}
+                                      href={`https://linkedin.com/in/${profile?.social[s]}`}
+                                      component={Link}
+                                    >
+                                      <LinkedinIcon
+                                        className={classes.profileIcon}
+                                      />
+                                    </IconButton>
+                                  );
+                                case "whatsApp":
+                                  return (
+                                    <IconButton
+                                      key={s}
+                                      component={Link}
+                                      className={classes.profileIconButton}
+                                      href={`https://api.whatsapp.com/send?phone=${profile?.social[s]}&text=From%20JikoPoint.`}
+                                    >
+                                      <WhatsappIcon
+                                        className={classes.profileIcon}
+                                      />
+                                    </IconButton>
+                                  );
+                                case "telegram":
+                                  return (
+                                    <IconButton
+                                      key={s}
+                                      component={Link}
+                                      className={classes.profileIconButton}
+                                      href={`https://telegram.me/${profile?.social[s]}`}
+                                    >
+                                      <TelegramIcon
+                                        className={classes.profileIcon}
+                                      />
+                                    </IconButton>
+                                  );
+                                default:
+                                  return null;
+                              }
+                            })}
                         </div>
                       </div>
                     ),
