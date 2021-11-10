@@ -110,6 +110,7 @@ function Add({ categories, variant, user, course: courseProp, ...props }) {
         setCourse(res?.data);
         setNotice("Umefanikiwa kuhifadhi");
       } else {
+        console.log(res);
         setNotice("Tatizo la kiufundi, jaribu tena baadae.");
       }
       setTimeout(() => {
@@ -221,7 +222,7 @@ function Add({ categories, variant, user, course: courseProp, ...props }) {
                     <Typography className={classes.caption}>
                       {notice}
                     </Typography>
-                    <LinearProgress />
+                    {notice?.includes("Tunashughulikia") && <LinearProgress />}
                   </Grid>
                 )}
                 <Grid item xs={12}>
