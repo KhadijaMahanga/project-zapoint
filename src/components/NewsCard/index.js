@@ -33,12 +33,15 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   },
   title: {
     color: palette.text.primary,
-    height: typography.pxToRem(70),
+    height: typography.pxToRem(60),
     overflow: "hidden",
     display: "-webkit-box",
     WebkitLineClamp: 2,
     WebkitBoxOrient: "vertical",
     textOverflow: "ellipsis",
+    [breakpoints.up("lg")]: {
+      height: typography.pxToRem(70),
+    },
   },
   description: {
     color: palette.text.primary,
