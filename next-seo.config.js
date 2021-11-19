@@ -1,5 +1,5 @@
 export default {
-  titleTemplate: "%s | JikoPoint",
+  titleTemplate: "%s",
   defaultTitle: "JikoPoint",
   description:
     "JikoPoint ni jukwaa maalum na la kipekee la mtandaoni linalomilikiwa na kampuni ya Nukta Africa na kuwezeshwa na Shirika la Hivos na washirika wake kwa lengo la kuchochea matumizi ya nishati safi Tanzania",

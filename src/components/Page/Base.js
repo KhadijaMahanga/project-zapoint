@@ -22,10 +22,10 @@ const menuItems = [
 
 const social = {
   facebook: "https://www.facebook.com/JikoPoint",
-  instagram: "https://www.instagram.com/JikoPoint",
-  linkedin: "https://www.linkedin.com/company/jiko-point",
-  twitter: "https://www.twitter.com/jiko_point",
-  youtube: "https://www.youtube.com",
+  instagram: "https://www.instagram.com/jiko_point",
+  linkedin: "https://www.linkedin.com/company/jiko_point",
+  twitter: "https://www.twitter.com/JikoPoint",
+  youtube: "https://www.youtube.com/channel/UCXv2mpPGA6b22QbNaVC5YXQ",
 };
 
 /**

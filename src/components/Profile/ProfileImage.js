@@ -119,7 +119,7 @@ function ProfileImage({ user: userProps, ...props }) {
                 // and ID's as an object. More information on their use can be found at
                 // https://cloudinary.com/documentation/upload_widget#the_sources_parameter
                 resourceType="image" // optionally set with 'auto', 'image', 'video' or 'raw' -> default = 'auto'
-                cloudName="miji-codes" // your cloudinary account cloud name.
+                cloudName="nukta-cloud" // your cloudinary account cloud name.
                 // Locmy_foldermy_folderated on https://cloudinary.com/console/
                 uploadPreset="jikopoint" // check that an upload preset exists and check mode is signed or unisgned
                 buttonText="Pakia Picha" // default 'Upload Files'
