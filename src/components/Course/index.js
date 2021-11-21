@@ -129,7 +129,7 @@ function Index({ course, category, profile, ...props }) {
       <Section className={classes.section}>
         <Grid container>
           <Player {...props} videoImg={course?.image} />
-          <Grid item xs={12} md={8} container alignItems="center">
+          <Grid item xs={12} lg={8} container alignItems="center">
             <Grid item xs={12} className={classes.section}>
               <Typography variant="h3" className={classes.title}>
                 {course?.name}

@@ -87,7 +87,7 @@ function Partners({ ...props }) {
         </Typography>
         <Grid container justifyContent="space-around" alignItems="center">
           {partners.map(({ alt, link, logo }) => (
-            <Grid item xs={6} md={4} lg={2} key={alt}>
+            <Grid item xs={6} md={2} key={alt}>
               <Link href={link} className={classes.partner}>
                 <Image
                   objectFit="contain"
