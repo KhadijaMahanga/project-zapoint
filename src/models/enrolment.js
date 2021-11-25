@@ -10,6 +10,8 @@ const EnrolmentSchema = new Schema(
   { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } }
 );
 
+EnrolmentSchema.index({ student: 1, course: 1 }, { unique: true });
+
 const Enrolment =
   mongoose.models[MODEL_NAME] || mongoose.model(MODEL_NAME, EnrolmentSchema);
 
