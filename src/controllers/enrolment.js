@@ -19,8 +19,7 @@ export const getEnrolmentPerUser = async (userId) => {
       return Promise.all(
         data?.map(async ({ _id, course }) => {
           const cs = await getCourse(course);
-          cs.enrolmentId = _id;
-          return cs;
+          return { enrolmentId: _id, course: cs };
         })
       );
     })

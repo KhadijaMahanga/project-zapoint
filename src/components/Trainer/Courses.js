@@ -53,7 +53,6 @@ const useStyles = makeStyles(({ typography, palette }) => ({
 function Courses({ courses: coursesProp, user, categories, ...props }) {
   const classes = useStyles(props);
   const [courses, setCourses] = useState([]);
-  const [refreshList, setRefreshList] = useState(false);
 
   useEffect(() => {
     if (coursesProp?.length) {
@@ -61,15 +60,14 @@ function Courses({ courses: coursesProp, user, categories, ...props }) {
     }
   }, [coursesProp]);
 
-  const { data: res } = useSWR(
-    refreshList ? `/api/courses/instructor/${user?._id}` : null,
+  const { data: res, mutate } = useSWR(
+    `/api/courses/instructor/${user?._id}`,
     fetcher
   );
 
   useEffect(() => {
     if (res?.success && res?.data) {
       setCourses(res?.data);
-      setRefreshList(false);
     }
   }, [res]);
 
@@ -85,7 +83,7 @@ function Courses({ courses: coursesProp, user, categories, ...props }) {
 
     const url = `/api/courses/${id}`;
     await fetcher(url, options);
-    setRefreshList(true);
+    mutate();
   };
 
   return (

@@ -81,6 +81,7 @@ function CourseCard({
   trainer,
   trainee,
   enrolmentId,
+  onDelete,
   ...props
 }) {
   const classes = useStyles(props);
@@ -119,6 +120,9 @@ function CourseCard({
       if (!res.success) {
         setNotice(`Samahani, jaribu tena baadae ${res.message}`);
         setNoticeStatus("error");
+      } else if (JSON.stringify(res?.data) === "{}") {
+        setNotice("Umeshajisajili kwenye hii kozi");
+        setNoticeStatus("warning");
       } else {
         setNotice("Umefanikiwa kujisajili");
         setNoticeStatus("success");
@@ -143,6 +147,9 @@ function CourseCard({
     } else {
       setNotice("Umefanikiwa kufuta");
       setNoticeStatus("success");
+    }
+    if (onDelete) {
+      onDelete();
     }
     setOpen(true);
   };
@@ -242,6 +249,7 @@ CourseCard.propTypes = {
   trainer: PropTypes.bool,
   trainee: PropTypes.bool,
   enrolmentId: PropTypes.string,
+  onDelete: PropTypes.func,
   instructor: PropTypes.shape({
     name: PropTypes.string,
   }),
@@ -256,6 +264,7 @@ CourseCard.defaultProps = {
   duration: undefined,
   trainer: false,
   trainee: false,
+  onDelete: undefined,
 };
 
 export default CourseCard;

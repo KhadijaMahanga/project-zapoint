@@ -15,7 +15,7 @@ function JikoSnackbar({ message, onClose, open, status }) {
         horizontal: "left",
       }}
       open={open}
-      autoHideDuration={6000}
+      autoHideDuration={4000}
       onClose={onClose}
     >
       <Alert onClose={onClose} severity={status}>

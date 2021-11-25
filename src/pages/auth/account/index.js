@@ -33,12 +33,15 @@ export async function getServerSideProps(context) {
     `${process.env.NEXT_PUBLIC_APP_URL}/api/users/${session?.user?.email}`
   );
   let users;
-  let courses;
+  let courses = {};
   if (session.user.role === "trainee") {
     // pull all enrolled courses
-    courses = await fetcher(
+    const enrolCourses = await fetcher(
       `${process.env.NEXT_PUBLIC_APP_URL}/api/enrolment/student/${currentUser?.user?._id}`
     );
+    courses.data = enrolCourses?.data?.map(({ enrolmentId, course }) => {
+      return { ...course, enrolmentId };
+    });
   } else if (session.user.role === "trainer") {
     // get my courses
     courses = await fetcher(

@@ -3,8 +3,10 @@ import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
+import useSWR from "swr";
 
 import CourseCard from "@/jikopoint/components/CourseCard";
+import fetcher from "@/jikopoint/utils/fetcher";
 
 const useStyles = makeStyles(({ typography, palette }) => ({
   root: {},
@@ -51,8 +53,24 @@ function Courses({ courses: coursesProp, user, categories, ...props }) {
   const [courses, setCourses] = useState(coursesProp);
 
   useEffect(() => {
-    setCourses(coursesProp);
+    if (coursesProp?.length) {
+      setCourses(coursesProp);
+    }
   }, [coursesProp]);
+
+  const { data: res, mutate } = useSWR(
+    `/api/enrolment/student/${user?._id}`,
+    fetcher
+  );
+
+  useEffect(() => {
+    if (res?.success && res?.data) {
+      const c = res?.data?.map(({ enrolmentId, course }) => {
+        return { ...course, enrolmentId };
+      });
+      setCourses(c);
+    }
+  }, [res]);
 
   return (
     <div className={classes.root}>
@@ -64,6 +82,7 @@ function Courses({ courses: coursesProp, user, categories, ...props }) {
                 {...c}
                 slug={c._id}
                 trainee
+                onDelete={() => mutate()}
                 classes={{ image: classes.courseImage }}
               />
             </Grid>
