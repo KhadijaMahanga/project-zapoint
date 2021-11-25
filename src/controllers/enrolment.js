@@ -1,8 +1,11 @@
 /* eslint-disable no-return-assign */
+import { getCourse } from "@/jikopoint/controllers/course";
+import { getUser } from "@/jikopoint/controllers/user";
 import Enrolment from "@/jikopoint/models/enrolment";
 
 export const createEnrolment = async (data) => {
-  const created = await new Enrolment(data)
+  const student = await getUser(data.student);
+  const created = await new Enrolment({ ...data, student })
     .save()
     .then((enrolment) => enrolment)
     .catch((e) => new Error(e));
@@ -12,7 +15,15 @@ export const createEnrolment = async (data) => {
 
 export const getEnrolmentPerUser = async (userId) => {
   return Enrolment.find({ student: userId })
-    .then((enrolment) => enrolment)
+    .then((data) => {
+      return Promise.all(
+        data?.map(async ({ _id, course }) => {
+          const cs = await getCourse(course);
+          cs.enrolmentId = _id;
+          return cs;
+        })
+      );
+    })
     .catch((e) => new Error(e));
 };
 

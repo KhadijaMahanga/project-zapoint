@@ -36,6 +36,9 @@ export async function getServerSideProps(context) {
   let courses;
   if (session.user.role === "trainee") {
     // pull all enrolled courses
+    courses = await fetcher(
+      `${process.env.NEXT_PUBLIC_APP_URL}/api/enrolment/student/${currentUser?.user?._id}`
+    );
   } else if (session.user.role === "trainer") {
     // get my courses
     courses = await fetcher(
@@ -52,7 +55,7 @@ export async function getServerSideProps(context) {
   return {
     props: {
       courses: courses?.data ?? null,
-      user: currentUser?.user,
+      user: { ...currentUser?.user, role: session?.user?.role ?? "trainee" },
       categories: categories?.data ?? null,
       users: users?.users ?? null,
     },

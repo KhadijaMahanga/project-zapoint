@@ -12,6 +12,10 @@ import { ReactComponent as IconLogin } from "@/jikopoint/assets/icons/icon-login
 import { ReactComponent as IconTwitter } from "@/jikopoint/assets/icons/icon-twitter-white.svg";
 
 const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
+  root: {
+    paddingBottom: typography.pxToRem(30),
+    paddingTop: typography.pxToRem(20),
+  },
   iconDiv: {
     backgroundColor: palette.background.light,
     borderRadius: "50%",
@@ -64,6 +68,9 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   },
   dividerSpan: {
     margin: `0 ${typography.pxToRem(5)}`,
+  },
+  title: {
+    color: palette.primary.main,
   },
 }));
 function SwitchCase({ provider, signIn }) {
@@ -127,6 +134,7 @@ function Ingia({ csrfToken, signIn, providers, title, isDialog, ...props }) {
       alignItems="center"
       justifyContent="space-around"
       direction="column"
+      className={clsx({ [classes.root]: isDialog })}
     >
       {!isDialog && (
         <div className={classes.iconDiv}>
@@ -134,23 +142,31 @@ function Ingia({ csrfToken, signIn, providers, title, isDialog, ...props }) {
         </div>
       )}
       <Grid item xs={12}>
-        <Typography variant="h4">{title}</Typography>
+        <Typography
+          variant="h4"
+          className={clsx({ [classes.title]: isDialog })}
+        >
+          {title}
+        </Typography>
       </Grid>
       <Grid item xs={12} md={isDialog ? 7 : 5}>
         <LoginForm signIn={signIn} csrfToken={csrfToken} {...props} />
-        <div className={classes.divider}>
-          <div className={classes.dividerBorder} />
-          <span className={classes.dividerSpan}>au</span>
-          <div className={classes.dividerBorder} />
-        </div>
-        {providers &&
-          Object.values(providers).map((provider) => (
-            <SwitchCase
-              provider={provider}
-              signIn={signIn}
-              key={provider.name}
-            />
-          ))}
+        {providers && (
+          <>
+            <div className={classes.divider}>
+              <div className={classes.dividerBorder} />
+              <span className={classes.dividerSpan}>au</span>
+              <div className={classes.dividerBorder} />
+            </div>
+            {Object.values(providers)?.map((provider) => (
+              <SwitchCase
+                provider={provider}
+                signIn={signIn}
+                key={provider.name}
+              />
+            ))}
+          </>
+        )}
       </Grid>
     </Grid>
   );
