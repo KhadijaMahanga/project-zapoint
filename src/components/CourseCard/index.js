@@ -64,6 +64,7 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   name: {
     textTransform: "Capitalize",
     fontSize: typography.pxToRem(14),
+    fontWeight: "bold",
   },
   duration: {
     fontSize: typography.pxToRem(14),
@@ -193,7 +194,7 @@ function CourseCard({
                 >
                   <Grid item>
                     {!trainee ? (
-                      <Tooltip title="Jiandikishe">
+                      <Tooltip title="Jisajili">
                         <IconButton
                           aria-label="Open drawer"
                           edge="start"
