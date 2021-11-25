@@ -206,18 +206,13 @@ function CourseCard({
                           aria-label="Open drawer"
                           edge="start"
                           onClick={handleRegister}
-                          className={classes.menuButton}
                         >
                           <RegisterIcon className={classes.icon} />
                         </IconButton>
                       </Tooltip>
                     ) : (
                       <Tooltip title="Futa usajili">
-                        <IconButton
-                          edge="start"
-                          onClick={handleDeregister}
-                          className={classes.menuButton}
-                        >
+                        <IconButton edge="start" onClick={handleDeregister}>
                           <RemoveIcon className={classes.icon} />
                         </IconButton>
                       </Tooltip>
