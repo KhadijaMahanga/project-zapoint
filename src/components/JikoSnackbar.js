@@ -3,6 +3,8 @@ import MuiAlert from "@material-ui/lab/Alert";
 import PropTypes from "prop-types";
 import React from "react";
 
+import RichTypography from "@/jikopoint/components/RichTypography";
+
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -19,7 +21,9 @@ function JikoSnackbar({ message, onClose, open, status }) {
       onClose={onClose}
     >
       <Alert onClose={onClose} severity={status}>
-        {message}
+        <RichTypography style={{ color: "#fff" }} variant="caption">
+          {message}
+        </RichTypography>
       </Alert>
     </Snackbar>
   );

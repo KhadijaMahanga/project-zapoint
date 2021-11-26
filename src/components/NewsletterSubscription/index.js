@@ -10,9 +10,10 @@ const NewsletterSubscription = () => {
   return (
     <MailchimpSubscribe
       url={postUrl}
-      render={({ subscribe, status }) => (
+      render={({ subscribe, status, message }) => (
         <CustomForm
           status={status}
+          message={message}
           onValidated={(formData) => subscribe(formData)}
         />
       )}
