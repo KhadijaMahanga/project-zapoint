@@ -16,15 +16,16 @@ function EditCourse(props) {
 }
 
 export async function getServerSideProps(context) {
-  const { params, req, res } = context;
+  const { params, req } = context;
   const session = await getSession({ req });
 
-  if (!(session && res && session?.user)) {
-    res.writeHead(302, {
-      Location: "/auth/ingia",
-    });
-    res.end();
-    return null;
+  if (!(session && session?.user)) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/auth/ingia",
+      },
+    };
   }
 
   if (session?.user?.role !== "trainer") {

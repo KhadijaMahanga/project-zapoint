@@ -4,7 +4,6 @@ import {
   InputBase,
   FormControl,
   InputLabel,
-  FormHelperText,
   Button,
   LinearProgress,
 } from "@material-ui/core";
@@ -13,30 +12,31 @@ import React, { useState, useEffect } from "react";
 
 import useStyles from "./useStyles";
 
+import JikoSnackbar from "@/jikopoint/components/JikoSnackbar";
 import Section from "@/jikopoint/components/Section";
 
-function CustomForm({ status, onValidated, ...props }) {
+function CustomForm({ status, onValidated, message, ...props }) {
   const classes = useStyles(props);
   const [email, setEmail] = useState("");
-  const [helperText, setHelperText] = useState("");
+  const [open, setOpen] = useState(false);
+
+  const handleCloseSnack = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
-      setHelperText("Barua pepe ni batili");
-    } else {
-      onValidated({
-        MERGE0: email,
-      });
-    }
+    onValidated({
+      MERGE0: email,
+    });
   };
+
   useEffect(() => {
-    if (status === "success") {
-      setHelperText("Ahsante, usajili umekamilika ");
-    } else if (status === "sending") {
-      setHelperText("Ahsante, tunashughulikia usajili wako... ");
-    } else if (status === "error") {
-      setHelperText("Tafadhali jaribu tena baadae");
+    if (status && status !== "sending") {
+      setOpen(true);
     }
   }, [status]);
 
@@ -53,7 +53,7 @@ function CustomForm({ status, onValidated, ...props }) {
               za kupikia
             </Typography>
           </Grid>
-          <Grid item xs={12} lg={8} container>
+          <Grid item>
             <form
               onSubmit={(e) => handleSubmit(e)}
               noValidate
@@ -77,7 +77,6 @@ function CustomForm({ status, onValidated, ...props }) {
                   value={email}
                   onChange={(e) => {
                     setEmail(e.target.value);
-                    setHelperText("");
                   }}
                   {...props}
                   classes={{
@@ -85,9 +84,6 @@ function CustomForm({ status, onValidated, ...props }) {
                     input: classes.inputBaseInput,
                   }}
                 />
-                <FormHelperText id="helper-text" className={classes.helperText}>
-                  {helperText}
-                </FormHelperText>
                 {status === "sending" ? <LinearProgress /> : null}
               </FormControl>
               <Button
@@ -104,16 +100,26 @@ function CustomForm({ status, onValidated, ...props }) {
           </Grid>
         </Grid>
       </Section>
+      {status !== "sending" && (
+        <JikoSnackbar
+          open={open}
+          onClose={handleCloseSnack}
+          status={status}
+          message={message}
+        />
+      )}
     </div>
   );
 }
 
 CustomForm.propTypes = {
+  message: PropTypes.string,
   status: PropTypes.string,
   onValidated: PropTypes.func,
 };
 
 CustomForm.defaultProps = {
+  message: undefined,
   status: undefined,
   onValidated: undefined,
 };

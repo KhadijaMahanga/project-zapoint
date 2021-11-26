@@ -14,10 +14,6 @@ function Trainee({ ...props }) {
           label: "Kozi Zangu",
           panel: <Courses {...props} />,
         },
-        {
-          label: "Taarifa",
-          panel: <div />,
-        },
       ]}
     />
   );

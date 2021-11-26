@@ -110,15 +110,14 @@ function SahauNywila() {
 }
 
 export async function getServerSideProps(context) {
-  const { res } = context;
   const session = await getSession(context);
-
   if (session?.user) {
-    res.writeHead(302, {
-      Location: "/auth/nywila/mpya",
-    });
-    res.end();
-    return null;
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/auth/nywila/mpya",
+      },
+    };
   }
 
   return {

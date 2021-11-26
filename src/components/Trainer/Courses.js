@@ -1,10 +1,17 @@
 /* eslint-disable no-underscore-dangle */
-import { Button, Grid, Typography } from "@material-ui/core";
+import {
+  Button,
+  Grid,
+  IconButton,
+  Tooltip,
+  Typography,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import useSWR from "swr";
 
+import { ReactComponent as RemoveIcon } from "@/jikopoint/assets/icons/icon-remove.svg";
 import CourseCard from "@/jikopoint/components/CourseCard";
 import Link from "@/jikopoint/components/Link";
 import fetcher from "@/jikopoint/utils/fetcher";
@@ -20,13 +27,15 @@ const useStyles = makeStyles(({ typography, palette }) => ({
   },
   status: {
     color: palette.text.primary,
-    fontSize: typography.pxToRem(13),
+    fontSize: typography.pxToRem(16),
+    fontWeight: "bold",
     marginBottom: typography.pxToRem(10),
   },
   editButton: {
     backgroundColor: palette.primary.main,
     fontSize: typography.pxToRem(13),
     padding: typography.pxToRem(10),
+    display: "flex",
   },
   logOutButton: {
     fontSize: typography.pxToRem(13),
@@ -48,12 +57,15 @@ const useStyles = makeStyles(({ typography, palette }) => ({
     position: "relative",
     height: typography.pxToRem(220),
   },
+  icon: {
+    width: typography.pxToRem(25),
+    height: typography.pxToRem(25),
+  },
 }));
 
 function Courses({ courses: coursesProp, user, categories, ...props }) {
   const classes = useStyles(props);
   const [courses, setCourses] = useState([]);
-  const [refreshList, setRefreshList] = useState(false);
 
   useEffect(() => {
     if (coursesProp?.length) {
@@ -61,15 +73,14 @@ function Courses({ courses: coursesProp, user, categories, ...props }) {
     }
   }, [coursesProp]);
 
-  const { data: res } = useSWR(
-    refreshList ? `/api/courses/instructor/${user?._id}` : null,
+  const { data: res, mutate } = useSWR(
+    `/api/courses/instructor/${user?._id}`,
     fetcher
   );
 
   useEffect(() => {
     if (res?.success && res?.data) {
       setCourses(res?.data);
-      setRefreshList(false);
     }
   }, [res]);
 
@@ -85,7 +96,18 @@ function Courses({ courses: coursesProp, user, categories, ...props }) {
 
     const url = `/api/courses/${id}`;
     await fetcher(url, options);
-    setRefreshList(true);
+    mutate();
+  };
+
+  const handleCourseDeletion = async (e, id) => {
+    e.preventDefault();
+
+    const options = {
+      method: "DELETE",
+    };
+    const url = `/api/courses/${id}`;
+    await fetcher(url, options);
+    mutate();
   };
 
   return (
@@ -116,13 +138,29 @@ function Courses({ courses: coursesProp, user, categories, ...props }) {
                 container
                 className={classes.button}
                 justifyContent="space-between"
+                alignItems="center"
               >
-                <Grid item xs={12}>
+                <Grid item xs={10}>
                   <Typography
                     className={classes.status}
                   >{`Status: ${c.status}`}</Typography>
                 </Grid>
-                <Grid item xs={5}>
+                <Grid item xs={2}>
+                  <Tooltip title="Futa kozi">
+                    <IconButton
+                      edge="start"
+                      onClick={(e) => handleCourseDeletion(e, c._id)}
+                    >
+                      <RemoveIcon className={classes.icon} />
+                    </IconButton>
+                  </Tooltip>
+                </Grid>
+                <Grid
+                  item
+                  container
+                  direction="column"
+                  justifyContent="space-between"
+                >
                   <Button
                     variant="contained"
                     underline="none"
@@ -134,8 +172,6 @@ function Courses({ courses: coursesProp, user, categories, ...props }) {
                   >
                     Hariri
                   </Button>
-                </Grid>
-                <Grid item xs={5}>
                   <Button
                     fullWidth
                     variant="contained"

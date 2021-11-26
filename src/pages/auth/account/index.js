@@ -15,15 +15,14 @@ function Account(props) {
 }
 
 export async function getServerSideProps(context) {
-  const { req, res } = context;
-  const session = await getSession({ req });
-
-  if (!(session && res && session?.user)) {
-    res.writeHead(302, {
-      Location: "/auth/ingia",
-    });
-    res.end();
-    return null;
+  const session = await getSession(context);
+  if (!(session && session?.user)) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/auth/ingia",
+      },
+    };
   }
 
   const categories = await fetcher(
@@ -34,9 +33,15 @@ export async function getServerSideProps(context) {
     `${process.env.NEXT_PUBLIC_APP_URL}/api/users/${session?.user?.email}`
   );
   let users;
-  let courses;
+  let courses = {};
   if (session.user.role === "trainee") {
     // pull all enrolled courses
+    const enrolCourses = await fetcher(
+      `${process.env.NEXT_PUBLIC_APP_URL}/api/enrolment/student/${currentUser?.user?._id}`
+    );
+    courses.data = enrolCourses?.data?.map(({ enrolmentId, course }) => {
+      return { ...course, enrolmentId };
+    });
   } else if (session.user.role === "trainer") {
     // get my courses
     courses = await fetcher(
@@ -53,7 +58,7 @@ export async function getServerSideProps(context) {
   return {
     props: {
       courses: courses?.data ?? null,
-      user: currentUser?.user,
+      user: { ...currentUser?.user, role: session?.user?.role ?? "trainee" },
       categories: categories?.data ?? null,
       users: users?.users ?? null,
     },

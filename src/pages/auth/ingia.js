@@ -54,15 +54,14 @@ Ingia.defaultProps = {
 };
 
 export async function getServerSideProps(context) {
-  const { req, res } = context;
-  const session = await getSession({ req });
-
-  if (session && res && session.accessToken) {
-    res.writeHead(302, {
-      Location: "/auth/account",
-    });
-    res.end();
-    return null;
+  const session = await getSession(context);
+  if (session && session.accessToken) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/auth/account",
+      },
+    };
   }
   return {
     props: {

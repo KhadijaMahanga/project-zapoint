@@ -13,7 +13,7 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 
 import { ReactComponent as SearchMenuIcon } from "@/jikopoint/assets/icons/icon-close-white.svg";
 import { ReactComponent as MenuIcon } from "@/jikopoint/assets/icons/icon-menu-grey.svg";
@@ -169,8 +169,8 @@ function MobileNavigation({ ...props }) {
             <Grid container justifyContent="center" alignItems="center">
               <List component="nav" className={classes.list}>
                 {menuItems.map(({ href, label }) => (
-                  <>
-                    <ListItemLink key={href} underline="none" href={href}>
+                  <Fragment key={href}>
+                    <ListItemLink underline="none" href={href}>
                       <ListItemText
                         disableTypography
                         className={classes.listItemText}
@@ -200,7 +200,7 @@ function MobileNavigation({ ...props }) {
                           </ListItemText>
                         </ListItemLink>
                       ))}
-                  </>
+                  </Fragment>
                 ))}
                 <Hidden smUp implementation="css">
                   <Divider classes={{ root: classes.divider }} />

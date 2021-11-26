@@ -15,15 +15,14 @@ function Profile(props) {
 }
 
 export async function getServerSideProps(context) {
-  const { req, res } = context;
-  const session = await getSession({ req });
-
-  if (!(session && res && session?.user)) {
-    res.writeHead(302, {
-      Location: "/auth/ingia",
-    });
-    res.end();
-    return null;
+  const session = await getSession(context);
+  if (!(session && session?.user)) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/auth/ingia",
+      },
+    };
   }
 
   const currentUser = await fetcher(

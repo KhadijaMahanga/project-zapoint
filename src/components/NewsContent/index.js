@@ -40,14 +40,14 @@ function NewsContent({
   return (
     <Section classes={{ root: classes.section }}>
       <Grid container direction="column">
-        <Grid item container md={8}>
+        <Grid item container lg={8}>
           {title && (
             <Typography color="primary" variant="h3" className={classes.title}>
               {title}
             </Typography>
           )}
         </Grid>
-        <Grid item container md={8} justifyContent="space-between">
+        <Grid item container lg={8} justifyContent="space-between">
           {author && (
             <Grid item>
               <Typography className={classes.date} variant="h6">
@@ -64,13 +64,13 @@ function NewsContent({
           )}
         </Grid>
         {description && (
-          <Grid item xs={12} md={8}>
+          <Grid item xs={12} lg={8}>
             <RichTypography className={classes.description} variant="body1">
               {description}
             </RichTypography>
           </Grid>
         )}
-        <Grid item xs={12} md={8}>
+        <Grid item xs={12} lg={8}>
           {image && (
             <div className={classes.image}>
               <Image
@@ -84,7 +84,7 @@ function NewsContent({
         </Grid>
         <ShareBar socialLinks={socialLinks} title={title} />
         {content && (
-          <Grid xs={12} item md={8}>
+          <Grid xs={12} item lg={8}>
             <RichTypography className={classes.content} variant="body1">
               {content}
             </RichTypography>

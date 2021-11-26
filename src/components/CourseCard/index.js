@@ -10,10 +10,15 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import Image from "next/image";
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useState } from "react";
 
 import { ReactComponent as RegisterIcon } from "@/jikopoint/assets/icons/icon-register.svg";
+import { ReactComponent as RemoveIcon } from "@/jikopoint/assets/icons/icon-remove.svg";
+import LoginDialog from "@/jikopoint/components/Course/LoginDialog";
+import JikoSnackbar from "@/jikopoint/components/JikoSnackbar";
 import Link from "@/jikopoint/components/Link";
+import useAuth from "@/jikopoint/hooks/useAuth";
+import fetcher from "@/jikopoint/utils/fetcher";
 
 const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   root: {
@@ -59,6 +64,7 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   name: {
     textTransform: "Capitalize",
     fontSize: typography.pxToRem(14),
+    fontWeight: "bold",
   },
   duration: {
     fontSize: typography.pxToRem(14),
@@ -74,39 +80,118 @@ function CourseCard({
   slug,
   trainer,
   trainee,
+  enrolmentId,
+  onDelete,
   ...props
 }) {
   const classes = useStyles(props);
+  const { session, signIn, providers } = useAuth();
+  const [openLogin, setOpenLogin] = useState(false);
+  const [notice, setNotice] = useState();
+  const [noticeStatus, setNoticeStatus] = useState();
   const Component = slug?.length ? Link : undefined;
+
+  const [open, setOpen] = useState(false);
+
+  const handleCloseSnack = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenLogin(false);
+  };
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    if (session?.user && session?.user?.role === "trainee") {
+      const options = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "same-origin",
+        body: JSON.stringify({
+          student: session.user.email,
+          course: slug,
+        }),
+      };
+      const res = await fetcher("/api/enrolment", options);
+      if (!res.success) {
+        setNotice(`Samahani, jaribu tena baadae ${res.message}`);
+        setNoticeStatus("error");
+      } else if (JSON.stringify(res?.data) === "{}") {
+        setNotice("Umeshajisajili kwenye hii kozi");
+        setNoticeStatus("warning");
+      } else {
+        setNotice("Umefanikiwa kujisajili");
+        setNoticeStatus("success");
+      }
+      setOpen(true);
+    } else {
+      setOpenLogin(true);
+    }
+  };
+
+  const handleDeregister = async (e) => {
+    e.preventDefault();
+    const options = {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      credentials: "same-origin",
+    };
+    const res = await fetcher(`/api/enrolment/${enrolmentId}`, options);
+    if (!res.success) {
+      setNotice(`Samahani, jaribu tena baadae ${res.message}`);
+      setNoticeStatus("error");
+    } else {
+      setNotice("Umefanikiwa kufuta");
+      setNoticeStatus("success");
+    }
+    if (onDelete) {
+      onDelete();
+    }
+    setOpen(true);
+  };
 
   if (!(name || image || slug)) {
     return null;
   }
   return (
-    <Card className={classes.root}>
-      <CardActionArea
-        component={Component}
-        href={`/jiko-class/kozi/${slug}`}
-        classes={{ focusHighlight: classes.cardActionAreaFocusHighlight }}
-        underline="none"
-      >
-        <div className={classes.image}>
-          {image && image !== "null" && (
-            <Image src={image} alt={name} layout="fill" />
-          )}
-        </div>
-        <CardContent classes={{ root: classes.cardContentRoot }}>
-          <Typography className={classes.title}>{name}</Typography>
-        </CardContent>
-        {!trainer && (
-          <div className={classes.footer}>
-            <Grid container justifyContent="space-between" alignItems="center">
-              <Grid item xs={6}>
-                <Typography
-                  className={classes.name}
-                >{`Na ${instructor?.name}`}</Typography>
-              </Grid>
-              {!trainee && (
+    <>
+      <JikoSnackbar
+        open={open}
+        onClose={handleCloseSnack}
+        message={notice}
+        status={noticeStatus}
+      />
+      <Card className={classes.root}>
+        <CardActionArea
+          component={Component}
+          href={`/jiko-class/kozi/${slug}`}
+          classes={{ focusHighlight: classes.cardActionAreaFocusHighlight }}
+          underline="none"
+        >
+          <div className={classes.image}>
+            {image && image !== "null" && (
+              <Image src={image} alt={name} layout="fill" />
+            )}
+          </div>
+          <CardContent classes={{ root: classes.cardContentRoot }}>
+            <Typography className={classes.title}>{name}</Typography>
+          </CardContent>
+          {!trainer && (
+            <div className={classes.footer}>
+              <Grid
+                container
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                <Grid item xs={6}>
+                  <Typography
+                    className={classes.name}
+                  >{`Na ${instructor?.name}`}</Typography>
+                </Grid>
                 <Grid
                   item
                   xs={6}
@@ -115,24 +200,39 @@ function CourseCard({
                   justifyContent="flex-end"
                 >
                   <Grid item>
-                    <Tooltip title="Jiandikishe">
-                      <IconButton
-                        aria-label="Open drawer"
-                        edge="start"
-                        // onClick={handleOpenMenu}
-                        className={classes.menuButton}
-                      >
-                        <RegisterIcon className={classes.icon} />
-                      </IconButton>
-                    </Tooltip>
+                    {!trainee ? (
+                      <Tooltip title="Jisajili">
+                        <IconButton
+                          aria-label="Open drawer"
+                          edge="start"
+                          onClick={handleRegister}
+                        >
+                          <RegisterIcon className={classes.icon} />
+                        </IconButton>
+                      </Tooltip>
+                    ) : (
+                      <Tooltip title="Futa usajili">
+                        <IconButton edge="start" onClick={handleDeregister}>
+                          <RemoveIcon className={classes.icon} />
+                        </IconButton>
+                      </Tooltip>
+                    )}
                   </Grid>
                 </Grid>
-              )}
-            </Grid>
-          </div>
-        )}
-      </CardActionArea>
-    </Card>
+              </Grid>
+            </div>
+          )}
+        </CardActionArea>
+      </Card>
+      <LoginDialog
+        {...props}
+        openDialog={openLogin}
+        handleCloseDialog={handleCloseDialog}
+        signIn={signIn}
+        providers={providers}
+        title="Ili kujisajili kwenye darasa, inabidi uingie kama mwanafunzi"
+      />
+    </>
   );
 }
 
@@ -143,6 +243,8 @@ CourseCard.propTypes = {
   duration: PropTypes.number,
   trainer: PropTypes.bool,
   trainee: PropTypes.bool,
+  enrolmentId: PropTypes.string,
+  onDelete: PropTypes.func,
   instructor: PropTypes.shape({
     name: PropTypes.string,
   }),
@@ -150,12 +252,14 @@ CourseCard.propTypes = {
 
 CourseCard.defaultProps = {
   slug: undefined,
+  enrolmentId: undefined,
   image: undefined,
   instructor: undefined,
   name: undefined,
   duration: undefined,
   trainer: false,
   trainee: false,
+  onDelete: undefined,
 };
 
 export default CourseCard;

@@ -4,7 +4,7 @@ import React from "react";
 
 import Login from "@/jikopoint/components/Auth/Login";
 
-function LoginDialog({ handleCloseDialog, openDialog, ...props }) {
+function LoginDialog({ handleCloseDialog, openDialog, title, ...props }) {
   return (
     <Dialog
       open={openDialog}
@@ -16,7 +16,7 @@ function LoginDialog({ handleCloseDialog, openDialog, ...props }) {
       <DialogContent>
         <Login
           {...props}
-          title="Tafadhali, Ingia kwanza"
+          title={title}
           isDialog
           onSuccess={handleCloseDialog}
         />
@@ -28,11 +28,13 @@ function LoginDialog({ handleCloseDialog, openDialog, ...props }) {
 LoginDialog.propTypes = {
   handleCloseDialog: PropTypes.func,
   openDialog: PropTypes.bool,
+  title: PropTypes.string,
 };
 
 LoginDialog.defaultProps = {
   handleCloseDialog: undefined,
   openDialog: undefined,
+  title: "Tafadhali, Ingia kwanza",
 };
 
 export default LoginDialog;

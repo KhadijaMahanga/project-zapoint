@@ -62,7 +62,7 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   },
   form: {
     display: "flex",
-    alignItems: "center",
+    alignItems: "flex-end",
   },
   button: {
     minWidth: "max-content",
