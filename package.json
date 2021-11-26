@@ -65,7 +65,7 @@
     "dev": "next dev",
     "build": "next build",
     "postbuild": "next-sitemap",
-    "start": "next start -H 0.0.0.0 -p ${PORT:-8080}",
+    "start": "echo \"${MONGO_DB_CERT}\" > ca-certificate.crt && next start -H 0.0.0.0 -p ${PORT:-8080}",
     "format": "yarn prettier --write --ignore-path './.gitignore' '**/*.+(json|md|yml)' '.'",
     "format-staged": "yarn prettier --write '**/*.+(json|md|yml)'",
     "codemod": "yarn codemod-staged-optimal-imports './src' && yarn codemod-staged-top-level-imports './src'",

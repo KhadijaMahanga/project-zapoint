@@ -17,7 +17,6 @@ function useAuth() {
     } else {
       setIsAuthenticated(true);
     }
-
     return () => setIsAuthenticated(false);
   }, [session]);
 
