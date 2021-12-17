@@ -5,6 +5,7 @@ import defaultPageData from "@/jikopoint/lib/wordpress/_query-partials/defaultPa
 import featuredImagePostFields from "@/jikopoint/lib/wordpress/_query-partials/featuredImagePostFields";
 import globalPostFields from "@/jikopoint/lib/wordpress/_query-partials/globalPostFields";
 // import lazyBlockInsightChartBlockFields from "@/jikopoint/lib/wordpress/_query-partials/lazyBlockInsightChartBlockFields";
+import relatedPostsFields from "@/jikopoint/lib/wordpress/_query-partials/relatedPostsFields";
 import seoPostFields from "@/jikopoint/lib/wordpress/_query-partials/seoPostFields";
 import tagsPostFields from "@/jikopoint/lib/wordpress/_query-partials/tagsPostFields";
 
@@ -36,6 +37,9 @@ const relatedCategoryPostsFields = `
 const singlePostFragment = gql`
   fragment SinglePostFields on Post {
     ${globalPostFields}
+    customAuthor {
+      anonymous
+    }
     blocksJSON
     content
     excerpt
@@ -44,6 +48,7 @@ const singlePostFragment = gql`
     ${featuredImagePostFields}
     ${tagsPostFields}
     ${relatedCategoryPostsFields}
+    ${relatedPostsFields}
   }
 `;
 

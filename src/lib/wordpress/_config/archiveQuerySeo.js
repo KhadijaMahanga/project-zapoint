@@ -4,7 +4,7 @@ import queryPostsArchive from "@/jikopoint/lib/wordpress/posts/queryPostsArchive
 const archiveQuerySeo = {
   post: {
     query: queryPostsArchive,
-    title: "Stories",
+    title: "Jiko News",
     description: "",
   },
 };

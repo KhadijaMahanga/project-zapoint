@@ -20,6 +20,22 @@ export async function getServerSideProps() {
     postType
   );
 
+  const post = {
+    seo: {
+      title: "Jiko Class",
+      canonical: `${process.env.NEXT_PUBLIC_APP_URL}/jiko-class/kozi`,
+      metaRobotsNofollow: "follow",
+      metaRobotsNoindex: "index",
+      openGraph: {
+        title: "Jiko Class",
+        url: `${process.env.NEXT_PUBLIC_APP_URL}/jiko-class/kozi`,
+      },
+      twitter: {
+        cardType: "player",
+      },
+    },
+  };
+
   const courses = await fetcher(
     `${process.env.NEXT_PUBLIC_APP_URL}/api/courses`
   );
@@ -27,7 +43,9 @@ export async function getServerSideProps() {
   return {
     props: {
       ...props,
+      post,
       courses: courses?.data ?? null,
+      opengraphType: "website",
     },
   };
 }
