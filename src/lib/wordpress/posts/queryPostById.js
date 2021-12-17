@@ -36,6 +36,9 @@ const relatedCategoryPostsFields = `
 const singlePostFragment = gql`
   fragment SinglePostFields on Post {
     ${globalPostFields}
+    customAuthor {
+      anonymous
+    }
     blocksJSON
     content
     excerpt
