@@ -6,8 +6,8 @@ export default {
   openGraph: {
     type: "website",
     url: "https://www.jikopoint.co.tz",
-    locale: "en_NG",
-    site_name: "JikoPoint",
+    locale: "sw_KE",
+    site_name: "Jiko Point",
     images: [
       {
         /* eslint-disable global-require */

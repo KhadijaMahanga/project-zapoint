@@ -73,6 +73,7 @@ export async function getServerSideProps(context) {
       providers,
       csrfToken,
       post,
+      opengraphType: "website",
     },
   };
 }

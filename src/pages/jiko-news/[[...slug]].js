@@ -94,6 +94,7 @@ export async function getStaticProps({ params, preview, previewData }) {
       blocks,
       categories,
       activeCategory,
+      opengraphType: "article",
     },
     revalidate,
   };
