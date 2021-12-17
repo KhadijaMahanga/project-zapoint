@@ -5,6 +5,7 @@ import React from "react";
 
 import useStyles from "./useStyles";
 
+import HighlightNews from "@/jikopoint/components/HighlightNews";
 import RichTypography from "@/jikopoint/components/RichTypography";
 import Section from "@/jikopoint/components/Section";
 import ShareBar from "@/jikopoint/components/ShareBar";
@@ -15,6 +16,7 @@ function NewsContent({
   author,
   description,
   image,
+  relatedPosts,
   title,
   ...props
 }) {
@@ -91,6 +93,15 @@ function NewsContent({
           </Grid>
         )}
       </Grid>
+      {relatedPosts?.edges?.length && (
+        <HighlightNews
+          items={relatedPosts.edges.map(({ node }) => {
+            return { ...node };
+          })}
+          isRelatedNews
+          title="Zinazohusiana "
+        />
+      )}
     </Section>
   );
 }
@@ -102,6 +113,9 @@ NewsContent.propTypes = {
   content: PropTypes.string,
   image: PropTypes.string,
   author: PropTypes.string,
+  relatedPosts: PropTypes.shape({
+    edges: PropTypes.arrayOf(PropTypes.shape({})),
+  }),
 };
 
 NewsContent.defaultProps = {
@@ -111,6 +125,7 @@ NewsContent.defaultProps = {
   content: undefined,
   author: undefined,
   image: undefined,
+  relatedPosts: undefined,
 };
 
 export default NewsContent;
