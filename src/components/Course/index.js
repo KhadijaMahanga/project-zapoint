@@ -14,6 +14,7 @@ import {
 } from "react-share";
 
 import { ReactComponent as IconCategory } from "@/jikopoint/assets/icons/icon-category-grey.svg";
+import Comments from "@/jikopoint/components/Comments";
 import DefaultProfilePic from "@/jikopoint/components/DefaultProfilePic";
 import Link from "@/jikopoint/components/Link";
 import RichTypography from "@/jikopoint/components/RichTypography";
@@ -301,7 +302,7 @@ function Index({ course, category, profile, ...props }) {
                   },
                   {
                     label: "Maoni",
-                    panel: <div />,
+                    panel: <Comments course={course?._id} {...props} />,
                   },
                 ]}
               />
@@ -315,6 +316,7 @@ function Index({ course, category, profile, ...props }) {
 
 Index.propTypes = {
   course: PropTypes.shape({
+    _id: PropTypes.string,
     name: PropTypes.string,
     image: PropTypes.string,
     description: PropTypes.string,

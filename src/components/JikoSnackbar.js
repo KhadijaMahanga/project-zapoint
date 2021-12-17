@@ -33,7 +33,7 @@ JikoSnackbar.propTypes = {
   message: PropTypes.string,
   onClose: PropTypes.func,
   open: PropTypes.bool,
-  status: PropTypes.oneOf(["success", "error"]),
+  status: PropTypes.oneOf(["success", "warning", "error"]),
 };
 
 JikoSnackbar.defaultProps = {
