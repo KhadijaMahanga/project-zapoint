@@ -1,5 +1,6 @@
 import { Typography, Grid, useMediaQuery } from "@material-ui/core";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
+import clsx from "clsx";
 import PropTypes from "prop-types";
 import React from "react";
 
@@ -33,19 +34,41 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   },
   cardSection: {
     [breakpoints.only("md")]: {
-      "&:nth-child(1)": {
+      "&:first-child": {
         marginRight: typography.pxToRem(20),
       },
     },
     [breakpoints.up("lg")]: {
-      "&:nth-child(2)": {
-        margin: `0 ${typography.pxToRem(20)}`,
+      marginRight: typography.pxToRem(20),
+      "&:last-child": {
+        marginRight: 0,
       },
     },
   },
+  cardTitle: {
+    height: typography.pxToRem(60),
+    [breakpoints.up("lg")]: {
+      height: typography.pxToRem(60),
+    },
+  },
+  cardRoot: {
+    height: typography.pxToRem(310),
+    [breakpoints.up("lg")]: {
+      width: "100%",
+    },
+  },
+  cardImage: {
+    height: typography.pxToRem(170),
+  },
 }));
 
-function HighlightNews({ items: itemsProp, title, subtitle, ...props }) {
+function HighlightNews({
+  items: itemsProp,
+  title,
+  subtitle,
+  isRelatedNews,
+  ...props
+}) {
   const classes = useStyles(props);
   const theme = useTheme();
   const isTablet = useMediaQuery(theme.breakpoints.only("md"));
@@ -53,7 +76,13 @@ function HighlightNews({ items: itemsProp, title, subtitle, ...props }) {
   if (!itemsProp?.length) {
     return null;
   }
-  const numberOfItemsToShow = isTablet ? 2 : 3;
+  let numberOfItemsToShow = 3;
+  if (isRelatedNews) {
+    numberOfItemsToShow = 4;
+  }
+  if (isTablet) {
+    numberOfItemsToShow = 2;
+  }
   const items = itemsProp.slice(0, numberOfItemsToShow);
   return (
     <div className={classes.root}>
@@ -61,22 +90,24 @@ function HighlightNews({ items: itemsProp, title, subtitle, ...props }) {
         <Typography variant="h3" className={classes.title}>
           {title}
         </Typography>
-        <Typography
-          underline="none"
-          variant="h6"
-          component={Link}
-          href="/jiko-news"
-          className={classes.subtitle}
-        >
-          {subtitle}
-        </Typography>
+        {subtitle && (
+          <Typography
+            underline="none"
+            variant="h6"
+            component={Link}
+            href="/jiko-news"
+            className={classes.subtitle}
+          >
+            {subtitle}
+          </Typography>
+        )}
         <Grid container className={classes.grid}>
           {items.map(
             ({ featuredImage, excerpt, categories, slug, ...item }) => (
               <Grid
                 xs={12}
                 md={6}
-                lg={4}
+                lg={isRelatedNews ? 3 : 4}
                 className={classes.cardSection}
                 key={slug}
                 item
@@ -87,6 +118,11 @@ function HighlightNews({ items: itemsProp, title, subtitle, ...props }) {
                   description={excerpt?.replace(/<[^>]+>/g, "") ?? ""}
                   slug={slug}
                   image={featuredImage?.node?.sourceUrl}
+                  classes={{
+                    title: clsx({ [classes.cardTitle]: isRelatedNews }),
+                    root: clsx({ [classes.cardRoot]: isRelatedNews }),
+                    image: clsx({ [classes.cardImage]: isRelatedNews }),
+                  }}
                 />
               </Grid>
             )
@@ -111,12 +147,14 @@ HighlightNews.propTypes = {
   ),
   title: PropTypes.string,
   subtitle: PropTypes.string,
+  isRelatedNews: PropTypes.bool,
 };
 
 HighlightNews.defaultProps = {
   items: undefined,
   title: undefined,
   subtitle: undefined,
+  isRelatedNews: false,
 };
 
 export default HighlightNews;

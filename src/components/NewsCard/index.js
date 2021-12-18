@@ -113,14 +113,16 @@ function NewsCard({
       >
         <div className={classes.image}>
           {image && <Image src={image} alt={title} layout="fill" />}
-          <Button
-            underline="none"
-            component={Link}
-            href={`/jiko-news/${category?.slug}`}
-            className={classes.category}
-          >
-            {category?.name}
-          </Button>
+          {category && (
+            <Button
+              underline="none"
+              component={Link}
+              href={`/jiko-news/${category?.slug}`}
+              className={classes.category}
+            >
+              {category?.name}
+            </Button>
+          )}
         </div>
         <CardContent classes={{ root: classes.cardContentRoot }}>
           {date && (

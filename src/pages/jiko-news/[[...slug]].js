@@ -34,7 +34,7 @@ function Index({ posts, post, categories, archive, activeCategory, ...props }) {
     authorName = post?.author?.node?.nickname ?? post?.author?.node?.slug;
   }
 
-  if (authorName?.toLowerCase() === "jikopoint") {
+  if (post?.customAuthor?.anonymous) {
     authorName = "Mwandishi Wetu";
   }
 
@@ -94,6 +94,7 @@ export async function getStaticProps({ params, preview, previewData }) {
       blocks,
       categories,
       activeCategory,
+      opengraphType: "article",
     },
     revalidate,
   };
@@ -109,6 +110,9 @@ Index.propTypes = {
         nickname: PropTypes.string,
         slug: PropTypes.string,
       }),
+    }),
+    customAuthor: PropTypes.shape({
+      anonymous: PropTypes.bool,
     }),
     featuredImage: PropTypes.shape({
       node: PropTypes.shape({

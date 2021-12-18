@@ -53,6 +53,7 @@ export async function getStaticProps({ preview, previewData }) {
       ...props,
       blocks,
       articles,
+      opengraphType: "website",
     },
     revalidate,
   };

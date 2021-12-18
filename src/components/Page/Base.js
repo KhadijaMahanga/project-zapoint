@@ -31,7 +31,7 @@ const social = {
 /**
  * Base page that can be used to build all other pages.
  */
-function BasePage({ children, post, ...props }) {
+function BasePage({ children, post, opengraphType, ...props }) {
   return (
     <>
       <Head>
@@ -49,9 +49,14 @@ function BasePage({ children, post, ...props }) {
           description:
             post?.seo?.metaDesc ??
             "Jiko Point ni jukwaa maalum na la kipekee la mtandaoni linalomilikiwa na kampuni ya Nukta Africa na kuwezeshwa na Shirika la Hivos na washirika wake kwa lengo la kuchochea matumizi ya nishati safi Tanzania",
-          images: [{ url: post?.seo?.opengraphImage?.sourceUrl ?? logo.src }],
+          images: [
+            {
+              url: post?.seo?.opengraphImage?.sourceUrl ?? logo.src,
+              alt: post?.seo?.opengraphImage?.altText ?? post?.seo?.title,
+            },
+          ],
           url: post?.seo?.canonical ?? process.env.NEXT_PUBLIC_APP_URL,
-          type: post?.seo?.opengraphType ?? "Web Page",
+          type: opengraphType ?? "article",
         }}
         nofollow={post?.seo?.metaRobotsNofollow !== "follow"}
         noindex={post?.seo?.metaRobotsNoindex !== "index"}
@@ -73,6 +78,7 @@ BasePage.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]),
+  opengraphType: PropTypes.string,
   post: PropTypes.shape({
     seo: PropTypes.shape({
       breadcrumbs: PropTypes.arrayOf(PropTypes.shape({})),
@@ -110,6 +116,7 @@ BasePage.propTypes = {
 
 BasePage.defaultProps = {
   children: undefined,
+  opengraphType: undefined,
   post: {
     seo: {
       metaRobotsFollow: "follow",
