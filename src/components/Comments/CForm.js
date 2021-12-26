@@ -11,7 +11,11 @@ const useStyles = makeStyles(({ palette, typography }) => ({
     backgroundColor: palette.background.default,
     margin: `${typography.pxToRem(20)} 0`,
   },
-  button: {},
+  button: {
+    color: palette.text.secondary,
+    display: "flex",
+    margin: `${typography.pxToRem(10)} 0`,
+  },
 }));
 
 function CForm({
@@ -37,7 +41,10 @@ function CForm({
     setOpen(false);
   };
 
-  const onSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
     if (comment?.length && variant === "add") {
       const options = {
         method: "POST",
@@ -49,14 +56,14 @@ function CForm({
       if (res?.success) {
         if (onUpdate) {
           onUpdate(res?.data);
-          setApiStatus("success");
-          setNotice("Umefanikiwa kuhifadhi");
         }
+        setApiStatus("success");
+        setNotice("Umefanikiwa kuhifadhi");
       } else {
-        setOpen(true);
         setApiStatus("error");
         setNotice(res?.message);
       }
+      setOpen(true);
     }
     if (comment?.length && variant === "edit") {
       const options = {
@@ -69,28 +76,29 @@ function CForm({
       if (res?.success) {
         if (onUpdate) {
           onUpdate(res?.data);
-          setApiStatus("success");
-          setNotice("Umefanikiwa kuhifadhi");
         }
+        setApiStatus("success");
+        setNotice("Umefanikiwa kuhifadhi");
       } else {
-        setOpen(true);
         setApiStatus("error");
         setNotice(res?.message);
       }
+      setOpen(true);
     }
   };
+
   return (
     <>
-      <form onSubmit={onSubmit} className={classes.root}>
+      <form onSubmit={(e) => handleSubmit(e)} className={classes.root}>
         <TextField
           variant="outlined"
           fullWidth
           onChange={(e) => setComment(e.target.value)}
         />
         <Button
+          color="primary"
           type="submit"
           variant="contained"
-          color="primary"
           className={classes.button}
         >
           Hifadhi
@@ -108,7 +116,7 @@ function CForm({
 
 CForm.propTypes = {
   variant: PropTypes.oneOf(["add", "edit"]),
-  commentor: PropTypes.shape({}),
+  commentor: PropTypes.string,
   comment: PropTypes.string,
   course: PropTypes.string,
   id: PropTypes.string,
@@ -116,7 +124,7 @@ CForm.propTypes = {
 };
 
 CForm.defaultProps = {
-  variant: undefined,
+  variant: "add",
   id: undefined,
   course: undefined,
   commentor: undefined,

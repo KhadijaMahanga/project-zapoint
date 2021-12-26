@@ -110,7 +110,6 @@ function Add({ categories, variant, user, course: courseProp, ...props }) {
         setCourse(res?.data);
         setNotice("Umefanikiwa kuhifadhi");
       } else {
-        console.log(res);
         setNotice("Tatizo la kiufundi, jaribu tena baadae.");
       }
       setTimeout(() => {

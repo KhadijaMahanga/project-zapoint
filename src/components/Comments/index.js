@@ -5,6 +5,8 @@ import React from "react";
 
 import CForm from "./CForm";
 
+import useAuth from "@/jikopoint/hooks/useAuth";
+
 const useStyles = makeStyles(({ typography }) => ({
   root: {
     margin: `${typography.pxToRem(20)} 0`,
@@ -13,12 +15,24 @@ const useStyles = makeStyles(({ typography }) => ({
 
 function Comments({ comments, ...props }) {
   const classes = useStyles(props);
+  const { session } = useAuth();
+
+  if (!session?.user) {
+    return (
+      <div className={classes.root}>
+        <Typography variant="caption">
+          Ingia ili kushiriki kwenye maoni
+        </Typography>
+      </div>
+    );
+  }
+
   return (
     <div className={classes.root}>
       {!comments?.data?.length && (
         <Typography variant="caption">Kuwa wa kwanza kutoa maoni</Typography>
       )}
-      <CForm {...props} variant="add" />
+      <CForm commentor={session?.user?.email} {...props} variant="add" />
     </div>
   );
 }

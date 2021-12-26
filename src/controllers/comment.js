@@ -1,7 +1,9 @@
+import { getUser } from "@/jikopoint/controllers/user";
 import Comment from "@/jikopoint/models/comment";
 
 export const createComment = async (data) => {
-  const created = await new Comment(data)
+  const commentor = await getUser(data.commentor);
+  const created = await new Comment({ ...data, commentor })
     .save()
     .then((createdComment) => createdComment)
     .catch((e) => new Error(e));
