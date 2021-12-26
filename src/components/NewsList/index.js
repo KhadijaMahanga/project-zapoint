@@ -43,10 +43,10 @@ function NewsList({ news, pageLimit, category, pagination }) {
   const [startIndex, setStartIndex] = useState(0);
   const [paginator, setPaginator] = useState(pagination);
 
-  const { hasNextPage } = paginator;
   const endIndex = startIndex + pageLimit;
 
-  const fetchMore = allNews.length - endIndex < pageLimit && hasNextPage;
+  const fetchMore =
+    allNews.length - endIndex < pageLimit && paginator?.hasNextPage;
   const { data: moreNews } = useSWR(
     fetchMore ? ["/api/wp/archive", category, paginator?.endCursor] : null,
     (url, taxonomyId, cursor) =>
@@ -110,9 +110,9 @@ function NewsList({ news, pageLimit, category, pagination }) {
               </Grid>
             ))}
         </Grid>
-        {(hasNextPage || hasMore || startIndex !== 0) && (
+        {(paginator?.hasNextPage || hasMore || startIndex !== 0) && (
           <Pagination
-            next={hasNextPage || hasMore ? handleNext : undefined}
+            next={paginator?.hasNextPage || hasMore ? handleNext : undefined}
             previous={startIndex !== 0 ? handlePrevious : undefined}
             classes={{ root: classes.pagination }}
           />
