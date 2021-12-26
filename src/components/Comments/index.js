@@ -1,21 +1,39 @@
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import useSWR from "swr";
 
 import CForm from "./CForm";
+import Item from "./Item";
 
 import useAuth from "@/jikopoint/hooks/useAuth";
+import fetcher from "@/jikopoint/utils/fetcher";
 
-const useStyles = makeStyles(({ typography }) => ({
+const useStyles = makeStyles(({ breakpoints, typography }) => ({
   root: {
-    margin: `${typography.pxToRem(20)} 0`,
+    margin: `${typography.pxToRem(30)} 0`,
+    [breakpoints.up("lg")]: {
+      margin: typography.pxToRem(30),
+    },
   },
 }));
 
-function Comments({ comments, ...props }) {
+function Comments({ comments: commentsProp, course, ...props }) {
   const classes = useStyles(props);
   const { session } = useAuth();
+  const [comments, setComments] = useState(commentsProp);
+
+  const { data: res, mutate } = useSWR(
+    `/api/comments/course/${course}`,
+    fetcher
+  );
+
+  useEffect(() => {
+    if (res?.success && res?.data) {
+      setComments(res.data);
+    }
+  }, [res]);
 
   if (!session?.user) {
     return (
@@ -29,22 +47,31 @@ function Comments({ comments, ...props }) {
 
   return (
     <div className={classes.root}>
-      {!comments?.data?.length && (
+      {!comments?.length && (
         <Typography variant="caption">Kuwa wa kwanza kutoa maoni</Typography>
       )}
-      <CForm commentor={session?.user?.email} {...props} variant="add" />
+      {comments?.map((c) => (
+        <Item comment={c} user={session.user.email} />
+      ))}
+      <CForm
+        {...props}
+        commentor={session?.user?.email}
+        course={course}
+        onUpdate={() => mutate()}
+        variant="add"
+      />
     </div>
   );
 }
 
 Comments.propTypes = {
-  comments: PropTypes.shape({
-    data: PropTypes.arrayOf(PropTypes.shape({})),
-  }),
+  comments: PropTypes.arrayOf(PropTypes.shape({})),
+  course: PropTypes.string,
 };
 
 Comments.defaultProps = {
   comments: undefined,
+  course: undefined,
 };
 
 export default Comments;

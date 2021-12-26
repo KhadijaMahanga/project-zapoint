@@ -55,7 +55,7 @@ function CForm({
       const res = await fetcher("/api/comments", options);
       if (res?.success) {
         if (onUpdate) {
-          onUpdate(res?.data);
+          onUpdate();
         }
         setApiStatus("success");
         setNotice("Umefanikiwa kuhifadhi");
@@ -75,7 +75,7 @@ function CForm({
       const res = await fetcher(`/api/comments/${id}`, options);
       if (res?.success) {
         if (onUpdate) {
-          onUpdate(res?.data);
+          onUpdate();
         }
         setApiStatus("success");
         setNotice("Umefanikiwa kuhifadhi");
