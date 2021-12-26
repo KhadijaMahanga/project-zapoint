@@ -226,6 +226,7 @@ tags
 **/public/workbox-*.js
 **/public/sw.js
 **/public/fallback-*.js
+**/public/fonts
 # include wordpress tags function
 !src/lib/wordpress/tags
 #cloudinary uploads
