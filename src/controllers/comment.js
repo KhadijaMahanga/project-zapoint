@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { getUser } from "@/jikopoint/controllers/user";
 import Comment from "@/jikopoint/models/comment";
 
@@ -12,9 +13,19 @@ export const createComment = async (data) => {
 };
 
 export const getCommentsPerCourse = async (course) => {
-  return Comment.find({ course })
+  const res = await Comment.find({ course })
     .then((comments) => comments)
     .catch((e) => new Error(e));
+
+  const result = await Promise.all(
+    res?.map(async (c) => {
+      const owner = await getUser(c.commentor);
+      c.commentor = owner;
+      return c;
+    })
+  ).then((p) => p);
+
+  return result;
 };
 
 export const getComment = async (id) => {
