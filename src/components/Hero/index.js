@@ -115,7 +115,7 @@ function Hero({ heading, items, buttonText, ...props }) {
         <Section classes={{ root: classes.section }}>
           <Grid container alignItems="center" justifyContent="flex-start">
             <Grid item xs={10} lg={8}>
-              <Typography variant="h2" className={classes.title}>
+              <Typography variant="h1" className={classes.title}>
                 {heading}
               </Typography>
               <Carousel

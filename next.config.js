@@ -31,6 +31,12 @@ module.exports = withPWA({
         destination: "/jiko-class/kozi",
         permanent: true,
       },
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.jikopoint.co.tz" }],
+        destination: "https://jikopoint.co.tz/:path*",
+        permanent: true,
+      },
     ];
   },
 });
