@@ -85,6 +85,7 @@ function CForm({
       }
       setOpen(true);
     }
+    setComment("");
   };
 
   return (
@@ -92,7 +93,10 @@ function CForm({
       <form onSubmit={(e) => handleSubmit(e)} className={classes.root}>
         <TextField
           variant="outlined"
+          multiline
           fullWidth
+          minRows={1}
+          value={comment}
           onChange={(e) => setComment(e.target.value)}
         />
         <Button

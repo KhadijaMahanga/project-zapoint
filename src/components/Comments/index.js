@@ -51,7 +51,7 @@ function Comments({ comments: commentsProp, course, ...props }) {
         <Typography variant="caption">Kuwa wa kwanza kutoa maoni</Typography>
       )}
       {comments?.map((c) => (
-        <Item comment={c} user={session.user.email} />
+        <Item comment={c} user={session.user.email} onUpdate={() => mutate()} />
       ))}
       <CForm
         {...props}

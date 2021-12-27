@@ -14,7 +14,7 @@ function Metrics({ items, heading, ...props }) {
   }
   return (
     <>
-      <RichTypography variant="h2" className={classes.title}>
+      <RichTypography variant="h1" className={classes.title}>
         {heading}
       </RichTypography>
       {items?.map((item, index) => (
