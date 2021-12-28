@@ -11,7 +11,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import { formatDistance } from "date-fns";
 import Image from "next/image";
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import useSWR from "swr";
 
 import CForm from "./CForm";
 
@@ -71,6 +72,18 @@ function Item({ comment, onUpdate, user, ...props }) {
   const [open, setOpen] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [openReply, setOpenReply] = useState(false);
+  const [replies, setReplies] = useState([]);
+
+  const { data: res, mutate } = useSWR(
+    `/api/comments/replies/${comment?._id}`,
+    fetcher
+  );
+
+  useEffect(() => {
+    if (res?.success && res?.data) {
+      setReplies(res.data);
+    }
+  }, [res]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -183,7 +196,7 @@ function Item({ comment, onUpdate, user, ...props }) {
                 color="primary"
                 variant="text"
               >
-                Jibu
+                {`Majibu (${replies.length})`}
               </Button>
             </Grid>
           </Grid>
@@ -233,7 +246,12 @@ function Item({ comment, onUpdate, user, ...props }) {
         maxWidth="md"
         fullWidth
       >
-        <Replies comment={comment} {...props} />
+        <Replies
+          comment={comment}
+          replies={replies}
+          onUpdate={() => mutate()}
+          {...props}
+        />
       </Dialog>
     </div>
   );

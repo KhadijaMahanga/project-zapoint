@@ -67,9 +67,6 @@ function CForm({
           text: comment,
           parent: parent?._id ?? null,
           commentor,
-          subject,
-          content,
-          email,
         }),
       };
       const res = await fetcher("/api/comments", options);
@@ -84,6 +81,9 @@ function CForm({
         setNotice(res?.message);
       }
       setOpen(true);
+      await fetch(
+        `/api/send-email?subject=${subject}&content=${content}&email=${email}`
+      );
     }
     if (comment?.length && variant === "edit") {
       const options = {

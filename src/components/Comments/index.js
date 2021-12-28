@@ -11,12 +11,16 @@ import Item from "./Item";
 import useAuth from "@/jikopoint/hooks/useAuth";
 import fetcher from "@/jikopoint/utils/fetcher";
 
-const useStyles = makeStyles(({ breakpoints, typography }) => ({
+const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   root: {
     margin: `${typography.pxToRem(30)} 0`,
     [breakpoints.up("lg")]: {
       margin: typography.pxToRem(30),
     },
+  },
+  header: {
+    color: palette.primary.main,
+    fontWeight: "bold",
   },
 }));
 
@@ -48,6 +52,17 @@ function Comments({ comments: commentsProp, course, ...props }) {
 
   return (
     <div className={classes.root}>
+      <CForm
+        {...props}
+        commentor={session?.user?.email}
+        course={course}
+        onUpdate={() => mutate()}
+        variant="add"
+      />
+      <Typography
+        variant="h4"
+        className={classes.header}
+      >{`Maoni (${comments.length}) `}</Typography>
       {comments?.map((c) => (
         <Item
           comment={c}
@@ -56,13 +71,6 @@ function Comments({ comments: commentsProp, course, ...props }) {
           onUpdate={() => mutate()}
         />
       ))}
-      <CForm
-        {...props}
-        commentor={session?.user?.email}
-        course={course}
-        onUpdate={() => mutate()}
-        variant="add"
-      />
     </div>
   );
 }

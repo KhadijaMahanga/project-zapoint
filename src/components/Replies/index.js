@@ -35,10 +35,10 @@ const useStyles = makeStyles(({ breakpoints, palette, typography }) => ({
   },
 }));
 
-function Replies({ comment, ...props }) {
+function Replies({ comment, replies: repliesProp, onUpdate, ...props }) {
   const classes = useStyles(props);
   const { session } = useAuth();
-  const [replies, setReplies] = useState([]);
+  const [replies, setReplies] = useState(repliesProp);
 
   const { data: res, mutate } = useSWR(
     `/api/comments/replies/${comment._id}`,
@@ -50,6 +50,13 @@ function Replies({ comment, ...props }) {
       setReplies(res.data);
     }
   }, [res]);
+
+  const handleUpdate = () => {
+    if (onUpdate) {
+      onUpdate();
+    }
+    mutate();
+  };
 
   return (
     <div className={classes.root}>
@@ -77,7 +84,7 @@ function Replies({ comment, ...props }) {
         {...props}
         commentor={session?.user?.email}
         parent={comment}
-        onUpdate={() => mutate()}
+        onUpdate={handleUpdate}
         variant="add"
       />
     </div>
@@ -85,13 +92,17 @@ function Replies({ comment, ...props }) {
 }
 
 Replies.propTypes = {
+  replies: PropTypes.arrayOf(PropTypes.shape({})),
   comment: PropTypes.shape({
     _id: PropTypes.string,
   }),
+  onUpdate: PropTypes.func,
 };
 
 Replies.defaultProps = {
   comment: undefined,
+  replies: undefined,
+  onUpdate: undefined,
 };
 
 export default Replies;
