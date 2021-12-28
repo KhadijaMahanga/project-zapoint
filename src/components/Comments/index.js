@@ -59,10 +59,9 @@ function Comments({ comments: commentsProp, course, ...props }) {
         onUpdate={() => mutate()}
         variant="add"
       />
-      <Typography
-        variant="h4"
-        className={classes.header}
-      >{`Maoni (${comments.length}) `}</Typography>
+      <Typography variant="h4" className={classes.header}>{`Maoni (${
+        comments?.length ?? 0
+      }) `}</Typography>
       {comments?.map((c) => (
         <Item
           comment={c}

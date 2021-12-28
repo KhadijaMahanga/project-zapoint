@@ -68,9 +68,9 @@ function Replies({ comment, replies: repliesProp, onUpdate, ...props }) {
           replyButton: classes.commentReplyButton,
         }}
       />
-      <Typography
-        className={classes.header}
-      >{`Majibu ${replies.length} `}</Typography>
+      <Typography className={classes.header}>{`Majibu ${
+        replies?.length ?? 0
+      } `}</Typography>
       {replies?.map((r) => (
         <Item
           comment={r}
