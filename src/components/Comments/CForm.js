@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { Button, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
@@ -25,6 +26,7 @@ function CForm({
   id,
   onUpdate,
   variant,
+  parent,
   ...props
 }) {
   const [comment, setComment] = useState(commentProp);
@@ -46,11 +48,29 @@ function CForm({
     e.stopPropagation();
 
     if (comment?.length && variant === "add") {
+      let subject = "Jiko Point | Oni jipya";
+      let content = `Mtumiaji ametoa oni kwenye kozi yako ${course?.name} `;
+      let email = course?.instructor?.email;
+
+      if (parent) {
+        subject = "Jiko Point | Umejibiwa oni lako";
+        content = `Mtumiaji amejibu oni lako kwenye kozi ${course?.name} `;
+        email = parent?.commentor?.email;
+      }
+
       const options = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "same-origin",
-        body: JSON.stringify({ commentor, course, text: comment }),
+        body: JSON.stringify({
+          course: course?._id,
+          text: comment,
+          parent: parent?._id ?? null,
+          commentor,
+          subject,
+          content,
+          email,
+        }),
       };
       const res = await fetcher("/api/comments", options);
       if (res?.success) {
@@ -122,9 +142,21 @@ CForm.propTypes = {
   variant: PropTypes.oneOf(["add", "edit"]),
   commentor: PropTypes.string,
   comment: PropTypes.string,
-  course: PropTypes.string,
+  course: PropTypes.shape({
+    _id: PropTypes.string,
+    name: PropTypes.string,
+    instructor: PropTypes.shape({
+      email: PropTypes.string,
+    }),
+  }),
   id: PropTypes.string,
   onUpdate: PropTypes.func,
+  parent: PropTypes.shape({
+    _id: PropTypes.string,
+    commentor: PropTypes.shape({
+      email: PropTypes.string,
+    }),
+  }),
 };
 
 CForm.defaultProps = {
@@ -134,6 +166,7 @@ CForm.defaultProps = {
   commentor: undefined,
   comment: undefined,
   onUpdate: undefined,
+  parent: null,
 };
 
 export default CForm;

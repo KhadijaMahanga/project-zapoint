@@ -16,6 +16,7 @@ import React, { useState } from "react";
 import CForm from "./CForm";
 
 import DefaultProfilePic from "@/jikopoint/components/DefaultProfilePic";
+import Replies from "@/jikopoint/components/Replies";
 import fetcher from "@/jikopoint/utils/fetcher";
 
 const useStyles = makeStyles(({ palette, typography }) => ({
@@ -231,7 +232,9 @@ function Item({ comment, onUpdate, user, ...props }) {
         onClose={handleCloseReply}
         maxWidth="md"
         fullWidth
-      />
+      >
+        <Replies comment={comment} {...props} />
+      </Dialog>
     </div>
   );
 }

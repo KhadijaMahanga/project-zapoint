@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
@@ -25,7 +26,7 @@ function Comments({ comments: commentsProp, course, ...props }) {
   const [comments, setComments] = useState(commentsProp);
 
   const { data: res, mutate } = useSWR(
-    `/api/comments/course/${course}`,
+    `/api/comments/course/${course?._id}`,
     fetcher
   );
 
@@ -47,11 +48,13 @@ function Comments({ comments: commentsProp, course, ...props }) {
 
   return (
     <div className={classes.root}>
-      {!comments?.length && (
-        <Typography variant="caption">Kuwa wa kwanza kutoa maoni</Typography>
-      )}
       {comments?.map((c) => (
-        <Item comment={c} user={session.user.email} onUpdate={() => mutate()} />
+        <Item
+          comment={c}
+          user={session.user.email}
+          course={course}
+          onUpdate={() => mutate()}
+        />
       ))}
       <CForm
         {...props}
@@ -66,7 +69,9 @@ function Comments({ comments: commentsProp, course, ...props }) {
 
 Comments.propTypes = {
   comments: PropTypes.arrayOf(PropTypes.shape({})),
-  course: PropTypes.string,
+  course: PropTypes.shape({
+    _id: PropTypes.string,
+  }),
 };
 
 Comments.defaultProps = {
