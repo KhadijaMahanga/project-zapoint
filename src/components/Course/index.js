@@ -302,7 +302,7 @@ function Index({ course, category, profile, ...props }) {
                   },
                   {
                     label: "Maoni",
-                    panel: <Comments course={course?._id} {...props} />,
+                    panel: <Comments course={course} {...props} />,
                   },
                 ]}
               />
