@@ -12,8 +12,26 @@ export const createComment = async (data) => {
   return created;
 };
 
+export const getRepliesPerComment = async (parent) => {
+  const res = await Comment.find({ parent })
+    .sort({ created_at: "desc" })
+    .then((comments) => comments)
+    .catch((e) => new Error(e));
+
+  const result = await Promise.all(
+    res?.map(async (c) => {
+      const owner = await getUser(c.commentor);
+      c.commentor = owner;
+      return c;
+    })
+  ).then((p) => p);
+
+  return result;
+};
+
 export const getCommentsPerCourse = async (course) => {
-  const res = await Comment.find({ course })
+  const res = await Comment.find({ course, parent: null })
+    .sort({ created_at: "desc" })
     .then((comments) => comments)
     .catch((e) => new Error(e));
 
