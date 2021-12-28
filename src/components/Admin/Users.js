@@ -70,7 +70,7 @@ function Users({ users: usersProp, ...props }) {
     };
     const result = await fetcher(`/api/users/${id}`, options);
     if (!result.success) {
-      alert("Kumetokea tatizo la kiufundi, jaribu tena baadae");
+      // alert("Kumetokea tatizo la kiufundi, jaribu tena baadae");
     }
     setRefreshList(true);
   };

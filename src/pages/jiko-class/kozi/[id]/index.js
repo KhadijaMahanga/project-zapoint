@@ -32,7 +32,7 @@ export async function getServerSideProps(context) {
 
   const post = {
     seo: {
-      title: `${course?.data?.name} - JikoPoint` ?? null,
+      title: `${course?.data?.name} | JikoPoint` ?? null,
       metaDesc: course?.data?.description ?? null,
       canonical: `${process.env.NEXT_PUBLIC_APP_URL}/jiko-class/kozi/${id}`,
       metaRobotsNofollow: "follow",
@@ -63,12 +63,17 @@ export async function getServerSideProps(context) {
   const cat = await fetcher(
     `${process.env.NEXT_PUBLIC_APP_URL}/api/categories/${course?.data?.category}`
   );
+
+  const comments = await fetcher(
+    `${process.env.NEXT_PUBLIC_APP_URL}/api/comments/course/${id}`
+  );
   return {
     props: {
       course: course?.data ?? null,
       category: cat?.data ?? null,
       lectures: lectures?.data ?? null,
       profile: profile?.data ?? null,
+      comments: comments?.data ?? null,
       session,
       providers,
       csrfToken,

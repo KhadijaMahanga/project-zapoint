@@ -16,6 +16,7 @@ const handler = nc({ onNoMatch, onError })
       const comment = await createComment(req?.body);
       res.json({ success: true, data: comment });
     } catch (e) {
+      console.log(e);
       res.status(401).send({ message: e, success: false });
     }
   });

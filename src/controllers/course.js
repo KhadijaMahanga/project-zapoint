@@ -21,7 +21,7 @@ export const getAllCourses = async () => {
 
 export const getCourses = async () => {
   const res = await Course.find({ isArchived: false, status: "approved" })
-    .sort({ createdAt: 1 })
+    .sort({ created_at: "desc" })
     .then((courses) => courses)
     .catch((e) => new Error(e));
 

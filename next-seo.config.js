@@ -5,7 +5,7 @@ export default {
     "JikoPoint ni jukwaa maalum na la kipekee la mtandaoni linalomilikiwa na kampuni ya Nukta Africa na kuwezeshwa na Shirika la Hivos na washirika wake kwa lengo la kuchochea matumizi ya nishati safi Tanzania",
   openGraph: {
     type: "website",
-    url: "https://www.jikopoint.co.tz",
+    url: "https://jikopoint.co.tz",
     locale: "sw_KE",
     site_name: "Jiko Point",
     images: [

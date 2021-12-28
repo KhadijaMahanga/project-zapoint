@@ -1,7 +1,10 @@
+/* eslint-disable no-param-reassign */
+import { getUser } from "@/jikopoint/controllers/user";
 import Comment from "@/jikopoint/models/comment";
 
 export const createComment = async (data) => {
-  const created = await new Comment(data)
+  const commentor = await getUser(data.commentor);
+  const created = await new Comment({ ...data, commentor })
     .save()
     .then((createdComment) => createdComment)
     .catch((e) => new Error(e));
@@ -9,10 +12,38 @@ export const createComment = async (data) => {
   return created;
 };
 
-export const getCommentsPerCourse = async (course) => {
-  return Comment.find({ course })
+export const getRepliesPerComment = async (parent) => {
+  const res = await Comment.find({ parent })
+    .sort({ created_at: "desc" })
     .then((comments) => comments)
     .catch((e) => new Error(e));
+
+  const result = await Promise.all(
+    res?.map(async (c) => {
+      const owner = await getUser(c.commentor);
+      c.commentor = owner;
+      return c;
+    })
+  ).then((p) => p);
+
+  return result;
+};
+
+export const getCommentsPerCourse = async (course) => {
+  const res = await Comment.find({ course, parent: null })
+    .sort({ created_at: "desc" })
+    .then((comments) => comments)
+    .catch((e) => new Error(e));
+
+  const result = await Promise.all(
+    res?.map(async (c) => {
+      const owner = await getUser(c.commentor);
+      c.commentor = owner;
+      return c;
+    })
+  ).then((p) => p);
+
+  return result;
 };
 
 export const getComment = async (id) => {

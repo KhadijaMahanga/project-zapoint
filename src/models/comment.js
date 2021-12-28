@@ -10,6 +10,10 @@ const CommentSchema = new Schema(
       type: String,
       required: true,
     },
+    parent: {
+      type: Schema.Types.ObjectId,
+      ref: "Comment",
+    },
   },
   { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } }
 );
