@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import useSWR from "swr";
 
+import JikoSnackbar from "@/jikopoint/components/JikoSnackbar";
 import fetcher from "@/jikopoint/utils/fetcher";
 
 const useStyles = makeStyles(({ typography, palette }) => ({
@@ -51,14 +52,22 @@ const useStyles = makeStyles(({ typography, palette }) => ({
 function Users({ users: usersProp, ...props }) {
   const classes = useStyles(props);
   const [users, setUsers] = useState(usersProp);
-  const [refreshList, setRefreshList] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [apiStatus, setApiStatus] = useState();
+  const [notice, setNotice] = useState();
 
-  const { data: res } = useSWR(refreshList ? "/api/users" : null, fetcher);
+  const handleCloseSnack = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+
+  const { data: res, mutate } = useSWR("/api/users", fetcher);
 
   useEffect(() => {
     if (res?.success && res?.users) {
       setUsers(res?.users);
-      setRefreshList(false);
     }
   }, [res]);
 
@@ -69,14 +78,25 @@ function Users({ users: usersProp, ...props }) {
       credentials: "same-origin",
     };
     const result = await fetcher(`/api/users/${id}`, options);
-    if (!result.success) {
-      // alert("Kumetokea tatizo la kiufundi, jaribu tena baadae");
+    if (result?.success) {
+      mutate();
+      setApiStatus("success");
+      setNotice("Umefanikiwa kufuta");
+    } else {
+      setApiStatus("error");
+      setNotice(result?.message);
     }
-    setRefreshList(true);
+    setOpen(true);
   };
 
   return (
     <div className={classes.root}>
+      <JikoSnackbar
+        open={open}
+        onClose={handleCloseSnack}
+        message={notice}
+        status={apiStatus}
+      />
       {users?.length > 0 && (
         <Grid container className={classes.tableRoot}>
           <Grid

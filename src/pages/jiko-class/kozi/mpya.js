@@ -1,4 +1,4 @@
-import { getSession } from "next-auth/client";
+import { getSession } from "next-auth/react";
 import React from "react";
 
 import Add from "@/jikopoint/components/Course/Add";
@@ -40,6 +40,7 @@ export async function getServerSideProps(context) {
 
   return {
     props: {
+      session,
       categories: categories?.data,
       user: user?.user ?? null,
     },

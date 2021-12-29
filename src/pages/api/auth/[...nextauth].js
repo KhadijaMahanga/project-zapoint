@@ -1,16 +1,22 @@
 /* eslint-disable no-param-reassign */
+import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import jwt from "jsonwebtoken";
 import NextAuth from "next-auth";
-import Providers from "next-auth/providers";
+import CredentialsProvider from "next-auth/providers/credentials";
+import EmailProvider from "next-auth/providers/email";
+import FacebookProvider from "next-auth/providers/facebook";
+import GoogleProvider from "next-auth/providers/google";
+import TwitterProvider from "next-auth/providers/twitter";
 
 import loginUser from "@/jikopoint/utils/auth/loginUser";
+import clientPromise from "@/jikopoint/utils/mongodb";
 import customEmailVerificationRequest from "@/jikopoint/utils/next-auth/customEmailSendVerification";
 
 export default async (req, res) =>
   NextAuth(req, res, {
     // Configure one or more authentication providers
     providers: [
-      Providers.Email({
+      EmailProvider({
         server: process.env.SMTP_SERVER,
         from: process.env.EMAIL_FROM,
         sendVerificationRequest: async ({
@@ -33,19 +39,19 @@ export default async (req, res) =>
           });
         },
       }),
-      Providers.Facebook({
+      FacebookProvider({
         clientId: process.env.FACEBOOK_CLIENT_ID,
         clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
       }),
-      Providers.Google({
+      GoogleProvider({
         clientId: process.env.GOOGLE_ID,
         clientSecret: process.env.GOOGLE_SECRET,
       }),
-      Providers.Twitter({
+      TwitterProvider({
         clientId: process.env.TWITTER_ID,
         clientSecret: process.env.TWITTER_SECRET,
       }),
-      Providers.Credentials({
+      CredentialsProvider({
         id: "login",
         name: "Login",
         async authorize(credentials) {
@@ -69,12 +75,13 @@ export default async (req, res) =>
         },
       }),
     ],
+    adapter: MongoDBAdapter(clientPromise),
     // A database is optional, but required to persist accounts in a database
     database: process.env.MONGODB_URI,
     secret: process.env.SECRET,
     redirect: false,
     session: {
-      jwt: true,
+      strategy: "jwt",
       maxAge: 30 * 24 * 60 * 60, // 30 days
 
       // Seconds - Throttle how frequently to write to database to extend a session.
@@ -117,13 +124,13 @@ export default async (req, res) =>
       // async redirect(url, baseUrl) { return baseUrl },
       // async session(session, user) { return session },
       // async jwt(token, user, account, profile, isNewUser) { return token }
-      async signIn(user) {
+      async signIn({ user }) {
         if (user?.isDeleted) {
           return false;
         }
         return true;
       },
-      async session(session, token) {
+      async session({ session, token }) {
         if (token?.accessToken) {
           session.accessToken = token.accessToken;
         }
@@ -132,7 +139,7 @@ export default async (req, res) =>
         }
         return session;
       },
-      async jwt(token, user, account) {
+      async jwt({ token, user, account }) {
         if (account?.accessToken) {
           token.accessToken = account.accessToken;
         }
@@ -155,5 +162,5 @@ export default async (req, res) =>
     theme: "light",
 
     // Enable debug messages in the console if you are having problems
-    debug: false,
+    debug: true,
   });

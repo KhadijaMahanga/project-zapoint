@@ -1,8 +1,9 @@
-import { signIn, signOut, useSession, getProviders } from "next-auth/client";
+import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 import { useState, useEffect } from "react";
 
 function useAuth() {
-  const [session, loading] = useSession();
+  const { data: session, status } = useSession();
+  const loading = status === "loading";
   const [providers, setProviders] = useState();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 

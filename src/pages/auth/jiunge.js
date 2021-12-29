@@ -1,7 +1,7 @@
 import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import { signIn, getCsrfToken } from "next-auth/client";
+import { signIn, getCsrfToken, getSession } from "next-auth/react";
 import PropTypes from "prop-types";
 import React from "react";
 
@@ -78,9 +78,13 @@ Jiunge.defaultProps = {
 };
 
 export async function getServerSideProps(context) {
+  const session = await getSession(context);
+  const csrfToken = await getCsrfToken(context);
+
   return {
     props: {
-      csrfToken: await getCsrfToken(context),
+      session,
+      csrfToken: csrfToken ?? null,
     },
   };
 }

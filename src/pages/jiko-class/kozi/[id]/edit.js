@@ -1,4 +1,4 @@
-import { getSession } from "next-auth/client";
+import { getSession } from "next-auth/react";
 import React from "react";
 
 import Add from "@/jikopoint/components/Course/Add";
@@ -63,6 +63,7 @@ export async function getServerSideProps(context) {
       user: user?.user ?? null,
       lectures: lectures?.data ?? null,
       courseId: id,
+      session,
     },
   };
 }

@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { getSession } from "next-auth/client";
+import { getSession } from "next-auth/react";
 import React from "react";
 
 import UserAccount from "@/jikopoint/components/Account";
@@ -57,6 +57,7 @@ export async function getServerSideProps(context) {
 
   return {
     props: {
+      session,
       courses: courses?.data ?? null,
       user: { ...currentUser?.user, role: session?.user?.role ?? "trainee" },
       categories: categories?.data ?? null,

@@ -1,5 +1,5 @@
 /* eslint-disable consistent-return */
-import { getSession } from "next-auth/client";
+import { getSession } from "next-auth/react";
 import nextConnect from "next-connect";
 
 import {

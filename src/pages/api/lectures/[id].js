@@ -1,7 +1,7 @@
 /* eslint-disable consistent-return */
 import { v2 as cloudinary } from "cloudinary";
 import multer from "multer";
-import { getSession } from "next-auth/client";
+import { getSession } from "next-auth/react";
 import nextConnect from "next-connect";
 
 import { updateLecture, deleteLecture } from "@/jikopoint/controllers/lecture";

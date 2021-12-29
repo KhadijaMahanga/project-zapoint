@@ -1,5 +1,5 @@
 /* eslint-disable consistent-return */
-import { getSession } from "next-auth/client";
+import { getSession } from "next-auth/react";
 import nc from "next-connect";
 
 import { getUser, updateUser, deleteUser } from "@/jikopoint/controllers/user";

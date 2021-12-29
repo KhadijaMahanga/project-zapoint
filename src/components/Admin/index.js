@@ -24,10 +24,6 @@ function Admin({ ...props }) {
           label: "Watumiaji",
           panel: <Users {...props} />,
         },
-        {
-          label: "Usajili",
-          panel: <div />,
-        },
       ]}
     />
   );
