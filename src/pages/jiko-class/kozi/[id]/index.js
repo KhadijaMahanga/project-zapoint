@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { getSession, getProviders, getCsrfToken } from "next-auth/client";
+import { getSession, getProviders, getCsrfToken } from "next-auth/react";
 import React from "react";
 
 import SingleCourse from "@/jikopoint/components/Course";
@@ -14,11 +14,10 @@ function Course(props) {
   );
 }
 
-export async function getServerSideProps(context) {
-  const { params, req } = context;
+export async function getServerSideProps({ params, req }) {
   const session = await getSession({ req });
-  const providers = await getProviders(context);
-  const csrfToken = await getCsrfToken(context);
+  const providers = await getProviders({ req });
+  const csrfToken = await getCsrfToken({ req });
   const { id } = params;
   const course = await fetcher(
     `${process.env.NEXT_PUBLIC_APP_URL}/api/courses/${id}`

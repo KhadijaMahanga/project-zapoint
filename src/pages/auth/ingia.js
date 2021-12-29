@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/core/styles";
-import { getSession, getProviders, getCsrfToken } from "next-auth/client";
+import { getSession, getProviders, getCsrfToken } from "next-auth/react";
 import { useRouter } from "next/router";
 import PropTypes from "prop-types";
 import React, { useEffect } from "react";
@@ -53,8 +53,8 @@ Ingia.defaultProps = {
   csrfToken: undefined,
 };
 
-export async function getServerSideProps(context) {
-  const session = await getSession(context);
+export async function getServerSideProps({ req }) {
+  const session = await getSession({ req });
   if (session && session.accessToken) {
     return {
       redirect: {
@@ -63,11 +63,13 @@ export async function getServerSideProps(context) {
       },
     };
   }
+  const providers = await getProviders({ req });
+  const csrfToken = await getCsrfToken({ req });
   return {
     props: {
-      session: null,
-      providers: await getProviders(context),
-      csrfToken: await getCsrfToken(context),
+      session,
+      providers: providers ?? null,
+      csrfToken: csrfToken ?? null,
     },
   };
 }

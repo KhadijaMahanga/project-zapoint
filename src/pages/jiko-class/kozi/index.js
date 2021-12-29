@@ -1,3 +1,4 @@
+import { getSession } from "next-auth/react";
 import React from "react";
 
 import CoursesPage from "@/jikopoint/components/CoursesPage";
@@ -13,7 +14,7 @@ function Index({ ...props }) {
   );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps({ req }) {
   const postType = "page";
   const { props } = await getPostTypeStaticProps(
     { slug: "jiko-class" },
@@ -40,10 +41,13 @@ export async function getServerSideProps() {
     `${process.env.NEXT_PUBLIC_APP_URL}/api/courses`
   );
 
+  const session = await getSession({ req });
+
   return {
     props: {
       ...props,
       post,
+      session,
       courses: courses?.data ?? null,
       opengraphType: "website",
     },

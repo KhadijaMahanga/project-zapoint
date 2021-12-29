@@ -52,7 +52,6 @@ function Categories({ categories: categoriesProp, ...props }) {
   const [openDialog, setOpenDialog] = useState(false);
   const [variant, setVariant] = useState("add");
   const [row, setRow] = useState(null);
-  const [refreshList, setRefreshList] = useState(false);
 
   useEffect(() => {
     if (categoriesProp?.length) {
@@ -60,12 +59,11 @@ function Categories({ categories: categoriesProp, ...props }) {
     }
   }, [categoriesProp]);
 
-  const { data: res } = useSWR(refreshList ? "/api/categories" : null, fetcher);
+  const { data: res, mutate } = useSWR("/api/categories", fetcher);
 
   useEffect(() => {
     if (res?.success && res?.data) {
       setCategories(res?.data);
-      setRefreshList(false);
     }
   }, [res]);
 
@@ -83,10 +81,6 @@ function Categories({ categories: categoriesProp, ...props }) {
   const handleCloseDialog = (e) => {
     e?.preventDefault();
     setOpenDialog(false);
-  };
-
-  const updateCategoriesList = () => {
-    setRefreshList(true);
   };
 
   return (
@@ -157,7 +151,7 @@ function Categories({ categories: categoriesProp, ...props }) {
         variant={variant}
         handleCloseDialog={handleCloseDialog}
         openDialog={openDialog}
-        updateCategoriesList={updateCategoriesList}
+        updateCategoriesList={() => mutate()}
         value={row}
       />
     </div>

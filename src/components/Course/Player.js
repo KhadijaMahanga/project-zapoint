@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 import { Typography, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { signIn } from "next-auth/client";
+import { signIn } from "next-auth/react";
 import PropTypes from "prop-types";
 import React, { useCallback, useEffect, useState } from "react";
 import videojs from "video.js";

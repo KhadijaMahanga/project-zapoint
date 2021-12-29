@@ -1,6 +1,6 @@
 import { v2 as cloudinary } from "cloudinary";
 import multer from "multer";
-import { getSession } from "next-auth/client";
+import { getSession } from "next-auth/react";
 import nc from "next-connect";
 
 import { createCourse, getCourses } from "@/jikopoint/controllers/course";

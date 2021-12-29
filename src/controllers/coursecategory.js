@@ -11,6 +11,7 @@ export const createCategory = async (data) => {
 
 export const getCategories = async () => {
   return CourseCategory.find({})
+    .sort({ created_at: "desc" })
     .then((categories) => categories)
     .catch((e) => new Error(e));
 };

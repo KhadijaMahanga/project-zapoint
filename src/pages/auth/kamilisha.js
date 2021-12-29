@@ -1,5 +1,6 @@
 import { Typography, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { getSession } from "next-auth/react";
 import React from "react";
 
 import Page from "@/jikopoint/components/Page";
@@ -47,9 +48,12 @@ function Kamilisha() {
     </Page>
   );
 }
-export async function getServerSideProps() {
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
   return {
-    props: {},
+    props: {
+      session,
+    },
   };
 }
 

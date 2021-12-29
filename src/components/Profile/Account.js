@@ -11,7 +11,7 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import bcrypt from "bcryptjs";
-import { getCsrfToken, signOut } from "next-auth/client";
+import { getCsrfToken, signOut } from "next-auth/react";
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 

@@ -1,5 +1,6 @@
 import { Typography, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { getSession } from "next-auth/react";
 import PropTypes from "prop-types";
 import React from "react";
 
@@ -65,9 +66,11 @@ function Error({ error }) {
 }
 export async function getServerSideProps(context) {
   const { error } = context.query;
+  const session = await getSession(context);
   return {
     props: {
       error,
+      session,
     },
   };
 }

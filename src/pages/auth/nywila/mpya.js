@@ -7,7 +7,7 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import bcrypt from "bcryptjs";
-import { getCsrfToken, signOut } from "next-auth/client";
+import { getCsrfToken, signOut, getSession } from "next-auth/react";
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 
@@ -142,11 +142,12 @@ function NywilaMpya({ user, ...props }) {
 }
 
 export async function getServerSideProps(context) {
+  const session = await getSession(context);
   const email = context?.query?.email;
   const currentUser = await fetcher(
     `${process.env.NEXT_PUBLIC_APP_URL}/api/users/${email}`
   );
-  return { props: { user: currentUser?.user } };
+  return { props: { user: currentUser?.user, session } };
 }
 
 NywilaMpya.propTypes = {

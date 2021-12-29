@@ -6,7 +6,7 @@ import {
   LinearProgress,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { getSession } from "next-auth/client";
+import { getSession } from "next-auth/react";
 import React, { useState } from "react";
 
 import Page from "@/jikopoint/components/Page";
@@ -122,6 +122,7 @@ export async function getServerSideProps(context) {
 
   return {
     props: {
+      session,
       sahau: true,
     },
   };

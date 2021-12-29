@@ -1,6 +1,6 @@
 import { Typography, Button, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { signOut } from "next-auth/client";
+import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 import React from "react";
 
