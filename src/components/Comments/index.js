@@ -64,6 +64,7 @@ function Comments({ comments: commentsProp, course, ...props }) {
       }) `}</Typography>
       {comments?.map((c) => (
         <Item
+          key={c?._id}
           comment={c}
           user={session.user.email}
           course={course}
@@ -75,7 +76,11 @@ function Comments({ comments: commentsProp, course, ...props }) {
 }
 
 Comments.propTypes = {
-  comments: PropTypes.arrayOf(PropTypes.shape({})),
+  comments: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string,
+    })
+  ),
   course: PropTypes.shape({
     _id: PropTypes.string,
   }),

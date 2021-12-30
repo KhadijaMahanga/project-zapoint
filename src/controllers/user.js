@@ -50,6 +50,14 @@ export const deleteUser = async (id) => {
 
 export const getUsers = async () => {
   return User.find({ isDeleted: false })
+    .sort({ created_at: "desc" })
+    .select("-__v")
+    .then((users) => users)
+    .catch((e) => new Error(e));
+};
+
+export const getAdminUsers = async () => {
+  return User.find({ isDeleted: false, role: "admin" })
     .select("-__v")
     .then((users) => users)
     .catch((e) => new Error(e));

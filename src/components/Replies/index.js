@@ -73,6 +73,7 @@ function Replies({ comment, replies: repliesProp, onUpdate, ...props }) {
       } `}</Typography>
       {replies?.map((r) => (
         <Item
+          key={r?._id}
           comment={r}
           user={session.user.email}
           parent={comment}
@@ -92,7 +93,11 @@ function Replies({ comment, replies: repliesProp, onUpdate, ...props }) {
 }
 
 Replies.propTypes = {
-  replies: PropTypes.arrayOf(PropTypes.shape({})),
+  replies: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string,
+    })
+  ),
   comment: PropTypes.shape({
     _id: PropTypes.string,
   }),
