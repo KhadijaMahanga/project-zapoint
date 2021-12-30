@@ -231,7 +231,7 @@ function Item({ comment, onUpdate, user, ...props }) {
         <DialogContent>
           <Typography variant="body2">Hariri Oni </Typography>
           <CForm
-            course={comment.course}
+            {...props}
             comment={comment.text}
             id={comment._id}
             commentor={comment?.commentor?.email}
@@ -247,10 +247,10 @@ function Item({ comment, onUpdate, user, ...props }) {
         fullWidth
       >
         <Replies
+          {...props}
           comment={comment}
           replies={replies}
           onUpdate={() => mutate()}
-          {...props}
         />
       </Dialog>
     </div>
