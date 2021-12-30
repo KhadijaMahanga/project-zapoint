@@ -66,15 +66,14 @@ const text = ({ url, site }) =>
 const customEmailVerificationRequest = ({
   identifier: email,
   url,
-  baseUrl,
   provider,
-  callbackUrl,
   status,
 }) => {
   return new Promise((resolve, reject) => {
     const { server, from } = provider;
+
     // Strip protocol from URL and use domain as site name
-    const site = baseUrl.replace(/^https?:\/\//, "");
+    const site = "Jiko Point";
 
     nodemailer.createTransport(server).sendMail(
       {
@@ -85,13 +84,13 @@ const customEmailVerificationRequest = ({
             ? "JikoPoint: Hakiki Barua Pepe Yako"
             : "JikoPoint: Badilisha Nywila Yako",
         text: text({
-          url: `${url}&callbackUrl=${callbackUrl}`,
+          url,
           site,
           email,
           status,
         }),
         html: html({
-          url: `${url}&callbackUrl=${callbackUrl}`,
+          url,
           site,
           email,
           status,

@@ -18,6 +18,7 @@ const sendVerificationRequest = async (email, status) => {
     status === "register"
       ? `${process.env.NEXTAUTH_URL}/auth/thibitishwa`
       : `${process.env.NEXTAUTH_URL}/auth/nywila/mpya?email=${email}`;
+
   const fetchOptions = {
     method: "POST",
     headers: {

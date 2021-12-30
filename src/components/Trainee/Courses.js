@@ -52,12 +52,6 @@ function Courses({ courses: coursesProp, user, categories, ...props }) {
   const classes = useStyles(props);
   const [courses, setCourses] = useState(coursesProp);
 
-  useEffect(() => {
-    if (coursesProp?.length) {
-      setCourses(coursesProp);
-    }
-  }, [coursesProp]);
-
   const { data: res, mutate } = useSWR(
     `/api/enrolment/student/${user?._id}`,
     fetcher
@@ -76,17 +70,18 @@ function Courses({ courses: coursesProp, user, categories, ...props }) {
     <div className={classes.root}>
       {courses?.length > 0 && (
         <Grid container className={classes.tableRoot}>
-          {courses?.map((c) => (
-            <Grid item xs={12} md={6} key={c._id}>
-              <CourseCard
-                {...c}
-                slug={c._id}
-                trainee
-                onDelete={() => mutate()}
-                classes={{ image: classes.courseImage }}
-              />
-            </Grid>
-          ))}
+          {courses?.length &&
+            courses?.map((c) => (
+              <Grid item xs={12} md={6} key={c._id}>
+                <CourseCard
+                  {...c}
+                  slug={c._id}
+                  trainee
+                  onDelete={() => mutate()}
+                  classes={{ image: classes.courseImage }}
+                />
+              </Grid>
+            ))}
         </Grid>
       )}
     </div>

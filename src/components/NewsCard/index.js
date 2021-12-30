@@ -86,6 +86,7 @@ function NewsCard({
   title,
   category,
   slug,
+  uri,
   description,
   ...props
 }) {
@@ -107,7 +108,7 @@ function NewsCard({
     <Card className={classes.root}>
       <CardActionArea
         component={Component}
-        href={`/jiko-news/${category?.slug}/${slug}`}
+        href={`/jiko-news${uri}`}
         classes={{ focusHighlight: classes.cardActionAreaFocusHighlight }}
         underline="none"
       >
@@ -150,6 +151,7 @@ NewsCard.propTypes = {
     slug: PropTypes.string,
     name: PropTypes.string,
   }),
+  uri: PropTypes.string,
 };
 
 NewsCard.defaultProps = {
@@ -159,6 +161,7 @@ NewsCard.defaultProps = {
   image: undefined,
   title: undefined,
   category: undefined,
+  uri: undefined,
 };
 
 export default NewsCard;
