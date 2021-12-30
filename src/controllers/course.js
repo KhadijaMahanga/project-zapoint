@@ -13,6 +13,7 @@ export const createCourse = async (data) => {
 
 export const getAllCourses = async () => {
   const res = await Course.find({})
+    .sort({ created_at: "desc" })
     .then((courses) => courses)
     .catch((e) => new Error(e));
 

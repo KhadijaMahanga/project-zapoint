@@ -53,7 +53,7 @@ function Courses({ courses: coursesProp, categories, ...props }) {
     }
   }, [coursesProp]);
 
-  const { data: res, mutate } = useSWR("/api/courses", fetcher);
+  const { data: res, mutate } = useSWR("/api/courses/admin", fetcher);
 
   useEffect(() => {
     if (res?.success && res?.data) {
@@ -61,7 +61,7 @@ function Courses({ courses: coursesProp, categories, ...props }) {
     }
   }, [res]);
 
-  const handleEditCourse = async (e, id) => {
+  const handleEditCourse = async (e, kozi) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("status", "approved");
@@ -71,9 +71,14 @@ function Courses({ courses: coursesProp, categories, ...props }) {
       body: formData,
     };
 
-    const url = `/api/courses/${id}`;
+    const url = `/api/courses/${kozi?._id}`;
     await fetcher(url, options);
     mutate();
+    const subject = "JikoPoint | Kozi yako imekubaliwa";
+    const content = `Hongera. Kozi ya, ${kozi?.name} imekubaliwa na kuchapishwa.\n\n Ahsante kwa kutumia JikoPoint `;
+    await fetch(
+      `/api/send-email?subject=${subject}&content=${content}&emailto=${kozi?.instructor}`
+    );
   };
 
   return (
@@ -142,7 +147,7 @@ function Courses({ courses: coursesProp, categories, ...props }) {
                   color="primary"
                   disabled={c.status !== "pending approval"}
                   className={classes.button}
-                  onClick={(e) => handleEditCourse(e, c._id)}
+                  onClick={(e) => handleEditCourse(e, c)}
                 >
                   Approve
                 </Button>
@@ -162,6 +167,7 @@ Courses.propTypes = {
       name: PropTypes.string,
       category: PropTypes.string,
       status: PropTypes.string,
+      instructor: PropTypes.string,
     })
   ),
   categories: PropTypes.arrayOf(PropTypes.shape({ slug: PropTypes.string })),
