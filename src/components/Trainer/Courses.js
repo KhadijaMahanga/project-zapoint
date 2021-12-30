@@ -97,6 +97,10 @@ function Courses({ courses: coursesProp, user, categories, ...props }) {
     const url = `/api/courses/${id}`;
     await fetcher(url, options);
     mutate();
+    const subject = "JikoPoint | Hakiki Kozi mpya";
+    const content =
+      "Mkufunzi amewasilisha kozi yake kwaajili ya uhakiki. Tembelea jikopoint kuhakiki";
+    await fetch(`/api/send-email/admin/?subject=${subject}&content=${content}`);
   };
 
   const handleCourseDeletion = async (e, id) => {

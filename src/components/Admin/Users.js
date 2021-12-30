@@ -6,6 +6,8 @@ import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import useSWR from "swr";
 
+import UserDialog from "./UserDialog";
+
 import JikoSnackbar from "@/jikopoint/components/JikoSnackbar";
 import fetcher from "@/jikopoint/utils/fetcher";
 
@@ -47,6 +49,10 @@ const useStyles = makeStyles(({ typography, palette }) => ({
     fontSize: typography.pxToRem(13),
     padding: `${typography.pxToRem(6)} ${typography.pxToRem(10)}`,
   },
+  addButton: {
+    color: palette.text.secondary,
+    margin: `${typography.pxToRem(20)} 0`,
+  },
 }));
 
 function Users({ users: usersProp, ...props }) {
@@ -55,6 +61,17 @@ function Users({ users: usersProp, ...props }) {
   const [open, setOpen] = useState(false);
   const [apiStatus, setApiStatus] = useState();
   const [notice, setNotice] = useState();
+  const [openDialog, setOpenDialog] = useState(false);
+
+  const handleCloseDialog = (e) => {
+    e?.preventDefault();
+    setOpenDialog(false);
+  };
+
+  const handleAddUser = (e) => {
+    e?.preventDefault();
+    setOpenDialog(true);
+  };
 
   const handleCloseSnack = (event, reason) => {
     if (reason === "clickaway") {
@@ -97,6 +114,14 @@ function Users({ users: usersProp, ...props }) {
         message={notice}
         status={apiStatus}
       />
+      <Button
+        variant="contained"
+        color="primary"
+        className={classes.addButton}
+        onClick={handleAddUser}
+      >
+        Mtumiaji mpya
+      </Button>
       {users?.length > 0 && (
         <Grid container className={classes.tableRoot}>
           <Grid
@@ -172,6 +197,11 @@ function Users({ users: usersProp, ...props }) {
           })}
         </Grid>
       )}
+      <UserDialog
+        handleCloseDialog={handleCloseDialog}
+        openDialog={openDialog}
+        onUpdate={() => mutate()}
+      />
     </div>
   );
 }
