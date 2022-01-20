@@ -53,7 +53,7 @@ function CForm({
       let email = course?.instructor?.email;
 
       if (parent) {
-        subject = "Jiko Point | Umejibiwa oni lako";
+        subject = "[JikoPoint] Jiko Class - Umejibiwa oni lako";
         content = `Mtumiaji amejibu oni lako kwenye kozi ${course?.name} `;
         email = parent?.commentor?.email;
       }

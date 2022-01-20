@@ -74,7 +74,7 @@ function Courses({ courses: coursesProp, categories, ...props }) {
     const url = `/api/courses/${kozi?._id}`;
     await fetcher(url, options);
     mutate();
-    const subject = "JikoPoint | Kozi yako imekubaliwa";
+    const subject = "[JikoPoint] Jiko Class - Kozi yako imekubaliwa";
     const content = `Hongera. Kozi ya, ${kozi?.name} imekubaliwa na kuchapishwa.\n\n Ahsante kwa kutumia JikoPoint `;
     await fetch(
       `/api/send-email?subject=${subject}&content=${content}&emailto=${kozi?.instructor}`

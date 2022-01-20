@@ -106,7 +106,7 @@ function Register({ userrole, csrfToken }) {
         setRegisterError(res.message);
         setNotice(null);
       } else {
-        const subject = "JikoPoint | Jiko Class - Mtumiaji Mpya";
+        const subject = "[JikoPoint] Jiko Class - Mtumiaji Mpya";
         const content = `Mtumiaji mpya amejiunga. \n\n Jina: ${name} \n Barua Pepe: ${email}`;
         await fetch(
           `/api/send-email/admin/?subject=${subject}&content=${content}`
