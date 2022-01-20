@@ -34,6 +34,7 @@ export async function getServerSideProps(context) {
   );
   let users;
   let courses = {};
+  let enrolments = null;
   if (session.user.role === "trainee") {
     // pull all enrolled courses
     const enrolCourses = await fetcher(
@@ -48,10 +49,13 @@ export async function getServerSideProps(context) {
       `${process.env.NEXT_PUBLIC_APP_URL}/api/courses/instructor/${currentUser?.user?._id}`
     );
   } else {
-    // get all courses, as you're an admin
+    // get all courses, users, enrolments as you're an admin
     users = await fetcher(`${process.env.NEXT_PUBLIC_APP_URL}/api/users`);
     courses = await fetcher(
       `${process.env.NEXT_PUBLIC_APP_URL}/api/courses/admin`
+    );
+    enrolments = await fetcher(
+      `${process.env.NEXT_PUBLIC_APP_URL}/api/enrolment/admin`
     );
   }
 
@@ -62,6 +66,7 @@ export async function getServerSideProps(context) {
       user: { ...currentUser?.user, role: session?.user?.role ?? "trainee" },
       categories: categories?.data ?? null,
       users: users?.users ?? null,
+      enrolments: enrolments?.data ?? null,
     },
   };
 }
