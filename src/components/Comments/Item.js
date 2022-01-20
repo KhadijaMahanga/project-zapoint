@@ -172,7 +172,7 @@ function Item({ comment, onUpdate, user, ...props }) {
               </Typography>
             </Grid>
             <Grid item>
-              {user === comment.commentor.email && (
+              {(user === comment.commentor.email || user?.role === "admin") && (
                 <>
                   <Button
                     className={classes.replyButton}
