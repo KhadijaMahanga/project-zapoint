@@ -54,6 +54,10 @@ const UserSchema = new Schema(
       type: String,
       enum: ["admin", "super admin", "trainee", "trainer"],
     },
+    gender: {
+      type: String,
+      enum: ["KE, ME"],
+    },
     isDeleted: {
       type: Boolean,
       default: false,
