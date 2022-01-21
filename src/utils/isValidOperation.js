@@ -17,7 +17,7 @@ const allowedFields = {
   activity: ["text"],
   comment: ["text"],
   reply: ["text"],
-  profile: ["name", "social", "bio"],
+  profile: ["name", "social", "bio", "gender", "user"],
 };
 
 // all fields must exist for this to return true
