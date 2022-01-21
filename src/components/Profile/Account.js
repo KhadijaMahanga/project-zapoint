@@ -13,7 +13,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import bcrypt from "bcryptjs";
 import { getCsrfToken, signOut } from "next-auth/react";
 import PropTypes from "prop-types";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import fetcher from "@/jikopoint/utils/fetcher";
 
@@ -48,16 +48,11 @@ const useStyles = makeStyles(({ palette, typography }) => ({
 
 function Account({ user, ...props }) {
   const classes = useStyles(props);
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState(null);
   const [newPassword, setNewPassword] = useState(null);
   const [reTypePassword, setReTypePassword] = useState(null);
   const [open, setOpen] = useState(false);
   const [notification, setNotification] = useState("");
-
-  useEffect(() => {
-    setEmail(user?.email);
-  }, [user]);
 
   const handleClose = () => {
     setOpen(false);
@@ -126,7 +121,7 @@ function Account({ user, ...props }) {
           autoComplete="fname"
           name="email"
           variant="outlined"
-          value={email}
+          value={user?.email}
           margin="normal"
           fullWidth
           id="email"

@@ -90,7 +90,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="left" timeout={1000} ref={ref} {...props} />;
 });
 
-function MobileNavigation({ ...props }) {
+function MobileNavigation({ archive, ...props }) {
   const classes = useStyles(props);
   const {
     menuItems,
@@ -129,14 +129,16 @@ function MobileNavigation({ ...props }) {
             >
               <MenuIcon className={classes.icon} />
             </IconButton>
-            <IconButton
-              aria-label="Open drawer"
-              edge="start"
-              onClick={handleOpenSearch}
-              className={classes.menuButton}
-            >
-              <SearchIcon className={classes.icon} />
-            </IconButton>
+            {archive && (
+              <IconButton
+                aria-label="Open drawer"
+                edge="start"
+                onClick={handleOpenSearch}
+                className={classes.menuButton}
+              >
+                <SearchIcon className={classes.icon} />
+              </IconButton>
+            )}
           </Grid>
         </Grid>
         <Dialog
@@ -248,6 +250,7 @@ MobileNavigation.propTypes = {
   active: PropTypes.string,
   setOpenSearch: PropTypes.func,
   social: PropTypes.shape({}),
+  archive: PropTypes.bool,
 };
 
 MobileNavigation.defaultProps = {
@@ -258,6 +261,7 @@ MobileNavigation.defaultProps = {
   social: undefined,
   categories: undefined,
   active: undefined,
+  archive: false,
 };
 
 export default MobileNavigation;

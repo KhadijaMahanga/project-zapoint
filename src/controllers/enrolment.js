@@ -1,4 +1,5 @@
 /* eslint-disable no-return-assign */
+/* eslint-disable no-param-reassign */
 import { getCourse } from "@/jikopoint/controllers/course";
 import { getUser } from "@/jikopoint/controllers/user";
 import Enrolment from "@/jikopoint/models/enrolment";
@@ -30,6 +31,25 @@ export const getEnrolmentPerCourse = async (courseId) => {
   return Enrolment.find({ course: courseId })
     .then((enrolment) => enrolment)
     .catch((e) => new Error(e));
+};
+
+export const getAllEnrolments = async () => {
+  const res = await Enrolment.find({})
+    .sort({ created_at: "desc" })
+    .then((courses) => courses)
+    .catch((e) => new Error(e));
+
+  const result = await Promise.all(
+    res?.map(async (c) => {
+      const student = await getUser(c.student);
+      const course = await getCourse(c.course);
+      c.student = student;
+      c.course = course;
+      return c;
+    })
+  ).then((p) => p);
+
+  return result;
 };
 
 export const deleteEnrolment = async (id) => {

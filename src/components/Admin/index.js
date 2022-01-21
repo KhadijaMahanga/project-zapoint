@@ -3,6 +3,7 @@ import React from "react";
 
 import Categories from "./Categories";
 import Courses from "./Courses";
+import Enrolments from "./Enrolments";
 import Users from "./Users";
 
 import Tabs from "@/jikopoint/components/Tabs";
@@ -23,6 +24,10 @@ function Admin({ ...props }) {
         {
           label: "Watumiaji",
           panel: <Users {...props} />,
+        },
+        {
+          label: "Usajili",
+          panel: <Enrolments {...props} />,
         },
       ]}
     />

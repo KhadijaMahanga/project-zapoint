@@ -1,16 +1,16 @@
 /* eslint-disable no-return-assign */
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-underscore-dangle */
+
+import { getUser, updateUser } from "@/jikopoint/controllers/user";
 import Profile from "@/jikopoint/models/profile";
-import User from "@/jikopoint/models/user";
 
 export const createProfile = async (data) => {
-  if (data?.name) {
-    const user = await User.findById(data?.user); // get matching user from db
-    user.name = data.name;
-    await user
-      .save() // user's password is hashed on each save, as a middleware operation
-      .catch((e) => new Error(e));
+  const u = await getUser(data?.user);
+  if (data?.name || data?.gender) {
+    await updateUser(u?._id, { name: data?.name, gender: data?.gender }); // get matching user from db
   }
-  const created = await new Profile(data)
+  const created = await new Profile({ ...data, user: u })
     .save()
     .then((profile) => profile)
     .catch((e) => new Error(e));
@@ -18,20 +18,33 @@ export const createProfile = async (data) => {
   return created;
 };
 
-export const getProfile = async (userId) => {
-  return Profile.findOne({ user: userId })
-    .then((profile) => profile)
+export const getProfile = async (id) => {
+  return Profile.findById(id)
+    .then(async (p) => {
+      const u = await getUser(p.user);
+      p.user = u;
+      return p;
+    })
+    .catch((e) => new Error(e));
+};
+
+export const getUserProfile = async (userId) => {
+  const u = await getUser(userId);
+
+  return Profile.findOne({ user: u?.id })
+    .then((profile) => {
+      profile.user = u;
+      return profile;
+    })
     .catch((e) => new Error(e));
 };
 
 export const updateProfile = async (id, updates = {}) => {
-  if (updates?.name) {
-    const user = await User.findById(updates?.user); // get matching user from db
-    user.name = updates.name;
-    await user
-      .save() // user's password is hashed on each save, as a middleware operation
-      .catch((e) => new Error(e));
+  const u = await getUser(updates?.user);
+  if (updates?.name || updates?.gender) {
+    await updateUser(u?._id, { name: updates?.name, gender: updates?.gender }); // get matching user from db
   }
+
   return Profile.findByIdAndUpdate(id, updates, {
     new: true, // returns newly updated user rather than the original db instance
     runValidators: true, // runs validation on the updated data
@@ -40,8 +53,8 @@ export const updateProfile = async (id, updates = {}) => {
     .catch((e) => new Error(e));
 };
 
-export const deleteProfile = async (userId) => {
-  return Profile.findOneAndDelete({ user: userId })
+export const deleteProfile = async (id) => {
+  return Profile.findByIdAndDelete(id)
     .then((profile) => profile)
     .catch((e) => new Error(e));
 };

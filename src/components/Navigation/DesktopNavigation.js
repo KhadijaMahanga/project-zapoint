@@ -64,7 +64,7 @@ function ListItemLink(props) {
   );
 }
 
-function DesktopNavigation({ ...props }) {
+function DesktopNavigation({ archive, ...props }) {
   const classes = useStyles(props);
   const { handleOpenSearch, menuItems } = props;
 
@@ -97,14 +97,16 @@ function DesktopNavigation({ ...props }) {
                 </Fragment>
               ))}
             </List>
-            <IconButton
-              aria-label="Open drawer"
-              edge="start"
-              onClick={handleOpenSearch}
-              className={classes.menuButton}
-            >
-              <SearchIcon className={classes.icon} />
-            </IconButton>
+            {archive && (
+              <IconButton
+                aria-label="Open drawer"
+                edge="start"
+                onClick={handleOpenSearch}
+                className={classes.menuButton}
+              >
+                <SearchIcon className={classes.icon} />
+              </IconButton>
+            )}
           </Grid>
         </Grid>
       </Section>
@@ -122,12 +124,14 @@ DesktopNavigation.propTypes = {
     })
   ),
   social: PropTypes.shape({}),
+  archive: PropTypes.bool,
 };
 
 DesktopNavigation.defaultProps = {
   handleOpenSearch: undefined,
   menuItems: undefined,
   social: undefined,
+  archive: false,
 };
 
 export default DesktopNavigation;

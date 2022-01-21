@@ -14,17 +14,24 @@ import isValidOperation from "@/jikopoint/utils/isValidOperation";
 const handler = nextConnect({ onNoMatch, onError })
   .use(middleware)
   .get(async (req, res) => {
-    // expecting a user id
-    const profile = await getProfile(req?.query?.id);
-    if (!profile) {
-      return res
-        .status(400)
-        .json({ success: false, message: "profile not found" });
+    try {
+      const session = await getSession({ req });
+      if (!session?.user) {
+        throw new Error("Hiki kitendo hakijathibitishwa");
+      }
+      const profile = await getProfile(req?.query?.id);
+      if (!profile) {
+        return res
+          .status(400)
+          .json({ success: false, message: "profile not found" });
+      }
+      res.json({ success: true, data: profile });
+    } catch (e) {
+      res.status(401).send({ message: e, success: false });
     }
-    res.json({ success: true, data: profile });
   })
   .put(async (req, res) => {
-    const session = await getSession();
+    const session = await getSession({ req });
     if (!session?.user) {
       throw new Error("Hiki kitendo hakijathibitishwa");
     }

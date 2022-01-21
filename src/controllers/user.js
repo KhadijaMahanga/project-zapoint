@@ -1,5 +1,4 @@
 /* eslint-disable no-return-assign */
-import { deleteProfile } from "@/jikopoint/controllers/profile";
 import User from "@/jikopoint/models/user";
 
 /**
@@ -43,8 +42,6 @@ export const updateUser = async (id, updates = {}) => {
  * we don't really delete users, instead we mark them as deleted
  */
 export const deleteUser = async (id) => {
-  // delete user profile
-  await deleteProfile(id);
   return updateUser(id, { isDeleted: true });
 };
 

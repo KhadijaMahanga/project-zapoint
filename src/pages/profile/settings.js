@@ -25,18 +25,19 @@ export async function getServerSideProps(context) {
     };
   }
 
-  const currentUser = await fetcher(
-    `${process.env.NEXT_PUBLIC_APP_URL}/api/users/${session?.user?.email}`
-  );
-
   const userProfile = await fetcher(
-    `${process.env.NEXT_PUBLIC_APP_URL}/api/profile/${currentUser?.user?._id}`
+    `${process.env.NEXT_PUBLIC_APP_URL}/api/profile/user/${session?.user?.email}`,
+    {
+      headers: {
+        Cookie: context.req.headers.cookie,
+      },
+      method: "GET",
+    }
   );
 
   return {
     props: {
       session,
-      user: currentUser?.user ?? null,
       profile: userProfile?.data ?? null,
     },
   };

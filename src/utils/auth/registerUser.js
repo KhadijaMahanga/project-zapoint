@@ -1,9 +1,11 @@
 /* eslint-disable no-unused-vars */
+/* eslint-disable no-underscore-dangle */
 import mongoose from "mongoose";
 
 import sendVerificationRequest from "./sendVerificationRequest";
 
 import { updateUser } from "@/jikopoint/controllers/user";
+import Profile from "@/jikopoint/models/profile";
 import User from "@/jikopoint/models/user";
 import dbConnect from "@/jikopoint/utils/mongoose";
 
@@ -63,6 +65,8 @@ async function registerUser(credentials) {
     };
 
     const created = await new User(doc).save();
+    const userProfile = await new Profile({ user: created._id }).save();
+
     if (!created) {
       return Promise.resolve(false);
     }

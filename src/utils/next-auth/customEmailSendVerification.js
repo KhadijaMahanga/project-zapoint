@@ -73,7 +73,7 @@ const customEmailVerificationRequest = ({
     const { server, from } = provider;
 
     // Strip protocol from URL and use domain as site name
-    const site = "Jiko Point";
+    const site = "JikoPoint";
 
     nodemailer.createTransport(server).sendMail(
       {
@@ -81,8 +81,8 @@ const customEmailVerificationRequest = ({
         from,
         subject:
           status === "register"
-            ? "JikoPoint: Hakiki Barua Pepe Yako"
-            : "JikoPoint: Badilisha Nywila Yako",
+            ? "[JikoPoint] Jiko Class - Hakiki Barua Pepe Yako"
+            : "[JikoPoint] Jiko Class - Badilisha Nywila Yako",
         text: text({
           url,
           site,
