@@ -44,6 +44,7 @@ function Index({ posts, post, categories, archive, activeCategory, ...props }) {
       active={activeCategory}
       {...props}
       post={post}
+      archive={archive}
     >
       <NewsNavigation categories={categories} active={activeCategory} />
       {archive ? (

@@ -8,7 +8,7 @@ import fetcher from "@/jikopoint/utils/fetcher";
 
 function Index({ ...props }) {
   return (
-    <Page {...props}>
+    <Page {...props} archive>
       <CoursesPage {...props} />
     </Page>
   );
