@@ -18,7 +18,7 @@ export default async function archive(req, res) {
     } = req.query;
 
     let postsData;
-    if (!taxonomy?.length) {
+    if (!taxonomyId?.length) {
       postsData = await getPostTypeArchive(postType, orderBy, order, cursor);
     } else {
       postsData = await getPostTypeTaxonomyArchive(
