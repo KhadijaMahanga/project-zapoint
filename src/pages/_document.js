@@ -69,6 +69,12 @@ export default class MyDocument extends Document {
           `,
             }}
           />
+          <script
+            id="mcjs"
+            dangerouslySetInnerHTML={{
+              __html: `!function(c,h,i,m,p){m=c.createElement(h),p=c.getElementsByTagName(h)[0],m.async=1,m.src=i,p.parentNode.insertBefore(m,p)}(document,"script","https://chimpstatic.com/mcjs-connected/js/users/1ac20269fc7bdb3726fcc5b32/1e4a2cff8ac507c796b85ac27.js");`,
+            }}
+          />
         </Head>
         <body style={{ overflowX: "hidden" }}>
           <Main />
