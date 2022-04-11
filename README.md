@@ -1,70 +1,96 @@
-# Getting Started with Create React App
+# Jiko Point
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Jiko Point ni jukwaa maalum na la kipekee la mtandaoni linalomilikiwa na kampuni ya Nukta Africa na kuwezeshwa na Shirika la Hivos na washirika wake kwa lengo la kuchochea matumizi ya nishati safi Tanzania. Ina vipengele vitatu ambavyo ni Jiko Class, Jiko News na Jiko Sokoni. 
 
-## Available Scripts
+Accessible at [https://jikopoint.co.tz](https://jikopoint.co.tz)
+
+Built with love ❤️ using [Nextjs](https://github.com/vercel/next.js/), Javascript and a couple other helper libraries (see [package.json](./package.json)).
+
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+## Getting Started with Jiko Point
+
+### Local Development
+
+### Environment Variables & Setup
+
+Run the following to get started locally:
+
+```sh
+  # copy environment variable template to a file name .env
+  cp .env.template .env
+  # Edit the .env file
+  yarn
+  yarn dev
+```
+
+From the root folder, run `yarn` to install all dependencies, alternatively you can run `npm install`
+
+```bash
+$ yarn
+```
+
+### Running the app
+
+```bash
+# watch mode
+$ yarn dev
+
+# building
+$ yarn build
+
+# running compiled
+$ yarn start
+```
+
+### Useful Scripts
 
 In the project directory, you can run:
 
-### `yarn start`
+#### `yarn start` or `yarn dev` (for watch mode)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Runs the app in the development mode. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api](http://localhost:3000/api/). This endpoint can be edited in `pages/api`.
 
-### `yarn test`
+The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### `yarn lint`
 
-### `yarn build`
+Executes lint and tries to fix all fixable lint errors
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#### `yarn build`
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Builds the app for production to the `dist` folder.\
+It correctly bundles Server in production mode and optimizes the build for the best performance.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+See the next [build](https://nextjs.org/docs/api-reference/cli#build) documentation for more details.
 
-### `yarn eject`
+#### `yarn storybook`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Starts a sandbox to view all resusable components developed in the aplication. Open [http://localhost:6006](http://localhost:6006) with your browser to see the result.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Project Structure
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```
+.
+├── LICENCE
+├── README.md
+├── jsconfig.json
+├── next-seo.config.js
+├── next.config.js
+├── package.json
+├── public
+│   ├── favicon.ico
+│   ├── fonts
+│   └── styles
+├── src
+│   ├── assets
+│   ├── components
+│   ├── functions
+│   ├── lib
+│   ├── pages
+│   ├── theme
+│   └── utils
+└── yarn.lock
+```
