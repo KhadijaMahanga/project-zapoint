@@ -4,7 +4,7 @@ Jiko Point ni jukwaa maalum na la kipekee la mtandaoni linalomilikiwa na kampuni
 
 Accessible at [https://jikopoint.co.tz](https://jikopoint.co.tz)
 
-Built with love ❤️ using [Nextjs](https://github.com/vercel/next.js/), Javascript and a couple other helper libraries (see [package.json](./package.json)).
+JikoPoint is a modern web stack application built using [Nextjs](https://github.com/vercel/next.js/), (javascript and a couple other helper libraries),  [MongoDB](https://www.mongodb.com/cloud/atlas/efficiency?utm_source=google&utm_campaign=gs_footprint_row_search_core_brand_atlas_desktop&utm_term=mongodb&utm_medium=cpc_paid_search&utm_ad=e&utm_ad_campaign_id=12212624584&adgroup=115749713703&gclid=CjwKCAjwo8-SBhAlEiwAopc9WxhOSRn5vwkHGJbetCPSeA2j14ugENCYpL_1rr8qsVYp0OVt4rC0ERoC548QAvD_BwE) Databases and [Wordpress](https://wordpress.com/) as a content management tool.
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
