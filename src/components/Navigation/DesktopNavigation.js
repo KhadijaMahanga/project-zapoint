@@ -1,15 +1,8 @@
-import {
-  Divider,
-  IconButton,
-  List,
-  ListItemText,
-  Grid,
-} from "@material-ui/core";
+import { Divider, List, ListItemText, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import React, { Fragment } from "react";
 
-import { ReactComponent as SearchIcon } from "@/jikopoint/assets/icons/icon-search-grey.svg";
 import Link from "@/jikopoint/components/Link";
 import LogoButton from "@/jikopoint/components/LogoButton";
 import SearchDialog from "@/jikopoint/components/Navigation/SearchDialog";
@@ -64,9 +57,9 @@ function ListItemLink(props) {
   );
 }
 
-function DesktopNavigation({ archive, ...props }) {
+function DesktopNavigation({ ...props }) {
   const classes = useStyles(props);
-  const { handleOpenSearch, menuItems } = props;
+  const { menuItems } = props;
 
   return (
     <div className={classes.root}>
@@ -97,16 +90,6 @@ function DesktopNavigation({ archive, ...props }) {
                 </Fragment>
               ))}
             </List>
-            {archive && (
-              <IconButton
-                aria-label="Open drawer"
-                edge="start"
-                onClick={handleOpenSearch}
-                className={classes.menuButton}
-              >
-                <SearchIcon className={classes.icon} />
-              </IconButton>
-            )}
           </Grid>
         </Grid>
       </Section>
@@ -124,14 +107,12 @@ DesktopNavigation.propTypes = {
     })
   ),
   social: PropTypes.shape({}),
-  archive: PropTypes.bool,
 };
 
 DesktopNavigation.defaultProps = {
   handleOpenSearch: undefined,
   menuItems: undefined,
   social: undefined,
-  archive: false,
 };
 
 export default DesktopNavigation;

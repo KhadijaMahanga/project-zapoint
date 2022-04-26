@@ -17,7 +17,6 @@ import React, { Fragment, useState } from "react";
 
 import { ReactComponent as SearchMenuIcon } from "@/jikopoint/assets/icons/icon-close-white.svg";
 import { ReactComponent as MenuIcon } from "@/jikopoint/assets/icons/icon-menu-grey.svg";
-import { ReactComponent as SearchIcon } from "@/jikopoint/assets/icons/icon-search-grey.svg";
 import Link from "@/jikopoint/components/Link";
 import LogoButton from "@/jikopoint/components/LogoButton";
 import SearchDialog from "@/jikopoint/components/Navigation/SearchDialog";
@@ -90,16 +89,9 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="left" timeout={1000} ref={ref} {...props} />;
 });
 
-function MobileNavigation({ archive, ...props }) {
+function MobileNavigation({ ...props }) {
   const classes = useStyles(props);
-  const {
-    menuItems,
-    footerItems,
-    setOpenSearch,
-    handleOpenSearch,
-    categories,
-    active,
-  } = props;
+  const { menuItems, footerItems, setOpenSearch, categories, active } = props;
 
   const [openMenu, setOpenMenu] = useState(false);
 
@@ -129,16 +121,6 @@ function MobileNavigation({ archive, ...props }) {
             >
               <MenuIcon className={classes.icon} />
             </IconButton>
-            {archive && (
-              <IconButton
-                aria-label="Open drawer"
-                edge="start"
-                onClick={handleOpenSearch}
-                className={classes.menuButton}
-              >
-                <SearchIcon className={classes.icon} />
-              </IconButton>
-            )}
           </Grid>
         </Grid>
         <Dialog
@@ -250,7 +232,6 @@ MobileNavigation.propTypes = {
   active: PropTypes.string,
   setOpenSearch: PropTypes.func,
   social: PropTypes.shape({}),
-  archive: PropTypes.bool,
 };
 
 MobileNavigation.defaultProps = {
@@ -261,7 +242,6 @@ MobileNavigation.defaultProps = {
   social: undefined,
   categories: undefined,
   active: undefined,
-  archive: false,
 };
 
 export default MobileNavigation;
