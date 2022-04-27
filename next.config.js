@@ -24,19 +24,21 @@ module.exports = withPWA({
     disable: process.env.NODE_ENV === "development",
     runtimeCaching,
   },
-  async redirects() {
+  async rewrites() {
     return [
       {
         source: "/feed",
         destination: "/api/feed/rss",
-        permanent: false,
       },
       {
         // The /:slug part is a generic parameter handler to catch all other cases
         source: "/feed/:slug",
         destination: "/api/feed/:slug",
-        permanent: false,
       },
+    ];
+  },
+  async redirects() {
+    return [
       {
         source: "/jiko-class",
         destination: "/jiko-class/kozi",
