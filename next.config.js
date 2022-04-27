@@ -27,6 +27,17 @@ module.exports = withPWA({
   async redirects() {
     return [
       {
+        source: "/feed",
+        destination: "/api/feed/rss",
+        permanent: false,
+      },
+      {
+        // The /:slug part is a generic parameter handler to catch all other cases
+        source: "/feed/:slug",
+        destination: "/api/feed/:slug",
+        permanent: false,
+      },
+      {
         source: "/jiko-class",
         destination: "/jiko-class/kozi",
         permanent: true,
