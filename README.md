@@ -1,6 +1,6 @@
 # Jiko Point
 
-Jiko Point ni jukwaa maalum na la kipekee la mtandaoni linalomilikiwa na kampuni ya Nukta Africa na kuwezeshwa na Shirika la Hivos na washirika wake kwa lengo la kuchochea matumizi ya nishati safi Tanzania. Ina vipengele vitatu ambavyo ni Jiko Class, Jiko News na Jiko Sokoni.
+Jiko Point ni jukwaa maalum na la kipekee la mtandaoni linalomilikiwa na kampuni ya Nukta Africa na kuwezeshwa na Shirika la Hivos na washirika wake kwa lengo la kuchochea matumizi ya nishati safi Tanzania. Ina vipengele vitatu ambavyo ni [Jiko Class](https://jikopoint.co.tz/jiko-class), [Jiko News](https://jikopoint.co.tz/jiko-news) na [Jiko Sokoni](https://jikosokoni.co.tz).
 
 Accessible at [https://jikopoint.co.tz](https://jikopoint.co.tz)
 
