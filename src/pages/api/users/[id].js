@@ -24,6 +24,7 @@ const handler = nc({ onNoMatch, onError })
       res.status(400).send({ message: "Invalid Updates!" });
     }
     const user = await updateUser(req.query.id, req.body);
+    delete user.password;
     res.status(200).json({ success: true, user });
   })
   .delete(async (req, res) => {
@@ -33,6 +34,7 @@ const handler = nc({ onNoMatch, onError })
         throw new Error("Hiki kitendo hakijathibitishwa");
       }
       const user = await deleteUser(req.query.id);
+      delete user.password;
       res.status(200).json({ success: true, user });
     } catch (e) {
       res.status(401).json({ message: e.message, success: false });

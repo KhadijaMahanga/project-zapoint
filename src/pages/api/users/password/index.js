@@ -20,6 +20,7 @@ const handler = nc({ onNoMatch, onError })
       res.status(400).send({ message: "Invalid Updates!" });
     }
     const user = await updateUser(req.query.id, req.body);
+    delete user.password;
     res.status(200).json({ success: true, user });
   });
 

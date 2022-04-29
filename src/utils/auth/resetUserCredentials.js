@@ -32,7 +32,7 @@ async function resetUserCredentials(credentials) {
     await dbConnect();
   }
 
-  const userExists = await User.findOne({ email }).exec();
+  const userExists = await User.findOne({ email }).select("-password").exec();
   if (!userExists || userExists.isDeleted) {
     throw new Error("Hakuna mtumiaji mwenye barua pepe kama hiyo");
   }

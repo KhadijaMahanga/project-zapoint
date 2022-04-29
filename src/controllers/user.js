@@ -27,7 +27,7 @@ export const getUser = async (id) => {
  */
 export const updateUser = async (id, updates = {}) => {
   const objectKeys = Object.keys(updates); // convert to an array of key names
-  const user = await User.findById(id).select("-password"); // get matching user from db
+  const user = await User.findById(id); // get matching user from db
 
   objectKeys.forEach((par) => (user[par] = updates[par]));
 

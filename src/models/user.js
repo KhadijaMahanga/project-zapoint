@@ -68,7 +68,7 @@ const UserSchema = new Schema(
 
 UserSchema.statics.findByEmail = async function (email) {
   const currentUser = this;
-  const user = await currentUser.findOne({ email }).select("-password").exec();
+  const user = await currentUser.findOne({ email }).exec();
   return user;
 };
 
