@@ -74,7 +74,7 @@ function HighlightNews({
   const isTablet = useMediaQuery(theme.breakpoints.only("md"));
 
   if (!itemsProp?.length) {
-    return null;
+    return <div className={classes.root} />;
   }
   let numberOfItemsToShow = 3;
   if (isRelatedNews) {
