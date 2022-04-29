@@ -7,11 +7,13 @@ import User from "@/jikopoint/models/user";
  */
 export const getUser = async (id) => {
   let result = await User.findById(id)
+    .select("-password")
     .then((user) => user)
     .catch((e) => new Error(e));
 
   if (!result || JSON.stringify(result) === "{}") {
     result = await User.findOne({ email: id })
+      .select("-password")
       .then((user) => user)
       .catch((e) => new Error(e));
   }
@@ -25,7 +27,7 @@ export const getUser = async (id) => {
  */
 export const updateUser = async (id, updates = {}) => {
   const objectKeys = Object.keys(updates); // convert to an array of key names
-  const user = await User.findById(id); // get matching user from db
+  const user = await User.findById(id).select("-password"); // get matching user from db
 
   objectKeys.forEach((par) => (user[par] = updates[par]));
 
@@ -49,6 +51,7 @@ export const getUsers = async () => {
   return User.find({ isDeleted: false })
     .sort({ created_at: "desc" })
     .select("-__v")
+    .select("-password")
     .then((users) => users)
     .catch((e) => new Error(e));
 };
@@ -56,6 +59,7 @@ export const getUsers = async () => {
 export const getAdminUsers = async () => {
   return User.find({ isDeleted: false, role: "admin" })
     .select("-__v")
+    .select("-password")
     .then((users) => users)
     .catch((e) => new Error(e));
 };
