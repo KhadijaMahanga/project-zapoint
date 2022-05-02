@@ -75,7 +75,7 @@ function Replies({ comment, replies: repliesProp, onUpdate, ...props }) {
         <Item
           key={r?._id}
           comment={r}
-          user={session.user.email}
+          user={session.user}
           parent={comment}
           onUpdate={() => mutate()}
         />

@@ -172,7 +172,8 @@ function Item({ comment, onUpdate, user, ...props }) {
               </Typography>
             </Grid>
             <Grid item>
-              {(user === comment.commentor.email || user?.role === "admin") && (
+              {(user?.email === comment.commentor.email ||
+                user?.role === "admin") && (
                 <>
                   <Button
                     className={classes.replyButton}
@@ -270,7 +271,10 @@ Item.propTypes = {
     updated_at: PropTypes.string,
   }),
   onUpdate: PropTypes.func,
-  user: PropTypes.string,
+  user: PropTypes.shape({
+    email: PropTypes.string,
+    role: PropTypes.string,
+  }),
 };
 
 Item.defaultProps = {

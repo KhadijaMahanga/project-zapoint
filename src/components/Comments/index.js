@@ -66,7 +66,7 @@ function Comments({ comments: commentsProp, course, ...props }) {
         <Item
           key={c?._id}
           comment={c}
-          user={session.user.email}
+          user={session.user}
           course={course}
           onUpdate={() => mutate()}
         />
