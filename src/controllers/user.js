@@ -12,7 +12,7 @@ export const getUser = async (id) => {
     .catch((e) => new Error(e));
 
   if (!result || JSON.stringify(result) === "{}") {
-    result = await User.findOne({ email: id })
+    result = await User.findByEmail(id)
       .select("-password")
       .then((user) => user)
       .catch((e) => new Error(e));

@@ -1,8 +1,8 @@
 export default {
   titleTemplate: "%s",
-  defaultTitle: "JikoPoint",
+  defaultTitle: "Jiko Point",
   description:
-    "JikoPoint ni jukwaa maalum na la kipekee la mtandaoni linalomilikiwa na kampuni ya Nukta Africa na kuwezeshwa na Shirika la Hivos na washirika wake kwa lengo la kuchochea matumizi ya nishati safi Tanzania",
+    "Jiko Point ni jukwaa maalum na la kipekee la mtandaoni linalomilikiwa na kampuni ya Nukta Africa na kuwezeshwa na Shirika la Hivos na washirika wake kwa lengo la kuchochea matumizi ya nishati safi Tanzania",
   openGraph: {
     type: "website",
     url: "https://jikopoint.co.tz",
