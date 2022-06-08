@@ -8,7 +8,11 @@ async function loginUser({ email, password }) {
     return false;
   }
   if (mongoose.connections[0].readyState !== 1) {
-    await dbConnect();
+    try {
+      await dbConnect();
+    } catch (e) {
+      throw new Error("Samahani kuna tatizo la kiufundi. Jaribu tena baadae");
+    }
   }
   const dbUser = await User.findByEmail(email);
   if (!dbUser) {
