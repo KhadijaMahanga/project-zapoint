@@ -13,10 +13,10 @@ export const getUser = async (id) => {
 
   if (!result || JSON.stringify(result) === "{}") {
     result = await User.findByEmail(id)
-      .select("-password")
       .then((user) => user)
       .catch((e) => new Error(e));
   }
+  delete result.password;
   return result;
 };
 
