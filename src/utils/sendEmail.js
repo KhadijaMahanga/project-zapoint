@@ -45,6 +45,7 @@ const sendEmail = ({ subject, email, content }) => {
       host: process.env.SMTP_HOST,
       port: process.env.SMTP_PORT,
       secure: false,
+      name: "jikopoint.co.tz",
       auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASSWORD,
@@ -61,7 +62,7 @@ const sendEmail = ({ subject, email, content }) => {
       },
       (error) => {
         if (error) {
-          return reject(new Error("SEND_VERIFICATION_EMAIL_ERROR", error));
+          return reject(new Error(error));
         }
         return resolve();
       }

@@ -28,6 +28,7 @@ const sendVerificationRequest = async (email, status) => {
     body: new URLSearchParams({
       email,
       callbackUrl,
+      url: callbackUrl,
       redirect: "false",
       status,
       csrfToken: response.csrfToken,

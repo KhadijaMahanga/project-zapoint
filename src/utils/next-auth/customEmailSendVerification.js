@@ -70,7 +70,18 @@ const customEmailVerificationRequest = ({
   status,
 }) => {
   return new Promise((resolve, reject) => {
-    const { server, from } = provider;
+    const { from } = provider;
+
+    const server = {
+      host: process.env.SMTP_HOST,
+      port: process.env.SMTP_PORT,
+      secure: false,
+      name: "jikopoint.co.tz",
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASSWORD,
+      },
+    };
 
     // Strip protocol from URL and use domain as site name
     const site = "JikoPoint";
@@ -98,7 +109,7 @@ const customEmailVerificationRequest = ({
       },
       (error) => {
         if (error) {
-          return reject(new Error("SEND_VERIFICATION_EMAIL_ERROR", error));
+          return reject(new Error(`SEND_VERIFICATION_EMAIL_ERROR: ${error}`));
         }
         return resolve();
       }
