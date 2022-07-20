@@ -64,6 +64,13 @@ const handler = nextConnect({ onNoMatch, onError })
   })
   .delete(async (req, res) => {
     try {
+      const session = await getSession({ req });
+      if (
+        !session &&
+        (session?.user?.role !== "admin" || session?.user?.role !== "trainer")
+      ) {
+        throw new Error("Hiki kitendo hakijathibitishwa");
+      }
       const deletedCourse = await deleteCourse(req?.query?.id);
       if (!deletedCourse) {
         return res
