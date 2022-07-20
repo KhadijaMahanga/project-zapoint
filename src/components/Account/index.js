@@ -110,7 +110,7 @@ function Account({ user, ...props }) {
     <div className={classes.root}>
       <Section classes={{ root: classes.section }}>
         <Grid container alignItems="flex-start" justifyContent="center">
-          <Grid item container xs={12} lg={4}>
+          <Grid item container xs={12} lg={3}>
             <Grid item xs={12}>
               <Card className={classes.cardRoot}>
                 <CardActionArea
@@ -225,7 +225,7 @@ function Account({ user, ...props }) {
             </Grid>
           </Grid>
           <Grid item lg={1} />
-          <Grid item xs={12} lg={7}>
+          <Grid item xs={12} lg={8}>
             {user?.role === "admin" && <Admin {...props} />}
             {user?.role === "trainer" && <Trainer {...props} user={user} />}
             {user?.role === "trainee" && <Trainee {...props} user={user} />}
