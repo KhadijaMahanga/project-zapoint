@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import useSWR from "swr";
 
+import JikoSnackbar from "@/jikopoint/components/JikoSnackbar";
 import Link from "@/jikopoint/components/Link";
 import fetcher from "@/jikopoint/utils/fetcher";
 
@@ -21,7 +22,7 @@ const useStyles = makeStyles(({ typography, palette }) => ({
     },
   },
   row: {
-    height: typography.pxToRem(50),
+    height: typography.pxToRem(60),
     borderBottom: `${typography.pxToRem(1)} solid #E2E2E3`,
     padding: `0 ${typography.pxToRem(15)}`,
     "& :last-of-type": {
@@ -41,11 +42,17 @@ const useStyles = makeStyles(({ typography, palette }) => ({
     fontSize: typography.pxToRem(13),
     padding: `${typography.pxToRem(6)} ${typography.pxToRem(10)}`,
   },
+  delete: {
+    backgroundColor: "#CC8585",
+  },
 }));
 
 function Courses({ courses: coursesProp, categories, ...props }) {
   const classes = useStyles(props);
   const [courses, setCourses] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [apiStatus, setApiStatus] = useState();
+  const [notice, setNotice] = useState();
 
   useEffect(() => {
     if (coursesProp?.length) {
@@ -60,6 +67,13 @@ function Courses({ courses: coursesProp, categories, ...props }) {
       setCourses(res?.data);
     }
   }, [res]);
+
+  const handleCloseSnack = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
 
   const handleEditCourse = async (e, kozi) => {
     e.preventDefault();
@@ -81,8 +95,32 @@ function Courses({ courses: coursesProp, categories, ...props }) {
     );
   };
 
+  const handleDeleteCourse = async (e, id) => {
+    e?.preventDefault();
+    const options = {
+      method: "DELETE",
+      credentials: "same-origin",
+    };
+    const result = await fetcher(`/api/courses/${id}`, options);
+    if (result?.success) {
+      mutate();
+      setApiStatus("success");
+      setNotice("Umefanikiwa kufuta");
+    } else {
+      setApiStatus("error");
+      setNotice(result?.message);
+    }
+    setOpen(true);
+  };
+
   return (
     <div className={classes.root}>
+      <JikoSnackbar
+        open={open}
+        onClose={handleCloseSnack}
+        message={notice}
+        status={apiStatus}
+      />
       {courses?.length > 0 && (
         <Grid container className={classes.tableRoot}>
           <Grid
@@ -97,63 +135,87 @@ function Courses({ courses: coursesProp, categories, ...props }) {
                 Name
               </Typography>
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={1}>
               <Typography className={clsx(classes.cell, classes.header)}>
-                Category
+                Kundi
               </Typography>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={2}>
               <Typography className={clsx(classes.cell, classes.header)}>
                 Status
               </Typography>
             </Grid>
-            <Grid item xs={3} />
+            <Grid item xs={5} />
           </Grid>
-          {courses?.map((c) => (
-            <Grid
-              item
-              container
-              justifyContent="flex-start"
-              alignItems="center"
-              className={classes.row}
-              key={c.name}
-            >
-              <Grid item xs={4}>
-                <Typography className={classes.cell}>{c.name}</Typography>
-              </Grid>
-              <Grid item xs={2}>
-                <Typography className={classes.cell}>
-                  {categories?.find((ac) => ac._id === c.category)?.name}
-                </Typography>
-              </Grid>
-              <Grid item xs={2}>
-                <Typography className={classes.cell}>{c.status}</Typography>
-              </Grid>
-              <Grid item xs={2}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  className={classes.button}
-                  component={Link}
-                  underline="none"
-                  href={`/jiko-class/kozi/${c._id}`}
+          {courses
+            ?.filter((c) => !c.isArchived)
+            .map((c) => (
+              <Grid
+                item
+                container
+                justifyContent="flex-start"
+                alignItems="center"
+                className={clsx(classes.row, {
+                  [classes.archived]: c.isArchived,
+                })}
+                key={c.name}
+              >
+                <Grid item xs={4}>
+                  <Typography className={classes.cell}>{c.name}</Typography>
+                </Grid>
+                <Grid item xs={1}>
+                  <Typography className={classes.cell}>
+                    {categories?.find((ac) => ac._id === c.category)?.name}
+                  </Typography>
+                </Grid>
+                <Grid item xs={2}>
+                  <Typography className={classes.cell}>{c.status}</Typography>
+                </Grid>
+                <Grid
+                  item
+                  container
+                  justifyContent="space-evenly"
+                  alignContent="flex-start"
+                  xs={5}
                 >
-                  Tembelea
-                </Button>
+                  <Grid item>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      className={classes.button}
+                      disabled={c.isArchived}
+                      component={Link}
+                      underline="none"
+                      href={`/jiko-class/kozi/${c._id}`}
+                    >
+                      Tembelea
+                    </Button>
+                  </Grid>
+                  <Grid item>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      disabled={c.status !== "pending approval" || c.isArchived}
+                      className={classes.button}
+                      onClick={(e) => handleEditCourse(e, c)}
+                    >
+                      Approve
+                    </Button>
+                  </Grid>
+                  <Grid item xs={1}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      disabled={c.isArchived}
+                      className={clsx(classes.button, classes.delete)}
+                      onClick={(e) => handleDeleteCourse(e, c._id)}
+                    >
+                      Futa
+                    </Button>
+                  </Grid>
+                </Grid>
               </Grid>
-              <Grid item xs={2}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  disabled={c.status !== "pending approval"}
-                  className={classes.button}
-                  onClick={(e) => handleEditCourse(e, c)}
-                >
-                  Approve
-                </Button>
-              </Grid>
-            </Grid>
-          ))}
+            ))}
         </Grid>
       )}
     </div>
