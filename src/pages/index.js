@@ -24,7 +24,7 @@ function Index({ articles, blocks, ...props }) {
       <HighlightCourses
         items={articles}
         title="Jiko Class"
-        subtitle="Tujifunze Mapishi pamoja"
+        subtitle="Tujifunze pamoja"
       />
       <Partners />
     </Page>

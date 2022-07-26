@@ -65,7 +65,7 @@ function HighlightCourses({ title, subtitle, ...props }) {
   if (!items?.length) {
     return null;
   }
-  const numberOfItemsToShow = isDesktop ? 6 : 4;
+  const numberOfItemsToShow = isDesktop ? 3 : 2;
   const itemsProp = items.slice(0, numberOfItemsToShow);
   return (
     <div className={classes.root}>
