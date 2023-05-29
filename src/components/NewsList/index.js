@@ -46,7 +46,7 @@ function NewsList({ news, pageLimit, category, pagination }) {
   const endIndex = startIndex + pageLimit;
 
   const fetchMore =
-    allNews.length - endIndex < pageLimit && paginator?.hasNextPage;
+    allNews && allNews.length - endIndex < pageLimit && paginator?.hasNextPage;
   const { data: moreNews } = useSWR(
     fetchMore ? ["/api/wp/archive", category, paginator?.endCursor] : null,
     (url, taxonomyId, cursor) =>

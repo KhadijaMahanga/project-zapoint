@@ -35,7 +35,10 @@ function BasePage({ children, post, opengraphType, ...props }) {
   return (
     <>
       <Head>
-        <script type="application/ld+json">{post?.seo?.schema?.raw}</script>
+        <script type="application/ld+json">
+          {post?.seo?.schema?.raw ??
+            "{'@context': 'https://schema.org','@type': 'WebSite','url': 'https://jikopoint.co.tz','name': 'JikoPoint','description': 'Jiko Point ni jukwaa maalum na la kipekee la mtandaoni linalomilikiwa na kampuni ya Nukta Africa na kuwezeshwa na Shirika la Hivos na washirika wake kwa lengo la kuchochea matumizi ya nishati safi Tanzania'}"}
+        </script>
       </Head>
       <NextSeo
         {...post?.seo}
