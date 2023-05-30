@@ -44,6 +44,7 @@ const defaultSeoFields = `
         url
       }
     }
+  }
 `;
 
 export default defaultSeoFields;
