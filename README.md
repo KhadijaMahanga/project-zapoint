@@ -4,9 +4,16 @@ Jiko Point ni jukwaa maalum na la kipekee la mtandaoni linalomilikiwa na kampuni
 
 Accessible at [https://jikopoint.co.tz](https://jikopoint.co.tz)
 
-JikoPoint is a modern web stack application built using [Nextjs](https://github.com/vercel/next.js/), (javascript and a couple other helper libraries), [MongoDB](https://www.mongodb.com/cloud/atlas/efficiency?utm_source=google&utm_campaign=gs_footprint_row_search_core_brand_atlas_desktop&utm_term=mongodb&utm_medium=cpc_paid_search&utm_ad=e&utm_ad_campaign_id=12212624584&adgroup=115749713703&gclid=CjwKCAjwo8-SBhAlEiwAopc9WxhOSRn5vwkHGJbetCPSeA2j14ugENCYpL_1rr8qsVYp0OVt4rC0ERoC548QAvD_BwE) Databases and [Wordpress](https://wordpress.com/) as a content management tool.
+JikoPoint is a modern web stack application built using [Nextjs](https://github.com/vercel/next.js/), (javascript and a couple other helper libraries), [MongoDB](https://www.mongodb.com/cloud/atlas/efficiency?utm_source=google&utm_campaign=gs_footprint_row_search_core_brand_atlas_desktop&utm_term=mongodb&utm_medium=cpc_paid_search&utm_ad=e&utm_ad_campaign_id=12212624584&adgroup=115749713703&gclid=CjwKCAjwo8-SBhAlEiwAopc9WxhOSRn5vwkHGJbetCPSeA2j14ugENCYpL_1rr8qsVYp0OVt4rC0ERoC548QAvD_BwE) Databases and a headless [Wordpress](https://wordpress.com/) as a content management tool for the news sub app. 
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+## Tools Used
+- NextJs Framework ( [Static Rendering](https://nextjs.org/learn/dashboard-app/static-and-dynamic-rendering) for Jiko News pages which makes use of `apollo-client` response from Wordpress GraphQL Server and [Server-side rendering](https://nextjs.org/learn/dashboard-app/static-and-dynamic-rendering) for Jiko Class pages which makes use of Next API & mongoose in middleware )
+- React
+- Moongose
+- GraphQL (apollo-client)
+- WPGraphQL for headless CMS
 
 ## Getting Started with Jiko Point
 
