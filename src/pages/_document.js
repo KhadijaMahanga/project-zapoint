@@ -76,10 +76,10 @@ export default class MyDocument extends Document {
             }}
           />
           {/* Google Adsense Script */}
-          <script 
+          <script
             async
             src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3368830028124939"
-            crossorigin="anonymous"
+            crossOrigin="anonymous"
           />
         </Head>
         <body style={{ overflowX: "hidden" }}>
